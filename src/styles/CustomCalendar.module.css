@@ -1,0 +1,74 @@
+/* styles/CustomCalendar.module.css */
+
+.calendar {
+    width: 100%;
+    max-width: 600px; /* Adjust based on your preference */
+    margin: 0 auto;
+    border-radius: 20px; /* Set border radius to 20px */
+    background: #f3f4f6; /* Background color */
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .header {
+    margin-bottom: 10px;
+    /* margin-top: 20px; */
+    /* margin-left: 10px; */
+  }
+  
+  .heading {
+    margin: 0;
+    font-size: 1.2em;
+    text-align: left; /* Align heading to the left */
+    font-weight: 600; 
+    color: #374151;
+  }
+  
+  .divider {
+    height: 2px;
+    background-color: #D1D5DB; /* Divider line color */
+    margin: 5px 0; /* Margin to create space around divider */
+  }
+  
+  .dayLabels {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .dayLabel {
+    text-align: center;
+    font-weight: 500; /* Thinner font weight */
+    color: #D1D5DB; /* Week day text color */
+  }
+  
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 10px 0;
+    color: #6B7280;
+  }
+  
+  .day {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 300px; /* Circular indicator for selected day */
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .day:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .selected {
+    background-color: #FBBF24;
+    color: white;
+    border-radius: 300px; 
+  }
+  
