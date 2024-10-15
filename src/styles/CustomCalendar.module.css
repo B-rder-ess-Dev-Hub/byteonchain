@@ -1,33 +1,31 @@
-/* styles/CustomCalendar.module.css */
 
 .calendar {
     width: 100%;
-    max-width: 600px; /* Adjust based on your preference */
+    max-width: 600px; 
     margin: 0 auto;
-    border-radius: 20px; /* Set border radius to 20px */
-    background: #f3f4f6; /* Background color */
+    border-radius: 20px; 
+    background: #f3f4f6; 
     padding: 20px;
     margin-top: 20px;
   }
   
   .header {
     margin-bottom: 10px;
-    /* margin-top: 20px; */
-    /* margin-left: 10px; */
+   
   }
   
   .heading {
     margin: 0;
     font-size: 1.2em;
-    text-align: left; /* Align heading to the left */
+    text-align: left; 
     font-weight: 600; 
     color: #374151;
   }
   
   .divider {
     height: 2px;
-    background-color: #D1D5DB; /* Divider line color */
-    margin: 5px 0; /* Margin to create space around divider */
+    background-color: #D1D5DB; 
+    margin: 5px 0; 
   }
   
   .dayLabels {
@@ -39,8 +37,8 @@
   
   .dayLabel {
     text-align: center;
-    font-weight: 500; /* Thinner font weight */
-    color: #D1D5DB; /* Week day text color */
+    font-weight: 500;
+    color: #D1D5DB;
   }
   
   .days {
@@ -55,7 +53,7 @@
     padding: 10px;
     text-align: center;
     cursor: pointer;
-    border-radius: 300px; /* Circular indicator for selected day */
+    border-radius: 300px; 
     transition: background-color 0.3s, color 0.3s;
     display: flex;
     align-items: center;

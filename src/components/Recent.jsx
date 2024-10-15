@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import videoIcon from '../../public/video-circle.png';
 import recentArrowIcon from '../../public/arrow-icon.png';
-import arrowRightIcon from '../../public/arrow-right.png'; // Import the arrow icon
+import arrowRightIcon from '../../public/arrow-right.png'; 
 import styles from '../styles/Recent.module.css';
 import Modal from './Modal';
 
 const Recent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const videoUrl = 'https://www.youtube.com/embed/xHtUBo3Ju-c'; // YouTube video URL
+  const videoUrl = 'https://www.youtube.com/embed/xHtUBo3Ju-c'; 
   const carouselRef = useRef(null);
 
   const openModal = () => setIsModalOpen(true);
@@ -18,7 +18,7 @@ const Recent = () => {
     title: 'Getting Started with Solidity',
     percentage: '37%',
     time: '1Hr:20Mins Left',
-    imageUrl: '/img.png', // Replace with your actual image path
+    imageUrl: '/img.png', 
   });
 
   return (
@@ -63,8 +63,8 @@ const Recent = () => {
                   src={arrowRightIcon}
                   alt="Arrow"
                   className={styles.continueIcon}
-                  width={15} // Add width
-                  height={15} // Add height
+                  width={15} 
+                  height={15} 
                 />
               </button>
             </div>

@@ -56,13 +56,13 @@
 }
 
 .calendarWrapper {
-  width: 80vw; /* Calendar width is 80% of the viewport width */
-  height: 80vh; /* Calendar height is 80% of the viewport height */
-  max-width: 800px; /* Optional: limit maximum width */
-  max-height: 600px; /* Optional: limit maximum height */
+  width: 80vw; 
+  height: 80vh; 
+  max-width: 800px; 
+  max-height: 600px; 
   margin-top: 20px;
-  border-radius: 10px; /* Border radius for modern look */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for modern look */
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .customCalendar {

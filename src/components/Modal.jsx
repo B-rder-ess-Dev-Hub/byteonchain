@@ -1,6 +1,5 @@
 import React from 'react';
-import styles from '../styles/Modal.module.css'; // Create this CSS file for modal styles
-
+import styles from '../styles/Modal.module.css'; 
 const Modal = ({ isOpen, onClose, videoUrl }) => {
   if (!isOpen) return null;
 

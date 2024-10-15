@@ -1,0 +1,54 @@
+.recentSection {
+  padding: 20px;
+}
+
+.recentHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.recentStrip {
+  width: 5px;
+  height: 30px;
+  background-color: #FBBF24;
+  margin-right: 10px;
+}
+
+.recentText {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #4B5563;
+  margin-right: 10px;
+}
+
+.recentArrowIcon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+.eventCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background-color: #F9FAFB;
+  max-width: 50%;
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+
+.noEventImage {
+  margin-bottom: 15px;
+}
+
+.noEventText {
+  font-size: 1.2em;
+  color: #6B7280;
+  font-weight: 600;
+  text-align: center;
+}
