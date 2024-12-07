@@ -9,15 +9,15 @@
 }
 
 .recentStrip {
-  width: 5px;
-  height: 30px;
+  width: 2px;
+  height: 15px;
   background-color: #FBBF24;
   margin-right: 10px;
 }
 
 .recentText {
-  font-size: 1.1em;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600; /* Adjusted to reduce emphasis */
   color: #4B5563;
   margin-right: 10px;
 }
@@ -25,30 +25,94 @@
 .recentArrowIcon {
   width: 20px;
   height: 20px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
+}
+
+.eventsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.eventRow {
+  display: flex;
+  align-items: center; /* Align the indicator vertically */
+  gap: 15px;
+}
+
+.indicatorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.futureIndicator {
+  background-color: #E5E7EB; /* Future event color */
+}
+
+.inProgressIndicator {
+  background-color: #FBBF24; /* In-progress event color */
+}
+
+.completedIndicator {
+  background-color: #137139; /* Completed event color */
 }
 
 .eventCard {
+  background-color: white;
+  border-radius: 20px; /* Rounded corners */
+  padding: 15px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.futureEvent {
+  border: 1px solid #E5E7EB; /* Future event border color */
+}
+
+.inProgressEvent {
+  border: 1px solid #FBBF24; /* In-progress event border color */
+}
+
+.completedEvent {
+  border: 1px solid #137139; /* Completed event border color */
+}
+
+.eventHeader {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  border: 1px solid #E5E7EB;
-  border-radius: 10px;
-  background-color: #F9FAFB;
-  max-width: 50%;
-  margin: 0 auto;
-  margin-bottom: 100px;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-.noEventImage {
-  margin-bottom: 15px;
+.eventType {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  color: #9CA3AF;
 }
 
-.noEventText {
-  font-size: 1.2em;
-  color: #6B7280;
-  font-weight: 600;
-  text-align: center;
+.eventTime {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  color: #9CA3AF;
+}
+
+.eventTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+  color: #4B5563;
 }

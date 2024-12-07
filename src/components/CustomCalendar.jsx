@@ -1,14 +1,18 @@
-// components/CustomCalendar.js
-import React, { useState } from 'react';
-import styles from '../styles/CustomCalendar.module.css'; // Import styles
+import React, { useState, useEffect } from 'react';
+import styles from '../styles/CustomCalendar.module.css';
 
 const CustomCalendar = ({ selectedDate, onDateChange }) => {
   const [currentWeek, setCurrentWeek] = useState(getCurrentWeek());
+  const [todayDate, setTodayDate] = useState(new Date());
+
+  useEffect(() => {
+    setTodayDate(new Date());
+  }, []);
 
   function getCurrentWeek() {
-    const startOfWeek = new Date();
-    const day = startOfWeek.getDay();
-    const start = new Date(startOfWeek.setDate(startOfWeek.getDate() - day));
+    const today = new Date();
+    const day = today.getDay();
+    const start = new Date(today.setDate(today.getDate() - day));
     const end = new Date(start);
     end.setDate(end.getDate() + 6);
 
@@ -20,7 +24,7 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
     let currentDay = new Date(currentWeek.start);
 
     while (currentDay <= currentWeek.end) {
-      days.push(currentDay.getDate());
+      days.push(new Date(currentDay)); // Store full date objects for accurate comparisons
       currentDay.setDate(currentDay.getDate() + 1);
     }
 
@@ -28,14 +32,29 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
   };
 
   const handleDayClick = (day) => {
-    const newDate = new Date(currentWeek.start.getFullYear(), currentWeek.start.getMonth(), day);
-    onDateChange(newDate);
+    onDateChange(day);
+  };
+
+  const isSameDay = (date1, date2) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   };
 
   const getDayClass = (day) => {
     if (!day) return '';
-    const date = new Date(currentWeek.start.getFullYear(), currentWeek.start.getMonth(), day);
-    return date.toDateString() === selectedDate.toDateString() ? styles.selected : '';
+
+    if (selectedDate && isSameDay(day, selectedDate)) {
+      return styles.selected;
+    }
+
+    if (isSameDay(day, todayDate)) {
+      return styles.currentDay;
+    }
+
+    return styles.inactiveDay;
   };
 
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -44,8 +63,8 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
     <div className={styles.calendar}>
       <header className={styles.header}>
         <h2 className={styles.heading}>This week</h2>
-        <div className={styles.divider}></div>
       </header>
+      <div className={styles.divider}></div>
       <div className={styles.dayLabels}>
         {weekDays.map((day, index) => (
           <div key={index} className={styles.dayLabel}>
@@ -60,7 +79,7 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
             className={`${styles.day} ${getDayClass(day)}`}
             onClick={() => handleDayClick(day)}
           >
-            {day}
+            {day.getDate()}
           </div>
         ))}
       </div>

@@ -28,48 +28,50 @@ const Recent = () => {
         <span className={styles.recentText}>Recent</span>
         <Image src={recentArrowIcon} alt="Arrow" className={styles.recentArrowIcon} width={20} height={20} />
       </div>
-      <div className={styles.carousel} ref={carouselRef}>
-        {carouselItems.map((item, index) => (
-          <div key={index} className={styles.carouselCard}>
-            <div className={styles.videoContainer} onClick={openModal}>
-              <Image
-                src={videoIcon}
-                alt="Play Video"
-                className={styles.videoIcon}
-                width={50}
-                height={50}
-              />
-              <Image
-                src={item.imageUrl}
-                alt="Sample"
-                className={styles.carouselImage}
-                layout="fill"
-              />
-            </div>
-            <div className={styles.cardContent}>
-              <p className={styles.cardTitle}>{item.title}</p>
-              <div className={styles.infoContainer}>
-                <span className={styles.percentage}>{item.percentage}</span>
-                <span className={styles.time}>{item.time}</span>
-              </div>
-              <div className={styles.progressContainer}>
-                <div className={styles.progressBarContainer}>
-                  <div className={styles.progressBar} style={{ width: '37%' }}></div>
-                </div>
-              </div>
-              <button className={styles.continueButton}>
-                Continue
+      <div className={styles.carouselWrapper}>
+        <div className={styles.carousel} ref={carouselRef}>
+          {carouselItems.map((item, index) => (
+            <div key={index} className={styles.carouselCard}>
+              <div className={styles.videoContainer} onClick={openModal}>
                 <Image
-                  src={arrowRightIcon}
-                  alt="Arrow"
-                  className={styles.continueIcon}
-                  width={15} 
-                  height={15} 
+                  src={videoIcon}
+                  alt="Play Video"
+                  className={styles.videoIcon}
+                  width={50}
+                  height={50}
                 />
-              </button>
+                <Image
+                  src={item.imageUrl}
+                  alt="Sample"
+                  className={styles.carouselImage}
+                  layout="fill"
+                />
+              </div>
+              <div className={styles.cardContent}>
+                <p className={styles.cardTitle}>{item.title}</p>
+                <div className={styles.infoContainer}>
+                  <span className={styles.percentage}>{item.percentage}</span>
+                  <span className={styles.time}>{item.time}</span>
+                </div>
+                <div className={styles.progressContainer}>
+                  <div className={styles.progressBarContainer}>
+                    <div className={styles.progressBar} style={{ width: '37%' }}></div>
+                  </div>
+                </div>
+                <button className={styles.continueButton}>
+                  Continue
+                  <Image
+                    src={arrowRightIcon}
+                    alt="Arrow"
+                    className={styles.continueIcon}
+                    width={15} 
+                    height={15} 
+                  />
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal} videoUrl={videoUrl} />
     </div>

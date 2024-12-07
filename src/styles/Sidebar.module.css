@@ -1,0 +1,97 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  padding: 20px;
+  height: 100vh;
+  border-right: 1px solid #e5e7eb; /* Thin border to separate sidebar */
+}
+
+.tabItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Styling for active tab */
+.activeTab {
+  background-color: #fffbeb; /* Light background for active tab */
+}
+
+/* Default label (text) styling */
+.label {
+  font-size: 16px;
+  font-weight: 400; /* Regular weight */
+  color: grey; /* Default text color */
+}
+
+/* Active label (text) styling */
+.activeLabel {
+  font-weight: 700; /* Bold weight for active tab */
+  color: #fbbf24; /* Text color for active tab */
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+
+
+.dottedLine {
+  border: none;
+  border-top: 1px dotted #e5e7eb; /* Dotted separator line */
+  margin: 20px 0;
+  width: 100%;
+}
+
+.userProfile {
+  background-color: #f9fafb; /* Background rectangle color */
+  border-radius: 10px; /* Rounded corners for the rectangle */
+  padding: 10px; /* Inner padding for the rectangle */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+  margin-top: 20px;
+}
+
+.profileTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.avatarContainer {
+  background-color: #e5e7eb; /* Slightly darker background for avatar */
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align username and role to the left */
+}
+
+.username {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.role {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 2px; /* Adds a slight gap between name and role */
+}
+
+

@@ -1,85 +1,102 @@
 .recentSection {
-    padding: 20px;
-  }
-  
-  .recentHeader {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .recentStrip {
-    width: 5px;
-    height: 30px;
-    background-color: #FBBF24;
-    margin-right: 10px;
-  }
-  
-  .recentText {
-    font-size: 1.1em;
-    font-weight: 700;
-    color: #4B5563;
-    margin-right: 10px;
-  }
-  
-  .recentArrowIcon {
-    width: 20px;
-    height: 20px;
-    margin-left: 10px;
-  }
-  
-  .carousel {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .carousel::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .carouselCard {
-    min-width: 300px;
-    height: 350px;
-    margin: 0 10px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 40px;
-    border-radius: 20px;
-    overflow: hidden; 
-  }
-  
-  .videoContainer {
-    position: relative;
-    width: 100%;
-    height: 200px; 
-  }
-  
-  .carouselImage {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-  }
-  
-  .cardContent {
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .cardTitle {
-    font-size: 1.1em;
-    font-weight: 700;
-    color: #4B5563;
-  }
-  
-  .cardDescription {
-    font-size: 0.9em;
-    font-weight: 900;
-    color: #6B7280;
-  }
-  
+  padding: 16px;
+  margin-left: 0;  /* Reset margin-left to 0 to avoid unnecessary space */
+}
+
+.recentHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.recentStrip {
+  width: 2px;
+  height: 15px;
+  background-color: #FBBF24;
+  margin-right: 8px;
+}
+
+.recentText {
+  font-size: 0.88em;
+  font-weight: 700;
+  color: #4B5563;
+  margin-right: 8px;
+}
+
+.recentArrowIcon {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+}
+
+/* Wrapper for carousel to control visibility of 3 items */
+.carouselWrapper {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselCard {
+  width: 250px;  /* Set width for the carousel card */
+  height: 300px; /* Set height for the carousel card */
+  margin: 0 8px; /* Space between cards */
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+  height: 100%; /* Make video container fill the card */
+}
+
+.carouselImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+}
+
+.cardContent {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.cardTitle {
+  font-size: 0.88em;
+  font-weight: 700;
+  color: #4B5563;
+}
+
+.cardDescription {
+  font-size: 0.72em;
+  font-weight: 900;
+  color: #6B7280;
+  text-align: justify; /* Justify the text */
+}
+
+/* Additional style to ensure only 3 items are visible */
+.carouselWrapper {
+  max-width: 760px; /* Adjusted to account for the reduced margin */
+  margin: 0;
+}

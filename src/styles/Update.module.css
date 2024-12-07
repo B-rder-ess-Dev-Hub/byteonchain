@@ -1,108 +1,159 @@
 .updateContainer {
-    padding: 20px;
-  }
-  
-  .topBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .classroomTitle {
-    font-size: 2em;
-    font-weight: bold;
-  }
-  
-  .settingsIcon {
-    cursor: pointer;
-  }
-  
-  .searchContainer {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-    border: 1px solid #D1D5DB;
-    border-radius: 25px;
-    padding: 5px 15px;
-  }
-  
-  .searchIcon {
-    margin-right: 10px;
-  }
-  
-  .searchInput {
-    border: none;
-    outline: none;
-    flex-grow: 1;
-    padding: 8px 10px;
-    font-size: 1em;
-    border-radius: 25px;
-  }
-  
-  .imageContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0;
-  }
-  
-  .mainImage {
-    width: 100%;
-    border-radius: 15px;
-  }
-  
-  .imageHeading {
-    font-size: 1.8em;
-    font-weight: bold;
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .imageDescription {
-    font-size: 1.2em;
-    color: #6B7280;
-    text-align: center;
-    margin-top: 10px;
-    width: 90%;
-  }
-  
-  .carouselContainer {
-    margin-top: 50px;
-  }
-  
-  .carouselTitle {
-    text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-  }
-  
-  .carousel {
-    display: flex;
-    overflow-x: auto; 
-    gap: 20px; 
-    scroll-behavior: smooth; 
-    padding-bottom: 10px;
-    scrollbar-width: none; 
-  }
-  
-  .carousel::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .carouselItem {
-    min-width: 400px; 
-    text-align: center;
-    margin-bottom: 50px;
-  }
-  
-  .carouselImage {
-    width: 100%;
-    border-radius: 15px;
-  }
-  
-  .updateTitle {
-    margin-top: 10px;
-    font-size: 1.1em;
-    color: #374151;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Section Header */
+.recentHeader {
+  margin-bottom: 20px;
+}
+
+.recentStrip {
+  width: 3px;
+  height: 20px;
+  background-color: #fbbf24;
+  margin-bottom: 8px;
+}
+
+.recentText {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #4b5563;
+}
+
+/* Grid Layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 items per row */
+  gap: 11px; /* Space between cards */
+  margin-bottom: 20px;
+}
+
+/* Grid for the second section (2 rows of 5 items) */
+.gridTwoRows {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 items per row */
+  grid-template-rows: repeat(2, auto); /* 2 rows */
+  gap: 11px; /* Space between cards */
+  margin-bottom: 20px;
+}
+
+/* Card Styling */
+.gridItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 220px; /* Fixed width */
+  height: 290px; /* Increased height */
+  border-radius: 20px; /* Increased radius */
+  border: 1px solid #e5e7eb; /* Light border */
+  padding: 10px; /* Padding inside the card */
+  gap: 11px; /* Space between elements inside the card */
+  overflow: hidden; /* Ensure content stays within rounded corners */
+}
+
+.imageContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center;
+}
+
+.gridImage {
+  width: 200px; /* Fixed width */
+  height: 154px; /* Fixed height */
+  border-radius: 11px; /* Rounded image corners */
+  object-fit: cover; /* Ensure the image covers its container */
+}
+
+/* Text Styling */
+.title {
+  font-family: 'Inter', sans-serif; /* Font family */
+  font-size: 14px; /* Text size */
+  font-weight: 600; /* Semibold */
+  line-height: 20px; /* Line height */
+  letter-spacing: -0.02em; /* Negative letter spacing */
+  color: #4b5563; /* Title color */
+}
+
+.description {
+  font-family: 'Inter', sans-serif; /* Font family */
+  font-size: 12px; /* Text size */
+  font-weight: 400; /* Regular weight */
+  line-height: 18px; /* Line height */
+  letter-spacing: -0.02em; /* Negative letter spacing */
+  color: #9ca3af; /* Description color */
+  word-wrap: break-word; /* Ensure long words break correctly */
+}
+
+/* Read More Link */
+.readMore {
+  font-size: 12px; /* Text size */
+  color: #fbbf24; /* Link color */
+  text-decoration: none; /* No underline by default */
+}
+
+.readMore:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+/* Load More Button Styling */
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.loadMoreButton {
+  width: 168px;
+  height: auto;
+  min-height: 48px;
+  padding: 12px 20px;
+  background-color: #fbbf24;
+  border: 1px solid #fbbf24;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.loadMoreButton:hover {
+  background-color: #fbbf20;
+  border-color: #fbbf20;
+}
+
+
+.recentHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; 
+}
+
+.recentStrip {
+  width: 2px; /* Reduced width by 20% */
+  height: 15px; /* Reduced height by 20% */
+  background-color: #FBBF24;
+  margin-right: 8px; /* Reduced margin by 20% */
+}
+
+.recentText {
+  font-size: 0.88em; /* Reduced font size by 20% */
+  font-weight: 700;
+  color: #4B5563;
+  margin-right: 8px; /* Reduced margin by 20% */
+}

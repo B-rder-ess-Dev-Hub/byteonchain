@@ -42,22 +42,25 @@ const Tupdate = () => {
           height={20}
         />
       </div>
-      <div className={styles.carousel} ref={carouselRef}>
-        {carouselItems.map((item, index) => (
-          <div key={index} className={styles.carouselCard}>
-            <div className={styles.videoContainer}>
-              <Image
-                src={item.imageUrl}
-                alt={item.title}
-                className={styles.carouselImage}
-                layout="fill"
-              />
+      
+      <div className={styles.carouselWrapper}> {/* Wrap the carousel inside this container */}
+        <div className={styles.carousel} ref={carouselRef}>
+          {carouselItems.map((item, index) => (
+            <div key={index} className={styles.carouselCard}>
+              <div className={styles.videoContainer}>
+                <Image
+                  src={item.imageUrl}
+                  alt={item.description}
+                  className={styles.carouselImage}
+                  layout="fill"
+                />
+              </div>
+              <div className={styles.cardContent}>
+                <p className={styles.cardDescription}>{item.description}</p>
+              </div>
             </div>
-            <div className={styles.cardContent}>
-              <p className={styles.cardDescription}>{item.description}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

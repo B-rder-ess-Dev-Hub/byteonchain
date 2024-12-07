@@ -1,72 +1,91 @@
-
 .calendar {
-    width: 100%;
-    max-width: 600px; 
-    margin: 0 auto;
-    border-radius: 20px; 
-    background: #f3f4f6; 
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
-  .header {
-    margin-bottom: 10px;
-   
-  }
-  
-  .heading {
-    margin: 0;
-    font-size: 1.2em;
-    text-align: left; 
-    font-weight: 600; 
-    color: #374151;
-  }
-  
-  .divider {
-    height: 2px;
-    background-color: #D1D5DB; 
-    margin: 5px 0; 
-  }
-  
-  .dayLabels {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-bottom: 5px;
-  }
-  
-  .dayLabel {
-    text-align: center;
-    font-weight: 500;
-    color: #D1D5DB;
-  }
-  
-  .days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    padding: 10px 0;
-    color: #6B7280;
-  }
-  
-  .day {
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 300px; 
-    transition: background-color 0.3s, color 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .day:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .selected {
-    background-color: #FBBF24;
-    color: white;
-    border-radius: 300px; 
-  }
-  
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #F3F4F6; /* Updated background color */
+  width: 100%; /* Reduce the width by 20% */
+  max-width: 480px; /* Further restrict max width for responsiveness */
+  padding: 20px;
+  border-radius: 15px; /* Updated border radius */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Center the calendar horizontally */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.heading {
+  font-size: 14px; /* Reduced size for "This week" */
+  color: #374151; /* Text color for "This week" */
+  font-weight: 600; /* Removed bold styling */
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background-color: #D1D5DB; /* Subtle divider color */
+  margin-top: 10px;
+}
+
+.dayLabels {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.dayLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #D1D5DB; /* Light gray for day labels (Mon, Tue, etc.) */
+}
+
+.days {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto; /* Remove fixed width */
+  height: auto; /* Remove fixed height */
+  margin: 5px;
+  font-size: 14px;
+  color: #6B7280; /* Default text color for dates (1, 2, 3, etc.) */
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.day:hover {
+  color: #FBBF24; /* Highlight text on hover */
+}
+
+.selected {
+  background-color: #FBBF24;
+  color: white;
+  border-radius: 50%; /* Circle shape for selected day */
+  width: 40px; /* Add consistent size for selected day */
+  height: 40px;
+}
+
+.currentDay {
+  background-color: #FBBF24; /* Highlight color for current day */
+  color: white;
+  border-radius: 50%; /* Circle shape */
+  width: 40px; /* Add consistent size for current day */
+  height: 40px;
+}
+
+.inactiveDay {
+  color: #6B7280; /* Inactive dates will only have text color */
+}

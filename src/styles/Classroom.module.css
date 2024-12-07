@@ -1,29 +1,64 @@
+/* General Classroom Layout */
 .classroomContainer {
-  padding: 20px;
-}
-
-.topBar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.classroomTitle {
+.headerWrapper {
+  flex-shrink: 0;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Banner */
+.banner {
+  background-color: #f3f4f6;
+  text-align: center;
+  padding: 50px 20px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.bannerText {
   font-size: 2em;
-  font-weight: bold;
+  font-weight: normal;
+  color: #333;
 }
 
-.settingsIcon {
-  cursor: pointer;
+.userName {
+  font-size: 3em;
+  font-weight: bold;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* Search */
+.searchWrapper {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 20px;
 }
 
 .searchContainer {
   display: flex;
   align-items: center;
-  margin: 20px 0;
-  border: 1px solid #D1D5DB;
+  background-color: #f3f4f6;
   border-radius: 25px;
-  padding: 5px 15px;
+  padding: 12px 16px;
+  width: 100%;
+  max-width: 350px;
 }
 
 .searchIcon {
@@ -34,64 +69,156 @@
   border: none;
   outline: none;
   flex-grow: 1;
-  padding: 8px 10px;
   font-size: 1em;
-  border-radius: 25px;
+  background-color: transparent;
+  color: #333;
 }
 
-.mainVideoContainer {
+/* Recent Section */
+.recentSection {
+  padding: 16px;
+}
+
+.recentHeader {
   display: flex;
-  justify-content: center;
-  margin: 30px 0;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.mainVideo {
-  width: 80%;
+.recentStrip {
+  width: 2px;
+  height: 15px;
+  background-color: #fbbf24;
+  margin-right: 8px;
+}
+
+.recentText {
+  font-size: 0.88em;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+/* Video Grid */
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 16px; /* Space between cards */
+}
+
+/* Video Card */
+.carouselCard {
+  width: 250px; /* Increased width of the card */
+  height: 335px; /* Increased height of the card */
+  border: 1px solid #F3F4F6;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: transparent;
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+  height: 181px;
+}
+
+.carouselImage {
+  object-fit: cover;
   border-radius: 15px;
+  width: 100%;
+  height: 100%;
 }
 
-.carouselContainer {
-  margin-top: 50px;
+.videoIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.carouselTitle {
-  text-align: center;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-}
-
-.carousel {
+.cardContent {
   display: flex;
-  overflow-x: auto; 
-  padding: 10px 0;
-  gap: 15px; 
-  scroll-behavior: smooth; 
-
-  -webkit-overflow-scrolling: touch;
-}
-
-.carousel::-webkit-scrollbar {
-  display: none; 
-}
-
-.carousel {
-  scrollbar-width: none; 
-}
-
-.carouselItem {
-  flex: 0 0 280px; 
-  text-align: center;
-}
-
-.carouselVideo {
-  width: 280px; 
-  height: 180px; 
-  border-radius: 10px;
-  background-color: #000;
-}
-
-.videoTitle {
+  flex-direction: column;
   margin-top: 10px;
-  font-size: 1.1em;
-  color: #374151;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tutorContainer {
+  display: flex;
+  align-items: center;
+}
+
+.tutorImage {
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.tutorName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #9CA3AF; /* Updated color */
+}
+
+.viewsAndDays {
+  display: flex;
+  align-items: center;
+}
+
+.viewsContainer {
+  display: flex;
+  align-items: center;
+}
+
+.views {
+  font-size: 12px;
+  font-weight: 400;
+  color: #9CA3AF; /* Updated color */
+}
+
+.separator {
+  margin-left: 8px;
+  margin-right: 8px;
+  color: #9CA3AF; /* Updated color */
+}
+
+.days {
+  font-size: 12px;
+  font-weight: 400;
+  color: #9CA3AF; /* Updated color */
+}
+
+/* Button */
+.continueButton {
+  background-color: #FBBF24;
+  color: #fff;
+  border: none;
+  width: 220px;
+  height: 46px;
+  border-radius: 12px;
+  padding-top: 8px;
+  padding-right: 29px;
+  padding-bottom: 8px;
+  padding-left: 29px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -2%;
+  align-self: center;
 }

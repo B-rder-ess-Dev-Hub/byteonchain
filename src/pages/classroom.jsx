@@ -1,122 +1,141 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from '../styles/Classroom.module.css';
-import BottomTab from '../components/BottomTab'; 
-
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
 
 // Import your custom icons
-import searchIcon from '../../public/search.png'; // Replace with your search icon path
-import settingsIcon from '../../public/settings.png'; // Replace with your settings icon path
+import searchIcon from '../../public/search.png';
+import videoIcon from '../../public/video-circle.png';
+import arrowRightIcon from '../../public/arrow-right.png'; 
+import eyeIcon from '../../public/eye-icon.png'; 
 
-const Classroom = () => {
+const Classroom = ({ userName }) => {
+  const videoItems = [
+    { 
+      imageUrl: '/img.png', 
+      title: 'UI/UX Design Basics', 
+      tutor: 'John Doe', 
+      views: '2.1k', 
+      days: '2d',
+      tutorImage: '/avatar.png',
+    },
+    { 
+      imageUrl: '/img.png', 
+      title: 'Advanced JavaScript', 
+      tutor: 'Jane Smith', 
+      views: '1.9k', 
+      days: '3d',
+      tutorImage: '/avatar.png',
+    },
+    { 
+      imageUrl: '/img.png', 
+      title: 'React.js Essentials', 
+      tutor: 'Mark Taylor', 
+      views: '3.1k', 
+      days: '1d',
+      tutorImage: '/avatar.png',
+    },
+    { 
+      imageUrl: '/img.png', 
+      title: 'Node.js Mastery', 
+      tutor: 'Sarah Lee', 
+      views: '1.5k', 
+      days: '5d',
+      tutorImage: '/avatar.png',
+    },
+  ];
+
   return (
     <div className={styles.classroomContainer}>
-      {/* Top bar with Classroom text and settings icon */}
-      <div className={styles.topBar}>
-        <h1 className={styles.classroomTitle}>Classroom</h1>
-        <Image
-          src={settingsIcon}
-          alt="Settings Icon"
-          className={styles.settingsIcon}
-          width={30}
-          height={30}
-        />
+      {/* Header Component */}
+      <div className={styles.headerWrapper}>
+        <Header />
       </div>
 
-      {/* Search field */}
-      <div className={styles.searchContainer}>
-        <Image
-          src={searchIcon}
-          alt="Search Icon"
-          className={styles.searchIcon}
-          width={20}
-          height={20}
-        />
-        <input
-          type="text"
-          placeholder="Search for a course..."
-          className={styles.searchInput}
-        />
-      </div>
+      {/* Sidebar and Main Content */}
+      <div className={styles.contentWrapper}>
+        <Sidebar />
 
-      {/* Main video section (YouTube Embed) */}
-      <div className={styles.mainVideoContainer}>
-        <iframe
-          className={styles.mainVideo}
-          width="80%"
-          height="400"
-          src="https://www.youtube.com/embed/fm0n1BG3RsU?si=eeYUmG1cPvw6BAT5"
-          title="Main Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
+        <div className={styles.mainContent}>
+          {/* Banner */}
+          <div className={styles.banner}>
+            <h1 className={styles.bannerText}>Welcome to our class</h1>
+            <p className={styles.userName}>{userName || 'John Doe'}</p>
+          </div>
 
-      {/* Carousel of YouTube video courses */}
-      <div className={styles.carouselContainer}>
-        <h2 className={styles.carouselTitle}>Video Courses</h2>
-        <div className={styles.carousel}>
-          {/* Sample videos in the carousel */}
-          <div className={styles.carouselItem}>
-            <iframe
-              className={styles.carouselVideo}
-              src="https://www.youtube.com/embed/fm0n1BG3RsU?si=eeYUmG1cPvw6BAT5"
-              title="Video Course 1"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            <p className={styles.videoTitle}>Understanding UI/UX</p>
+          {/* Search Field */}
+          <div className={styles.searchWrapper}>
+            <div className={styles.searchContainer}>
+              <Image
+                src={searchIcon}
+                alt="Search Icon"
+                className={styles.searchIcon}
+                width={20}
+                height={20}
+              />
+              <input
+                type="text"
+                placeholder="Search for a course..."
+                className={styles.searchInput}
+              />
+            </div>
           </div>
-          <div className={styles.carouselItem}>
-            <iframe
-              className={styles.carouselVideo}
-              src="https://www.youtube.com/embed/fm0n1BG3RsU?si=eeYUmG1cPvw6BAT5"
-              title="Video Course 2"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            <p className={styles.videoTitle}>Introduction to JavaScript</p>
-          </div>
-          <div className={styles.carouselItem}>
-            <iframe
-              className={styles.carouselVideo}
-              src="https://www.youtube.com/embed/fm0n1BG3RsU?si=eeYUmG1cPvw6BAT5"
-              title="Video Course 3"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            <p className={styles.videoTitle}>Responsive Web Design</p>
-          </div>
-          <div className={styles.carouselItem}>
-            <iframe
-              className={styles.carouselVideo}
-              src="https://www.youtube.com/embed/fm0n1BG3RsU?si=eeYUmG1cPvw6BAT5"
-              title="Video Course 4"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            <p className={styles.videoTitle}>React Basics</p>
-          </div>
-          <div className={styles.carouselItem}>
-            <iframe
-              className={styles.carouselVideo}
-              src="https://www.youtube.com/embed/fm0n1BG3RsU?si=eeYUmG1cPvw6BAT5"
-              title="Video Course 5"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            <p className={styles.videoTitle}>Node.js Overview</p>
+
+          {/* Video Section */}
+          <div className={styles.recentSection}>
+            <div className={styles.videoGrid}>
+              {videoItems.map((item, index) => (
+                <div key={index} className={styles.carouselCard}>
+                  <div className={styles.videoContainer}>
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      className={styles.carouselImage}
+                      layout="intrinsic"
+                      width={200}
+                      height={181}
+                    />
+                    <Image
+                      src={videoIcon}
+                      alt="Play Video"
+                      className={styles.videoIcon}
+                      width={40}
+                      height={40}
+                    />
+                  </div>
+                  <div className={styles.cardContent}>
+                    <p className={styles.cardTitle}>{item.title}</p>
+                    <div className={styles.infoContainer}>
+                      <div className={styles.tutorContainer}>
+                        <Image
+                          src={item.tutorImage}
+                          alt={item.tutor}
+                          className={styles.tutorImage}
+                          width={20}  /* Reduced size by 10% */
+                          height={20} /* Reduced size by 10% */
+                        />
+                        <span className={styles.tutorName}>{item.tutor}</span>
+                      </div>
+                      <div className={styles.viewsAndDays}>
+                        <div className={styles.viewsContainer}>
+                          <Image src={eyeIcon} alt="Eye Icon" width={12} height={12} />
+                          <span className={styles.views}>{item.views}</span>
+                        </div>
+                        <span className={styles.separator}>|</span>
+                        <span className={styles.days}>{item.days}</span>
+                      </div>
+                    </div>
+                    <button className={styles.continueButton}>
+                      Watch Video
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-
-      <BottomTab />
     </div>
   );
 };

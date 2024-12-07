@@ -1,16 +1,16 @@
 import React from 'react';
-import styles from '../styles/Chat.module.css'
-import BottomTab from '../components/BottomTab'; 
-
+import styles from '../styles/Chat.module.css';
+import Sidebar from '../components/Sidebar'; 
 
 const Chat = () => {
   return (
     <div className={styles.chatContainer}>
-      <div className={styles.banner}>
-       
-        <h2 className={styles.title}>Feature Coming Soon</h2>
+      <Sidebar />
+      <div className={styles.cardContainer}>
+        <div className={styles.card}>
+          <h2 className={styles.title}>Feature Coming Soon</h2>
+        </div>
       </div>
-      <BottomTab />
     </div>
   );
 };

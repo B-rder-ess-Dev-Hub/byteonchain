@@ -1,139 +1,156 @@
 .recentSection {
-    padding: 20px;
-  }
-  
-  .recentHeader {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .recentStrip {
-    width: 5px;
-    height: 30px;
-    background-color: #FBBF24;
-    margin-right: 10px;
-  }
-  
-  .recentText {
-    font-size: 1.1em;
-    font-weight: 700;
-    color: #4B5563;
-    margin-right: 10px;
-  }
-  
-  .recentArrowIcon {
-    width: 20px;
-    height: 20px;
-    margin-left: 10px;
-  }
-  
-  .carousel {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .carousel::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .carouselCard {
-    min-width: 300px;
-    height: 350px;
-    border: 1px solid #F3F4F6;
-    border-radius: 20px;
-    margin: 0 10px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-  }
-  
-  .videoContainer {
-    position: relative;
-    width: 100%;
-    height: 50%;
-  }
-  
-  .carouselImage {
-    object-fit: cover;
-    border-radius: 20px;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .videoIcon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-  }
-  
-  .cardContent {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-  }
-  
-  .cardTitle {
-    font-size: 1em;
-    font-weight: 700;
-    color: #4B5563;
-    margin-bottom: 10px;
-  }
-  
-  .infoContainer {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .percentage, .time {
-    font-size: 15px;
-    font-weight: 700;
-    color: #9CA3AF;
-  }
-  
-  .progressContainer {
-    margin-bottom: 10px;
-  }
-  
-  .progressBarContainer {
-    width: 100%;
-    height: 8px;
-    background-color: #E5E7EB;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .progressBar {
-    height: 100%;
-    background-color: #FBBF24;
-    border-radius: 10px;
-    width: 37%;
-  }
-  
-  .continueButton {
-    height: 44px;
-    width: 260px;
-    background-color: #FBBF24;
-    border: none;
-    border-radius: 10px;
-    color: #ffffff;
-    cursor: pointer;
-    font-size: 0.9em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px auto;
-  }
-  
-  .continueIcon {
-    margin-left: 10px;
-  }
-  
+  padding: 16px; /* Reduced padding by 20% */
+}
+
+.recentHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; /* Reduced margin by 20% */
+}
+
+.recentStrip {
+  width: 2px; /* Reduced width by 20% */
+  height: 15px; /* Reduced height by 20% */
+  background-color: #FBBF24;
+  margin-right: 8px; /* Reduced margin by 20% */
+}
+
+.recentText {
+  font-size: 0.88em; /* Reduced font size by 20% */
+  font-weight: 700;
+  color: #4B5563;
+  margin-right: 8px; /* Reduced margin by 20% */
+}
+
+.recentArrowIcon {
+  width: 16px; /* Reduced width by 20% */
+  height: 16px; /* Reduced height by 20% */
+  margin-left: 8px; /* Reduced margin by 20% */
+}
+
+.carouselWrapper {
+  display: flex;
+  justify-content: flex-start;  /* Ensures no gap before carousel starts */
+  overflow: hidden;  /* Hide items outside of the 3 visible items */
+  padding: 0;  /* Ensure no extra padding */
+  margin: 0;  /* Remove any unwanted margin */
+}
+
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carouselCard {
+  min-width: 240px; /* Reduced width by 20% */
+  height: 300px; /* Reduced height by 20% */
+  border: 1px solid #F3F4F6;
+  border-radius: 16px; /* Reduced border-radius by 20% */
+  margin: 5px; /* Reduced margin by 20% */
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px; /* Reduced padding by 20% */
+}
+
+.videoContainer {
+  position: relative;
+  width: 100%;
+  height: 60%; /* Reduced height by 20% */
+}
+
+.carouselImage {
+  object-fit: cover;
+  border-radius: 16px; /* Reduced border-radius by 20% */
+  width: 100%;
+  height: 100%;
+}
+
+.videoIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px; /* Reduced margin by 20% */
+}
+
+.cardTitle {
+  font-size: 0.88em; /* Reduced font size by 20% */
+  font-weight: 700;
+  color: #4B5563;
+  margin-bottom: 8px; /* Reduced margin by 20% */
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px; /* Reduced margin by 20% */
+}
+
+.percentage, .time {
+  font-size: 12px; /* Reduced font size by 20% */
+  /* font-weight: 700; */
+  color: #9CA3AF;
+}
+
+.progressContainer {
+  margin-bottom: 8px; /* Reduced margin by 20% */
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 6px; /* Reduced height by 20% */
+  background-color: #E5E7EB;
+  border-radius: 8px; /* Reduced border-radius by 20% */
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background-color: #FBBF24;
+  border-radius: 8px; /* Reduced border-radius by 20% */
+  width: 37%;
+}
+
+.continueButton {
+  height: 36px; /* Reduced height by 20% */
+  width: 208px; /* Reduced width by 20% */
+  background-color: #FBBF24;
+  border: none;
+  border-radius: 8px; /* Reduced border-radius by 20% */
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.72em; /* Reduced font size by 20% */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px auto; /* Reduced margin by 20% */
+}
+
+.continueIcon {
+  margin-left: 8px; /* Reduced margin by 20% */
+}
+
+/* Additional Style to Ensure Only 3 Items Are Visible at Once */
+.carouselWrapper {
+  max-width: 720px;  /* 3 * 240px (width of cards) + margins */
+  margin: 0;  /* Make sure no margin exists to cause gaps */
+}
+
+.carouselCard {
+  flex-shrink: 0;  /* Prevent cards from shrinking */
+}

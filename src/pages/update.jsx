@@ -1,105 +1,141 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from '../styles/Update.module.css';
-import BottomTab from '../components/BottomTab'; 
-import searchIcon from '../../public/search.png'; 
-import settingsIcon from '../../public/settings.png'; 
-import exampleImage from '../../public/img.png'; 
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
+import exampleImage from '../../public/img.png';
 
-const Update = () => {
+const Update = ({ description }) => {
+  const truncateDescription = (desc) => {
+    const words = desc.split(' '); // Split description into words
+    const truncated = words.slice(0, 9).join(' '); // Get first 9 words
+    return truncated;
+  };
+
+  const updateItems = [
+    {
+      title: 'React Basics',
+      description: 'Learn the basics of React, including components and hooks.',
+    },
+    {
+      title: 'Node.js & Express',
+      description: 'Explore advanced backend development concepts with Node.js.',
+    },
+    {
+      title: 'Smart Contracts',
+      description: 'A beginner-friendly guide to writing smart contracts in Solidity.',
+    },
+    {
+      title: 'Flutter Apps',
+      description: 'Build beautiful and responsive mobile applications using Flutter.',
+    },
+    {
+      title: 'CSS Layouts',
+      description: 'Master responsive design using CSS Flexbox and Grid.',
+    },
+    {
+      title: 'Docker Basics',
+      description: 'Introduction to containerization using Docker and Docker Compose.',
+    },
+    {
+      title: 'GraphQL',
+      description: 'Learn how to query APIs using GraphQL and integrate with React.',
+    },
+    {
+      title: 'Vue.js Fundamentals',
+      description: 'Master the Vue.js framework to build interactive UIs.',
+    },
+    {
+      title: 'MongoDB',
+      description: 'Learn how to set up and manage databases with MongoDB.',
+    },
+    {
+      title: 'AWS Services',
+      description: 'Learn to use AWS to deploy and manage cloud applications.',
+    },
+  ];
+
   return (
     <div className={styles.updateContainer}>
-      {/* Top bar with Classroom text and settings icon */}
-      <div className={styles.topBar}>
-        <h1 className={styles.classroomTitle}>Classroom</h1>
-        <Image
-          src={settingsIcon}
-          alt="Settings Icon"
-          className={styles.settingsIcon}
-          width={30}
-          height={30}
-        />
-      </div>
+      {/* Header */}
+      <Header />
 
-      {/* Search field */}
-      <div className={styles.searchContainer}>
-        <Image
-          src={searchIcon}
-          alt="Search Icon"
-          className={styles.searchIcon}
-          width={20}
-          height={20}
-        />
-        <input
-          type="text"
-          placeholder="Search for updates..."
-          className={styles.searchInput}
-        />
-      </div>
+      <div className={styles.contentWrapper}>
+        {/* Sidebar */}
+        <Sidebar />
 
-      {/* Main Image with heading and description */}
-      <div className={styles.imageContainer}>
-        <Image
-          src={exampleImage}
-          alt="Main Update"
-          className={styles.mainImage}
-          width={900}
-          height={400}
-        />
-        <h2 className={styles.imageHeading}>Update on Classroom Activities</h2>
-        <p className={styles.imageDescription}>
-          Stay updated with the latest events, lessons, and activities happening in the classroom.
-        </p>
-      </div>
+        {/* Main Content */}
+        <div className={styles.mainContent}>
+          {/* First Section - Today's Updates */}
+          <div className={styles.recentHeader}>
+            <div className={styles.recentStrip}></div>
+            <span className={styles.recentText}>Today's Updates</span>
+          </div>
 
-      {/* Custom Carousel of updates */}
-      <div className={styles.carouselContainer}>
-        <h2 className={styles.carouselTitle}>Latest Updates</h2>
-        <div className={styles.carousel}>
-          {/* Sample update items */}
-          <div className={styles.carouselItem}>
-            <Image
-              src={exampleImage}
-              alt="Update 1"
-              className={styles.carouselImage}
-              width={400}
-              height={250}
-            />
-            <p className={styles.updateTitle}>New Lesson on React Hooks</p>
+          {/* Grid of Update Items (First 5 Items) */}
+          <div className={styles.grid}>
+            {updateItems.slice(0, 5).map((item, index) => (
+              <div key={index} className={styles.gridItem}>
+                <div className={styles.imageContainer}>
+                  <Image
+                    src={exampleImage}
+                    alt={item.title}
+                    className={styles.gridImage}
+                    width={200}
+                    height={150}
+                  />
+                </div>
+                <div className={styles.content}>
+                  <h3 className={styles.title}>{item.title}</h3>
+                  <p className={styles.description}>
+                    {truncateDescription(item.description)}
+                    <a href="#" className={styles.readMore}>
+                      Read More
+                    </a>
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className={styles.carouselItem}>
-            <Image
-              src={exampleImage}
-              alt="Update 2"
-              className={styles.carouselImage}
-              width={400}
-              height={250}
-            />
-            <p className={styles.updateTitle}>Workshop on UI/UX Design</p>
+
+          {/* Second Section - Updates */}
+          <div className={styles.recentHeader}>
+            <div className={styles.recentStrip}></div>
+            <span className={styles.recentText}>Updates</span>
           </div>
-          <div className={styles.carouselItem}>
-            <Image
-              src={exampleImage}
-              alt="Update 3"
-              className={styles.carouselImage}
-              width={400}
-              height={250}
-            />
-            <p className={styles.updateTitle}>Guest Speaker Event</p>
+
+          {/* Grid of Update Items (Next 10 Items - 2 Rows of 5 Items) */}
+          <div className={styles.gridTwoRows}>
+            {updateItems.slice(5, 10).map((item, index) => (
+              <div key={index} className={styles.gridItem}>
+                <div className={styles.imageContainer}>
+                  <Image
+                    src={exampleImage}
+                    alt={item.title}
+                    className={styles.gridImage}
+                    width={200}
+                    height={150}
+                  />
+                </div>
+                <div className={styles.content}>
+                  <h3 className={styles.title}>{item.title}</h3>
+                  <p className={styles.description}>
+                    {truncateDescription(item.description)}
+                    <a href="#" className={styles.readMore}>
+                      Read More
+                    </a>
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className={styles.carouselItem}>
-            <Image
-              src={exampleImage}
-              alt="Update 4"
-              className={styles.carouselImage}
-              width={400}
-              height={250}
-            />
-            <p className={styles.updateTitle}>Introduction to Blockchain</p>
+
+          {/* Load More Button */}
+          <div className={styles.loadMoreContainer}>
+            <button className={styles.loadMoreButton}>Load More</button>
           </div>
         </div>
       </div>
-      <BottomTab />
     </div>
   );
 };
