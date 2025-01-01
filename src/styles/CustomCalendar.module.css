@@ -1,15 +1,17 @@
+/* Custom Calendar */
 .calendar {
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #F3F4F6; /* Updated background color */
-  width: 100%; /* Reduce the width by 20% */
-  max-width: 480px; /* Further restrict max width for responsiveness */
+  background-color: #F3F4F6;
+  width: 100%;
+  max-width: 480px; /* Restrict max width */
   padding: 20px;
-  border-radius: 15px; /* Updated border radius */
+  border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 0 auto; /* Center the calendar horizontally */
+  margin: 0 auto;
+  position: relative; /* Ensures it can adjust to mobile */
 }
 
 .header {
@@ -20,21 +22,21 @@
 }
 
 .heading {
-  font-size: 14px; /* Reduced size for "This week" */
-  color: #374151; /* Text color for "This week" */
-  font-weight: 600; /* Removed bold styling */
+  font-size: 14px;
+  color: #374151;
+  font-weight: 600;
 }
 
 .divider {
   height: 1px;
   width: 100%;
-  background-color: #D1D5DB; /* Subtle divider color */
+  background-color: #D1D5DB;
   margin-top: 10px;
 }
 
 .dayLabels {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* Equal width for each day */
   width: 100%;
   margin-top: 10px;
 }
@@ -42,12 +44,13 @@
 .dayLabel {
   font-size: 12px;
   font-weight: 600;
-  color: #D1D5DB; /* Light gray for day labels (Mon, Tue, etc.) */
+  color: #D1D5DB;
+  text-align: center; /* Center day labels */
 }
 
 .days {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* Equal width for each day */
   width: 100%;
   margin-top: 10px;
 }
@@ -56,36 +59,73 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto; /* Remove fixed width */
-  height: auto; /* Remove fixed height */
-  margin: 5px;
   font-size: 14px;
-  color: #6B7280; /* Default text color for dates (1, 2, 3, etc.) */
+  color: #6B7280;
   cursor: pointer;
   font-weight: 500;
   transition: color 0.3s ease;
+  height: 40px;
 }
 
 .day:hover {
-  color: #FBBF24; /* Highlight text on hover */
+  color: #FBBF24;
 }
 
-.selected {
+.selected, .currentDay {
   background-color: #FBBF24;
   color: white;
-  border-radius: 50%; /* Circle shape for selected day */
-  width: 40px; /* Add consistent size for selected day */
+  border-radius: 50%;
+  width: 40px;
   height: 40px;
-}
-
-.currentDay {
-  background-color: #FBBF24; /* Highlight color for current day */
-  color: white;
-  border-radius: 50%; /* Circle shape */
-  width: 40px; /* Add consistent size for current day */
-  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .inactiveDay {
-  color: #6B7280; /* Inactive dates will only have text color */
+  color: #6B7280;
+  cursor: not-allowed;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .calendar {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .heading {
+    font-size: 12px; /* Smaller font size */
+  }
+
+  .dayLabel {
+    font-size: 10px; /* Smaller day labels */
+  }
+
+  .day {
+    font-size: 12px; /* Smaller day font size */
+    height: 35px; /* Adjust height */
+  }
+
+  .selected, .currentDay {
+    width: 35px; /* Slightly smaller selected day */
+    height: 35px;
+  }
+
+  .divider {
+    margin-top: 8px;
+  }
+
+  .dayLabels {
+    margin-top: 8px;
+  }
+
+  .days {
+    margin-top: 8px;
+  }
+
+  /* Ensure the calendar comes on top of recent section */
+  .calendar {
+    margin-top: 20px; /* Adds margin on top */
+  }
 }

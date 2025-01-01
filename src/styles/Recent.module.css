@@ -93,13 +93,9 @@
   font-weight: 700;
   color: #4B5563;
   margin-bottom: 8px; /* Reduced margin by 20% */
+  text-align: center;
 }
 
-.infoContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px; /* Reduced margin by 20% */
-}
 
 .percentage, .time {
   font-size: 12px; /* Reduced font size by 20% */
@@ -153,4 +149,61 @@
 
 .carouselCard {
   flex-shrink: 0;  /* Prevent cards from shrinking */
+}
+
+
+/* Additional CSS for Views Section */
+.infoContainer {
+  display: flex;
+  justify-content: flex-end; /* Aligns content to the right */
+  margin-bottom: 8px;
+}
+
+.viewsContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Space between the text and icon */
+}
+
+.views {
+  font-size: 12px;
+  color: #9CA3AF; /* Grey text color */
+}
+
+
+/* Updated Button Styles */
+.watchButton {
+  height: 36px; /* Button height */
+  width: 208px; /* Button width */
+  background-color: #FBBF24;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.72em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px auto;
+}
+
+.infoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  margin: 10px;
+}
+
+.leftInfo,
+.rightInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shares,
+.views {
+  font-size: 12px;
+  color: #9ca3af;
 }

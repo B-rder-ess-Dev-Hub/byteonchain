@@ -1,9 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { ConnectButton } from '@rainbow-me/rainbowkit'; // Ensure this is correctly installed
+import { ConnectButton } from '@rainbow-me/rainbowkit'; 
 import styles from '../styles/Home.module.css';
-import logo from '../../public/borderless.png';
 import messageIcon from '../../public/topmessage.png';
 import notificationIcon from '../../public/notify.png';
 import searchIcon from '../../public/search.png';
@@ -19,11 +18,6 @@ const Header = () => {
       </Head>
 
       <header className={styles.header}>
-        {/* Left Section */}
-        <div className={styles.headerLeft}>
-          <Image src={logo} alt="Logo" className={styles.logo} />
-        </div>
-
         {/* Right Section */}
         <div className={styles.headerRight}>
           {/* Search Bar */}
@@ -49,9 +43,6 @@ const Header = () => {
               className={styles.icon}
             />
           </div>
-
-          {/* Separator */}
-          <div className={styles.separator}></div>
 
           {/* Wallet Connect Button */}
           <ConnectButton.Custom>

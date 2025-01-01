@@ -1,3 +1,4 @@
+/* General sidebar styling */
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -5,6 +6,45 @@
   padding: 20px;
   height: 100vh;
   border-right: 1px solid #e5e7eb; /* Thin border to separate sidebar */
+  position: fixed; /* Make sidebar fixed */
+  left: 0;
+  top: 0;
+  z-index: 100;
+  background-color: white; /* White background for the sidebar */
+  transform: translateX(0); /* Sidebar is visible by default in desktop view */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Mobile view: initially hidden, will slide in when opened */
+.sidebar.open {
+  transform: translateX(0); /* Sidebar appears when open */
+}
+
+/* Toggle button (hamburger) styling */
+.toggleButton {
+  display: none; /* Hidden by default on desktop */
+  position: fixed;
+  bottom: 20px; /* Position it at the bottom */
+  right: 20px; /* Position it to the right */
+  background-color: #fbbf24; /* Yellow circle */
+  border: none;
+  border-radius: 50%;
+  font-size: 30px;
+  color: white; /* White icon */
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 200; /* Ensure it sits above the sidebar */
+}
+
+/* Logo styling */
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Space between logo and tab items */
 }
 
 .tabItem {
@@ -40,8 +80,7 @@
   height: 24px;
 }
 
-
-
+/* Dotted separator line */
 .dottedLine {
   border: none;
   border-top: 1px dotted #e5e7eb; /* Dotted separator line */
@@ -49,6 +88,7 @@
   width: 100%;
 }
 
+/* User profile section */
 .userProfile {
   background-color: #f9fafb; /* Background rectangle color */
   border-radius: 10px; /* Rounded corners for the rectangle */
@@ -94,4 +134,50 @@
   margin-top: 2px; /* Adds a slight gap between name and role */
 }
 
+/* Active Discovery tab icon */
+.activeDiscoveryIcon {
+  filter: brightness(0) saturate(100%) invert(52%) sepia(70%) saturate(715%) hue-rotate(5deg) brightness(105%) contrast(104%);
+  /* Adding the yellow tint for the Discovery tab icon */
+}
 
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  /* Sidebar styling for mobile */
+  .sidebar {
+    width: 300px; /* Increased width for mobile */
+    background-color: white; /* White background for mobile view */
+    transform: translateX(-100%); /* Initially hidden */
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Show sidebar when open */
+  }
+
+  /* Show the toggle button only on mobile */
+  .toggleButton {
+    display: block; /* Show the toggle button on mobile */
+    bottom: 20px; /* Position it at the bottom */
+    right: 20px; /* Position it to the right */
+    z-index: 200; /* Ensure it sits above the sidebar */
+  }
+
+  .tabItem {
+    padding: 12px 20px; /* Adjust padding for mobile */
+  }
+
+  .label {
+    font-size: 14px; /* Adjust font size for mobile */
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Desktop view: Completely hide the hamburger menu */
+@media (min-width: 769px) {
+  .toggleButton {
+    display: none; /* Hide hamburger menu on desktop */
+  }
+}

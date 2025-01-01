@@ -67,7 +67,7 @@
 .eventCard {
   background-color: white;
   border-radius: 20px; /* Rounded corners */
-  padding: 15px;
+  padding: 20px;
   width: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

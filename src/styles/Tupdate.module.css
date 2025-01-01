@@ -51,18 +51,19 @@
 }
 
 .carouselCard {
-  width: 250px;  /* Set width for the carousel card */
+  width: 250px; /* Set width for the carousel card */
   height: 300px; /* Set height for the carousel card */
-  margin: 0 8px; /* Space between cards */
+  margin: 0px 4px 3px 15px; 
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 32px;
+  padding: 4px;
   border-radius: 16px;
   overflow: hidden;
   flex-shrink: 0;
 }
+
 
 .videoContainer {
   position: relative;

@@ -1,0 +1,115 @@
+.discoveryContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.contentWrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebarWrapper {
+  width: 250px; /* Fixed width for sidebar */
+  flex-shrink: 0;
+  background-color: #f8f9fa; /* Light background for sidebar */
+  border-right: 1px solid #e5e7eb; /* Separator for sidebar */
+  overflow-y: auto; /* Allow scrolling for longer sidebar */
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 20px;
+}
+
+.videoCard {
+  background: #ffffff;
+  border: 2px solid #fbbf24;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.videoCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.thumbnail {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-bottom: 2px solid #fbbf24;
+}
+
+.videoInfo {
+  padding: 10px;
+}
+
+.videoTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin: 0 0 5px 0;
+}
+
+.videoMeta {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.loadMoreButton {
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #fbbf24;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+}
+
+.loadMoreButton:hover {
+  background-color: #fbbe246d;
+}
+
+.loadMoreButton:active {
+  background-color: #fbbf24;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+
+  .sidebarWrapper {
+    width: 100%; /* Sidebar takes full width on mobile */
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb; /* Separator below sidebar */
+  }
+
+  .videoGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller cards for mobile */
+  }
+}

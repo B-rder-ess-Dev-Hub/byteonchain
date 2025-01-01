@@ -81,8 +81,8 @@ const Update = ({ description }) => {
                     src={exampleImage}
                     alt={item.title}
                     className={styles.gridImage}
-                    width={200}
-                    height={150}
+                    width={220}
+                    height={160}
                   />
                 </div>
                 <div className={styles.content}>
@@ -113,8 +113,8 @@ const Update = ({ description }) => {
                     src={exampleImage}
                     alt={item.title}
                     className={styles.gridImage}
-                    width={200}
-                    height={150}
+                    width={220}
+                    height={160}
                   />
                 </div>
                 <div className={styles.content}>
@@ -141,3 +141,4 @@ const Update = ({ description }) => {
 };
 
 export default Update;
+

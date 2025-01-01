@@ -24,7 +24,7 @@ const CustomCalendar = ({ selectedDate, onDateChange }) => {
     let currentDay = new Date(currentWeek.start);
 
     while (currentDay <= currentWeek.end) {
-      days.push(new Date(currentDay)); // Store full date objects for accurate comparisons
+      days.push(new Date(currentDay));
       currentDay.setDate(currentDay.getDate() + 1);
     }
 

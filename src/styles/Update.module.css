@@ -1,116 +1,93 @@
-.updateContainer {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
 .contentWrapper {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
+  width: 100%; /* Ensure the wrapper takes full width */
+}
+
+.sidebar {
+  width: 250px; /* Set fixed width for the sidebar */
+  background-color: #f4f4f4; /* Optional: background color for sidebar */
 }
 
 .mainContent {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
+  margin-left: 250px; /* Add margin to ensure content doesn't overlap with the sidebar */
 }
 
-/* Section Header */
-.recentHeader {
-  margin-bottom: 20px;
-}
-
-.recentStrip {
-  width: 3px;
-  height: 20px;
-  background-color: #fbbf24;
-  margin-bottom: 8px;
-}
-
-.recentText {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #4b5563;
-}
-
-/* Grid Layout */
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 items per row */
-  gap: 11px; /* Space between cards */
+  grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+  gap: 20px;
   margin-bottom: 20px;
 }
 
-/* Grid for the second section (2 rows of 5 items) */
 .gridTwoRows {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 items per row */
+  grid-template-columns: repeat(4, 1fr); /* 4 items per row */
   grid-template-rows: repeat(2, auto); /* 2 rows */
-  gap: 11px; /* Space between cards */
+  gap: 20px;
   margin-bottom: 20px;
 }
 
-/* Card Styling */
 .gridItem {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 220px; /* Fixed width */
-  height: 290px; /* Increased height */
-  border-radius: 20px; /* Increased radius */
-  border: 1px solid #e5e7eb; /* Light border */
-  padding: 10px; /* Padding inside the card */
-  gap: 11px; /* Space between elements inside the card */
-  overflow: hidden; /* Ensure content stays within rounded corners */
+  width: 250px; /* Increased width */
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  padding: 15px;
+  gap: 15px;
+  overflow: hidden;
 }
 
 .imageContainer {
   width: 100%;
   display: flex;
-  justify-content: center; /* Center the image horizontally */
+  justify-content: center;
   align-items: center;
 }
 
 .gridImage {
-  width: 200px; /* Fixed width */
-  height: 154px; /* Fixed height */
-  border-radius: 11px; /* Rounded image corners */
-  object-fit: cover; /* Ensure the image covers its container */
+  width: 220px;
+  height: 160px;
+  border-radius: 11px;
+  object-fit: cover;
 }
 
-/* Text Styling */
 .title {
-  font-family: 'Inter', sans-serif; /* Font family */
-  font-size: 14px; /* Text size */
-  font-weight: 600; /* Semibold */
-  line-height: 20px; /* Line height */
-  letter-spacing: -0.02em; /* Negative letter spacing */
-  color: #4b5563; /* Title color */
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+  color: #4b5563;
 }
 
 .description {
-  font-family: 'Inter', sans-serif; /* Font family */
-  font-size: 12px; /* Text size */
-  font-weight: 400; /* Regular weight */
-  line-height: 18px; /* Line height */
-  letter-spacing: -0.02em; /* Negative letter spacing */
-  color: #9ca3af; /* Description color */
-  word-wrap: break-word; /* Ensure long words break correctly */
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  color: #9ca3af;
+  word-wrap: break-word;
+  margin-top: 10px; /* Add space between title and description */
 }
 
-/* Read More Link */
 .readMore {
-  font-size: 12px; /* Text size */
-  color: #fbbf24; /* Link color */
-  text-decoration: none; /* No underline by default */
+  font-size: 12px;
+  color: #fbbf24;
+  text-decoration: none;
 }
 
 .readMore:hover {
-  text-decoration: underline; /* Underline on hover */
+  text-decoration: underline;
 }
 
-/* Load More Button Styling */
 .loadMoreContainer {
   display: flex;
   justify-content: center;
@@ -119,7 +96,6 @@
 
 .loadMoreButton {
   width: 168px;
-  height: auto;
   min-height: 48px;
   padding: 12px 20px;
   background-color: #fbbf24;
@@ -137,23 +113,63 @@
   border-color: #fbbf20;
 }
 
-
 .recentHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .recentStrip {
-  width: 2px; /* Reduced width by 20% */
-  height: 15px; /* Reduced height by 20% */
+  width: 2px;
+  height: 15px;
   background-color: #FBBF24;
-  margin-right: 8px; /* Reduced margin by 20% */
+  margin-right: 8px;
 }
 
 .recentText {
-  font-size: 0.88em; /* Reduced font size by 20% */
+  font-size: 0.88em;
   font-weight: 700;
   color: #4B5563;
-  margin-right: 8px; /* Reduced margin by 20% */
+  margin-right: 8px;
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column; /* Stack sidebar and main content */
+  }
+
+  .sidebar {
+    display: none; /* Hide the sidebar */
+    width: 0; /* Ensure it doesn't take up space */
+  }
+
+  .mainContent {
+    margin-left: 0; /* Remove left margin for mobile view */
+    width: 100%; /* Full width for main content */
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* Stack grid items vertically */
+  }
+
+  .gridTwoRows {
+    grid-template-columns: 1fr; /* Stack grid items vertically */
+  }
+
+  .gridItem {
+    width: 100%; /* Ensure grid items take full width */
+  }
+
+  /* Ensure the images take full width on mobile */
+  .gridImage {
+    width: 100%; /* Full width for images on mobile */
+    height: auto; /* Adjust height proportionally */
+  }
+
+  /* Ensure description text is visible and readable on mobile */
+  .description {
+    font-size: 14px; /* Adjust font size for better readability */
+    margin-top: 12px; /* Ensure enough space between title and description */
+  }
 }

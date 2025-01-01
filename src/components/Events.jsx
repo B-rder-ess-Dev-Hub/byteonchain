@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import recentArrowIcon from '../../public/arrow-icon.png'; // Import the arrow icon
+import recentArrowIcon from '../../public/arrow-icon.png';
 import styles from '../styles/Events.module.css';
 
 const Events = () => {
