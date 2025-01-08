@@ -5,8 +5,19 @@ import Tupdate from '../components/Tupdate';
 import Events from '../components/Events';
 import styles from '../styles/Home.module.css';
 import Header from '../components/Header';
+import { useAccount, useConnect } from 'wagmi';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 
 const Home = () => {
+  const { isConnected } = useAccount();
+  const { openConnectModal } = useConnectModal();
+
+  const handleConnectWallet = () => {
+    if (openConnectModal) {
+      openConnectModal();
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Header />
@@ -21,10 +32,24 @@ const Home = () => {
           </div>
           <div className={styles.calendarSection}>
             <CustomCalendar />
-            <Events />
           </div>
         </div>
       </div>
+      
+      {!isConnected && (
+        <div className={styles.walletOverlay}>
+          <div className={styles.walletContent}>
+            <h3>Connect Your Wallet</h3>
+            <p>Please connect your wallet to access the platform</p>
+            <button 
+              className={styles.connectWalletButton}
+              onClick={handleConnectWallet}
+            >
+              Connect Wallet
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

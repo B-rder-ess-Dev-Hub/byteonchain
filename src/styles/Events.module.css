@@ -1,118 +1,73 @@
-.recentSection {
-  padding: 20px;
-}
-
-.recentHeader {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.recentStrip {
-  width: 2px;
-  height: 15px;
-  background-color: #FBBF24;
-  margin-right: 10px;
-}
-
-.recentText {
-  font-size: 16px;
-  font-weight: 600; /* Adjusted to reduce emphasis */
-  color: #4B5563;
-  margin-right: 10px;
-}
-
-.recentArrowIcon {
-  width: 20px;
-  height: 20px;
-  /* margin-left: 10px; */
-}
-
 .eventsContainer {
+  padding: 20px;
+  background: #fafafa; /* Light background for the events section */
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.eventsHeading {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
+}
+
+.loading {
+  text-align: center;
+  color: #6b7280;
+  padding: 16px;
+}
+
+.error {
+  text-align: center;
+  color: #ef4444;
+  padding: 16px;
+}
+
+.eventsList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .eventRow {
-  display: flex;
-  align-items: center; /* Align the indicator vertically */
-  gap: 15px;
+  background: white; /* Background for each event row */
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.indicatorContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.indicator {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-}
-
-.futureIndicator {
-  background-color: #E5E7EB; /* Future event color */
-}
-
-.inProgressIndicator {
-  background-color: #FBBF24; /* In-progress event color */
-}
-
-.completedIndicator {
-  background-color: #137139; /* Completed event color */
-}
-
-.eventCard {
-  background-color: white;
-  border-radius: 20px; /* Rounded corners */
-  padding: 20px;
-  width: 100%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.futureEvent {
-  border: 1px solid #E5E7EB; /* Future event border color */
-}
-
-.inProgressEvent {
-  border: 1px solid #FBBF24; /* In-progress event border color */
-}
-
-.completedEvent {
-  border: 1px solid #137139; /* Completed event border color */
-}
-
-.eventHeader {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.eventType {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.02em;
-  color: #9CA3AF;
+.eventName {
+  font-weight: 500;
+  color: #1f2937;
+  margin: 0 0 4px;
 }
 
 .eventTime {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.02em;
-  color: #9CA3AF;
+  font-size: 0.9em;
+  color: #6b7280;
+  margin: 0 0 4px;
 }
 
-.eventTitle {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.02em;
-  color: #4B5563;
+.eventCategories {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.category {
+  font-size: 0.75em;
+  padding: 2px 8px;
+  background-color: #fef3c7;
+  color: #92400e;
+  border-radius: 12px;
+}
+
+.noEvents {
+  text-align: center;
+  color: #9ca3af;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  font-size: 0.9em;
 }

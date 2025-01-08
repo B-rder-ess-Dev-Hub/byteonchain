@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { ConnectButton } from '@rainbow-me/rainbowkit'; 
 import styles from '../styles/Home.module.css';
 import messageIcon from '../../public/topmessage.png';
 import notificationIcon from '../../public/notify.png';
 import searchIcon from '../../public/search.png';
 import walletIcon from '../../public/wallet-3.png';
+import { useAccount, useDisconnect } from 'wagmi';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
+import DisconnectModal from './DisconnectModal';
 
 const Header = () => {
+  const { isConnected, address } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { openConnectModal } = useConnectModal();
+  const [showDisconnectModal, setShowDisconnectModal] = useState(false);
+
+  const handleWalletClick = () => {
+    if (isConnected) {
+      setShowDisconnectModal(true); // Show confirmation modal instead of disconnecting immediately
+    } else if (openConnectModal) {
+      openConnectModal();
+    }
+  };
+
+  const handleDisconnect = () => {
+    disconnect();
+    setShowDisconnectModal(false);
+  };
+
   return (
     <>
       <Head>
@@ -18,9 +38,7 @@ const Header = () => {
       </Head>
 
       <header className={styles.header}>
-        {/* Right Section */}
         <div className={styles.headerRight}>
-          {/* Search Bar */}
           <div className={styles.searchContainer}>
             <input
               type="text"
@@ -30,12 +48,10 @@ const Header = () => {
             <Image src={searchIcon} alt="Search" className={styles.searchIcon} />
           </div>
 
-          {/* Message Icon */}
           <div className={styles.iconWrapper}>
             <Image src={messageIcon} alt="Messages" className={styles.icon} />
           </div>
 
-          {/* Notification Icon */}
           <div className={styles.iconWrapper}>
             <Image
               src={notificationIcon}
@@ -44,61 +60,30 @@ const Header = () => {
             />
           </div>
 
-          {/* Wallet Connect Button */}
-          <ConnectButton.Custom>
-            {({
-              account,
-              chain,
-              openAccountModal,
-              openChainModal,
-              openConnectModal,
-              mounted,
-            }) => {
-              const ready = mounted;
-              const connected = ready && account && chain;
-
-              return (
-                <div
-                  {...(!ready && {
-                    'aria-hidden': true,
-                    style: {
-                      opacity: 0,
-                      pointerEvents: 'none',
-                      userSelect: 'none',
-                    },
-                  })}
-                >
-                  {!connected ? (
-                    <button
-                      className={styles.connectButton}
-                      onClick={openConnectModal}
-                    >
-                      <Image
-                        src={walletIcon}
-                        alt="Wallet"
-                        className={styles.walletIcon}
-                      />
-                      Connect Wallet
-                    </button>
-                  ) : (
-                    <button
-                      className={styles.connectButton}
-                      onClick={openAccountModal}
-                    >
-                      <Image
-                        src={walletIcon}
-                        alt="Wallet"
-                        className={styles.walletIcon}
-                      />
-                      {account.displayName}
-                    </button>
-                  )}
-                </div>
-              );
-            }}
-          </ConnectButton.Custom>
+          <button className={styles.connectButton} onClick={handleWalletClick}>
+            <Image
+              src={walletIcon}
+              alt="Wallet"
+              className={styles.walletIcon}
+              width={20}
+              height={20}
+            />
+            {isConnected ? (
+              <span>
+                {`${address?.slice(0, 6)}...${address?.slice(-4)}`}
+              </span>
+            ) : (
+              'Connect Wallet'
+            )}
+          </button>
         </div>
       </header>
+
+      <DisconnectModal 
+        isOpen={showDisconnectModal}
+        onClose={() => setShowDisconnectModal(false)}
+        onConfirm={handleDisconnect}
+      />
     </>
   );
 };

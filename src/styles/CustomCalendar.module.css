@@ -1,131 +1,193 @@
 /* Custom Calendar */
 .calendar {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #F3F4F6;
-  width: 100%;
-  max-width: 480px; /* Restrict max width */
+  background: white;
+  border-radius: 16px;
   padding: 20px;
-  border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  position: relative; /* Ensures it can adjust to mobile */
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  margin-bottom: 16px;
 }
 
 .heading {
-  font-size: 14px;
-  color: #374151;
+  font-size: 1.2em;
   font-weight: 600;
+  color: #1f2937;
+  margin: 0;
 }
 
 .divider {
   height: 1px;
-  width: 100%;
-  background-color: #D1D5DB;
-  margin-top: 10px;
+  background-color: #e5e7eb;
+  margin: 12px 0;
+}
+
+.calendarContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .dayLabels {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Equal width for each day */
-  width: 100%;
-  margin-top: 10px;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .dayLabel {
-  font-size: 12px;
-  font-weight: 600;
-  color: #D1D5DB;
-  text-align: center; /* Center day labels */
+  text-align: center;
+  font-size: 0.85em;
+  color: #6b7280;
+  font-weight: 500;
 }
 
 .days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Equal width for each day */
-  width: 100%;
-  margin-top: 10px;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
 }
 
 .day {
+  aspect-ratio: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  font-size: 14px;
-  color: #6B7280;
+  justify-content: center;
+  border-radius: 12px;
   cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  background: #f9fafb;
+}
+
+.dayNumber {
+  font-size: 0.9em;
   font-weight: 500;
-  transition: color 0.3s ease;
-  height: 40px;
+  color: #4b5563;
 }
 
-.day:hover {
-  color: #FBBF24;
+.currentDay {
+  background: #fef3c7;
+  border: 2px solid #fbbf24;
 }
 
-.selected, .currentDay {
-  background-color: #FBBF24;
+.selected {
+  background: #fbbf24;
+}
+
+.selected .dayNumber {
   color: white;
+}
+
+.hasEvent {
+  position: relative;
+}
+
+.eventDot {
+  width: 6px;
+  height: 6px;
+  background-color: black;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  bottom: 4px;
+}
+
+.eventsSection {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.eventsHeading {
+  font-size: 1em;
+  color: #4b5563;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.eventsList {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eventItem {
+  display: flex;
   align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #f9fafb;
+  border-radius: 8px;
+  font-size: 0.9em;
+  color: #4b5563;
 }
 
-.inactiveDay {
-  color: #6B7280;
-  cursor: not-allowed;
+.noEvents {
+  text-align: center;
+  color: #9ca3af;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  font-size: 0.9em;
 }
 
-/* Mobile Responsive */
-@media (max-width: 600px) {
+.day:hover:not(.selected) {
+  background: #f3f4f6;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
   .calendar {
-    max-width: 100%;
-    padding: 15px;
+    padding: 16px;
   }
 
-  .heading {
-    font-size: 12px; /* Smaller font size */
+  .dayNumber {
+    font-size: 0.8em;
   }
+}
 
-  .dayLabel {
-    font-size: 10px; /* Smaller day labels */
-  }
+.loading {
+  text-align: center;
+  color: #6b7280;
+  padding: 16px;
+}
 
-  .day {
-    font-size: 12px; /* Smaller day font size */
-    height: 35px; /* Adjust height */
-  }
+.error {
+  text-align: center;
+  color: #ef4444;
+  padding: 16px;
+}
 
-  .selected, .currentDay {
-    width: 35px; /* Slightly smaller selected day */
-    height: 35px;
-  }
+.eventDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
-  .divider {
-    margin-top: 8px;
-  }
+.eventName {
+  font-weight: 500;
+  color: #1f2937;
+}
 
-  .dayLabels {
-    margin-top: 8px;
-  }
+.eventTime {
+  font-size: 0.8em;
+  color: #6b7280;
+}
 
-  .days {
-    margin-top: 8px;
-  }
+.eventCategories {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
 
-  /* Ensure the calendar comes on top of recent section */
-  .calendar {
-    margin-top: 20px; /* Adds margin on top */
-  }
+.category {
+  font-size: 0.75em;
+  padding: 2px 8px;
+  background-color: #fef3c7;
+  color: #92400e;
+  border-radius: 12px;
 }

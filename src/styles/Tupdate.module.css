@@ -1,6 +1,9 @@
 .recentSection {
   padding: 16px;
-  margin-left: 0;  /* Reset margin-left to 0 to avoid unnecessary space */
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .recentHeader {
@@ -29,75 +32,215 @@
   margin-left: 8px;
 }
 
-/* Wrapper for carousel to control visibility of 3 items */
-.carouselWrapper {
-  display: flex;
-  justify-content: flex-start;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
+.carouselContainer {
+  width: 100%;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.carouselHeading {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 16px;
 }
 
 .carousel {
   display: flex;
   overflow-x: auto;
-  scroll-behavior: smooth;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  gap: 16px;
 }
 
-.carousel::-webkit-scrollbar {
-  display: none;
+.newsItem {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
 }
 
 .carouselCard {
-  width: 250px; /* Set width for the carousel card */
-  height: 300px; /* Set height for the carousel card */
-  margin: 0px 4px 3px 15px; 
+  width: 300px;
+  min-width: 300px;
+  height: 350px;
+  flex: none;
   background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 4px;
+  border: 1px solid #e5e7eb;
   border-radius: 16px;
   overflow: hidden;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 6px;
 }
 
+.carouselCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
 
-.videoContainer {
-  position: relative;
+.imageContainer {
   width: 100%;
-  height: 100%; /* Make video container fill the card */
+  height: 60%;
+  position: relative;
+  overflow: hidden;
 }
 
 .carouselImage {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
   border-radius: 16px;
 }
 
 .cardContent {
-  margin-top: 8px;
-  text-align: center;
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .cardTitle {
-  font-size: 0.88em;
-  font-weight: 700;
-  color: #4B5563;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  word-wrap: break-word;
 }
 
 .cardDescription {
   font-size: 0.72em;
   font-weight: 900;
   color: #6B7280;
-  text-align: justify; /* Justify the text */
+  text-align: justify;
 }
 
-/* Additional style to ensure only 3 items are visible */
-.carouselWrapper {
-  max-width: 760px; /* Adjusted to account for the reduced margin */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid #FBBF24;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.errorState {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.errorStateCard {
+  background: #fff3f3;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.emptyState {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.emptyStateCard {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.readMoreButton {
+  background-color: #FBBF24;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: background-color 0.2s;
+}
+
+.readMoreButton:hover {
+  background-color: #F59E0B;
+}
+
+.moreCard {
+  width: 300px;
+  min-width: 300px;
+  height: 350px;
+  flex: none;
+  background-color: #f8f9fa;
+  border: 2px dashed #e5e7eb;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  padding: 6px;
+}
+
+.moreCard:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.moreContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.moreContent p {
+  color: #6b7280;
+  font-size: 1em;
+  font-weight: 500;
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .carouselCard, .moreCard {
+    width: 250px;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carouselCard, .moreCard {
+    width: 200px;
+    min-width: 200px;
+  }
 }
