@@ -1,118 +1,114 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '../styles/Classroom.module.css';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
-
 import searchIcon from '../../public/search.png';
 import videoIcon from '../../public/video-circle.png';
 import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
 
-const Classroom = ({ userName }) => {
-  const allVideoItems = [
-    {
-      imageUrl: '/img.png',
-      title: 'UI/UX Design Basics',
-      tutor: 'John Doe',
-      views: '2.1k',
-      days: '2d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Advanced JavaScript',
-      tutor: 'Jane Smith',
-      views: '1.9k',
-      days: '3d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'React.js Essentials',
-      tutor: 'Mark Taylor',
-      views: '3.1k',
-      days: '1d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Node.js Mastery',
-      tutor: 'Sarah Lee',
-      views: '1.5k',
-      days: '5d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Python for Data Science',
-      tutor: 'Anna White',
-      views: '2.3k',
-      days: '4d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Flutter for Beginners',
-      tutor: 'Chris Brown',
-      views: '2.8k',
-      days: '2d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Kotlin Masterclass',
-      tutor: 'Mia Lopez',
-      views: '1.2k',
-      days: '6d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Machine Learning 101',
-      tutor: 'Sophia Green',
-      views: '3.4k',
-      days: '1d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Machine Learning 101',
-      tutor: 'Sophia Green',
-      views: '3.4k',
-      days: '1d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Machine Learning 101',
-      tutor: 'Sophia Green',
-      views: '3.4k',
-      days: '1d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Machine Learning 101',
-      tutor: 'Sophia Green',
-      views: '3.4k',
-      days: '1d',
-      tutorImage: '/avatar.png',
-    },
-    {
-      imageUrl: '/img.png',
-      title: 'Machine Learning 101',
-      tutor: 'Sophia Green',
-      views: '3.4k',
-      days: '1d',
-      tutorImage: '/avatar.png',
-    },
-  ];
+const Classroom = ({ walletConnected }) => {
+  const [allVideoItems, setAllVideoItems] = useState([]);
+  const [visibleCourses, setVisibleCourses] = useState(8);
+  const [showModal, setShowModal] = useState(false);
+  const [userFullName, setUserFullName] = useState('');
+  const [userCourseCategory, setUserCourseCategory] = useState('');
+  const [walletAddress, setWalletAddress] = useState('');
+  const [videoToWatch, setVideoToWatch] = useState(null); // Store selected video to watch
 
-  const [visibleCourses, setVisibleCourses] = useState(8); 
+  // Function to check the wallet connection
+  const checkWalletConnection = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+          fetchUserDetails(accounts[0]); // Fetch user details when wallet is connected
+        } else {
+          setShowModal(true); // Show wallet connect modal if no wallet is connected
+        }
+      } catch (error) {
+        console.error('Error checking wallet connection:', error);
+      }
+    } else {
+      setShowModal(true);
+      alert('MetaMask is not installed. Please install MetaMask to proceed.');
+    }
+  };
 
+  useEffect(() => {
+    checkWalletConnection(); // Check wallet connection when the component mounts
+  }, []);
+
+  // Function to fetch user details from the backend using the wallet address
+  const fetchUserDetails = async (walletAddress) => {
+    try {
+      const response = await fetch(`https://byteapi-two.vercel.app/api/user/${walletAddress}`);
+      const data = await response.json();
+
+      if (data && data.user) {
+        setUserFullName(data.user.fullname);
+        setUserCourseCategory(data.user.course); // Set the user's course category
+        fetchVideos(data.user.course); // Fetch videos based on the user's course
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  };
+
+  // Function to fetch videos from the backend
+  const fetchVideos = async (courseCategory) => {
+    try {
+      const response = await fetch('https://byteapi-two.vercel.app/api/videos');
+      const data = await response.json();
+
+      // Filter out "Orientation" category videos
+      const filteredVideos = data.videos.filter((video) => video.category !== 'Orientation');
+
+      // Split videos into two groups: those that match the course and those that don't
+      const matchingVideos = filteredVideos.filter((video) => video.category === courseCategory);
+      const otherVideos = filteredVideos.filter((video) => video.category !== courseCategory);
+
+      // Combine matching videos first, followed by other videos
+      const sortedVideos = [...matchingVideos, ...otherVideos];
+      setAllVideoItems(sortedVideos); // Update video list
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+    }
+  };
+
+  // Function to handle "Load More" button click
   const handleLoadMore = () => {
-    setVisibleCourses((prev) => prev + 8); 
+    setVisibleCourses((prev) => prev + 8); // Increase the number of visible courses
+  };
+
+  // Function to connect the wallet when "Connect Wallet" button is clicked
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setWalletAddress(accounts[0]);
+        setShowModal(false); // Close the wallet connect modal after connection
+        fetchUserDetails(accounts[0]); // Fetch user details after wallet connection
+      } catch (error) {
+        console.error('Error connecting wallet:', error);
+      }
+    } else {
+      alert('MetaMask is not installed. Please install MetaMask to proceed.');
+    }
+  };
+
+  // Function to open video modal when "Watch Video" is clicked
+  const openVideoModal = (videoUrl) => {
+    setVideoToWatch(videoUrl); // Set the selected video to be watched
+    setShowModal(true); // Open the modal
+  };
+
+  // Function to close video modal
+  const closeVideoModal = () => {
+    setVideoToWatch(null); // Clear the video when closing
+    setShowModal(false);
   };
 
   return (
@@ -131,7 +127,11 @@ const Classroom = ({ userName }) => {
           {/* Banner */}
           <div className={styles.banner}>
             <h1 className={styles.bannerText}>Welcome to your class</h1>
-            <p className={styles.userName}>{userName || 'John Doe'}</p>
+            {userFullName ? (
+              <p className={styles.userName}>{userFullName}</p>
+            ) : (
+              <p className={styles.userName}>Please connect your wallet</p>
+            )}
           </div>
 
           {/* Search Field */}
@@ -155,64 +155,74 @@ const Classroom = ({ userName }) => {
           {/* Video Section */}
           <div className={styles.recentSection}>
             <div className={styles.videoGrid}>
-              {allVideoItems.slice(0, visibleCourses).map((item, index) => (
-                <div key={index} className={styles.carouselCard}>
-                  <div className={styles.videoContainer}>
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.title}
-                      className={styles.carouselImage}
-                      layout="intrinsic"
-                      width={200}
-                      height={181}
-                    />
-                    <Image
-                      src={videoIcon}
-                      alt="Play Video"
-                      className={styles.videoIcon}
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                  <div className={styles.cardContent}>
-                    <p className={styles.cardTitle}>{item.title}</p>
-                    <div className={styles.infoContainer}>
-                      <div className={styles.tutorContainer}>
-                        <Image
-                          src={item.tutorImage}
-                          alt={item.tutor}
-                          className={styles.tutorImage}
-                          width={20}
-                          height={20}
-                        />
-                        <span className={styles.tutorName}>{item.tutor}</span>
-                      </div>
-                      <div className={styles.viewsAndDays}>
-                        <div className={styles.viewsContainer}>
-                          <Image src={eyeIcon} alt="Eye Icon" width={12} height={12} />
-                          <span className={styles.views}>{item.views}</span>
+            {allVideoItems.length === 0 ? (
+  <div className={styles.noVideos}>
+    <Image src="/no-video.svg" alt="No videos available" width={100} height={100} />
+    <p>No videos available</p>
+  </div>
+
+              ) : (
+                allVideoItems.slice(0, visibleCourses).map((item, index) => (
+                  <div key={index} className={styles.carouselCard}>
+                    <div className={styles.videoContainer}>
+                      <Image
+                        src={item.imageUrl || '/img.png'}
+                        alt={item.videoname}
+                        className={styles.carouselImage}
+                        layout="intrinsic"
+                        width={200}
+                        height={181}
+                      />
+                      <Image
+                        src={videoIcon}
+                        alt="Play Video"
+                        className={styles.videoIcon}
+                        width={40}
+                        height={40}
+                        onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])} // Open video modal with extracted video ID
+                      />
+                    </div>
+                    <div className={styles.cardContent}>
+                      <p className={styles.cardTitle}>{item.videoname}</p>
+                      <div className={styles.infoContainer}>
+                        <div className={styles.tutorContainer}>
+                          <Image
+                            src={item.tutorImage || '/avatar.png'}
+                            alt={item.author}
+                            className={styles.tutorImage}
+                            width={20}
+                            height={20}
+                          />
+                          <span className={styles.tutorName}>{item.author}</span>
                         </div>
-                        <span className={styles.separator}>|</span>
-                        <span className={styles.days}>{item.days}</span>
+                        <div className={styles.viewsAndDays}>
+                          <div className={styles.viewsContainer}>
+                            <Image src={eyeIcon} alt="Eye Icon" width={12} height={12} />
+                            <span className={styles.views}>{item.shares}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.buttonContainer}>
+                        <button className={styles.continueButton} onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])}>
+                          Watch Video
+                        </button>
+                        <button
+                          className={styles.shareButton}
+                          onClick={() => {
+                            const tweetText = `Check out this amazing course: "${item.videoname}" by @primidac! Watch it now!`;
+                            const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+                            window.open(twitterShareUrl, '_blank');
+                          }}
+                        >
+                          Share
+                        </button>
                       </div>
                     </div>
-                    <div className={styles.buttonContainer}>
-                      <button className={styles.continueButton}>Watch Video</button>
-                      <button
-                        className={styles.shareButton}
-                        onClick={() => {
-                          const tweetText = `Check out this amazing course: "${item.title}" by @primidac! Watch it now!`;
-                          const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-                          window.open(twitterShareUrl, '_blank');
-                        }}
-                      >
-                        Share
-                      </button>
-                    </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
+
             {/* Load More Button */}
             {visibleCourses < allVideoItems.length && (
               <div className={styles.loadMoreContainer}>
@@ -224,6 +234,47 @@ const Classroom = ({ userName }) => {
           </div>
         </div>
       </div>
+
+      {/* Wallet Connect Modal */}
+      {showModal && !videoToWatch && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Connect Your Wallet</h3>
+            <p>You need to connect your wallet to proceed.</p>
+            <button className={styles.modalButton} onClick={connectWallet}>
+              Connect Wallet
+            </button>
+            <button
+              className={styles.modalClose}
+              onClick={() => setShowModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Video Modal */}
+      {showModal && videoToWatch && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <iframe
+              src={`https://www.youtube.com/embed/${videoToWatch}`}
+              frameBorder="0"
+              width="100%"
+              height="400"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+            <button
+              className={styles.modalClose}
+              onClick={closeVideoModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

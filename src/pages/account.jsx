@@ -1,20 +1,101 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import Image from 'next/image';
 import styles from '../styles/Account.module.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Confetti from 'react-confetti';
 
 const Account = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
-    occupation: '',
     sex: '',
-    age: '',
     course: '',
   });
+  const [isLoading, setIsLoading] = useState(false);  // For handling the loading state of the submit button
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(0);
+  const [confettiVisible, setConfettiVisible] = useState(false); // To control confetti visibility
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Client-side only code
+      setWindowWidth(window.innerWidth);
+      setWindowHeight(window.innerHeight);
+    }
+
+    checkWalletConnection();
+  }, []);
+
+  useEffect(() => {
+    if (confettiVisible) {
+      const timer = setTimeout(() => {
+        setConfettiVisible(false);  // Stop confetti after 5 seconds
+      }, 5000);  // 5000ms = 5 seconds
+      return () => clearTimeout(timer);  // Cleanup timeout on unmount or state change
+    }
+  }, [confettiVisible]);
+
+  const checkWalletConnection = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+          // Check if the wallet address exists in the database
+          fetchUserData(accounts[0]);
+        }
+      } catch (error) {
+        console.error('Error checking wallet connection:', error);
+      }
+    }
+  };
+
+  const fetchUserData = async (address) => {
+    try {
+      const response = await axios.get(`https://byteapi-two.vercel.app/api/user/${address}`);
+      if (response.data.status === 'success') {
+        const { user } = response.data;
+        setFormData({
+          fullName: user.fullname,
+          email: user.email,
+          phone: user.phone,
+          sex: user.sex,
+          course: user.course,
+        });
+        setFormSubmitted(true);  // Mark form as submitted if user exists in the database
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      toast.error('Failed to fetch user data. Please try again.', {
+        position: "top-right",
+        autoClose: 5000,
+      });
+    }
+  };
+
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setWalletAddress(accounts[0]);
+        setShowModal(false); // Hide modal after connecting
+        // Check if the wallet address exists in the database
+        fetchUserData(accounts[0]);
+      } catch (error) {
+        console.error('Error connecting wallet:', error);
+      }
+    } else {
+      alert('MetaMask is not installed. Please install MetaMask to proceed.');
+    }
+  };
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -24,13 +105,64 @@ const Account = () => {
     });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormSubmitted(true);
+  
+    if (!walletAddress) {
+      setShowModal(true);
+      return;
+    }
+
+    setIsLoading(true);  // Start loading state
+
+    try {
+      const response = await axios.post(
+        'https://byteapi-two.vercel.app/api/signup', // Ensure this is the correct API URL
+        {
+          fullname: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          sex: formData.sex,
+          course: formData.course,
+          wallet_address: walletAddress,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,  // Allow cookies if needed
+        }
+      );
+
+      setIsLoading(false);  // Stop loading state
+      setFormSubmitted(true);
+      toast.success('Account Created Successfully. Welcome!', {
+        position: "top-right",  // Use a simple string value for position
+        autoClose: 5000,  // Optionally, set a duration
+      });
+      setConfettiVisible(true);  // Show confetti on successful sign-up
+      console.log('Signup successful:', response.data);
+    } catch (error) {
+      setIsLoading(false);  // Stop loading state
+      console.error('Error submitting form:', error);
+      toast.error(
+        error.response?.data?.detail || 'An error occurred during signup. Please try again.',
+        {
+          position: "top-right",  // Use a simple string value for position
+          autoClose: 5000,  // Optionally, set a duration
+        }
+      );
+    }
   };
 
   return (
     <div className={styles.accountContainer}>
+      {/* Show Confetti on Successful Sign-up for 5 seconds */}
+      {formSubmitted && confettiVisible && windowWidth && windowHeight && (
+        <Confetti
+          width={windowWidth}
+          height={windowHeight}
+        />
+      )}
+
       {/* Header Component */}
       <div className={styles.headerWrapper}>
         <Header />
@@ -45,7 +177,6 @@ const Account = () => {
             <form onSubmit={handleFormSubmit} className={styles.formContainer}>
               <h2>Fill in your details</h2>
 
-              {/* Full Name */}
               <input
                 type="text"
                 name="fullName"
@@ -55,7 +186,6 @@ const Account = () => {
                 required
               />
 
-              {/* Email */}
               <input
                 type="email"
                 name="email"
@@ -65,7 +195,6 @@ const Account = () => {
                 required
               />
 
-              {/* Phone */}
               <input
                 type="text"
                 name="phone"
@@ -75,46 +204,13 @@ const Account = () => {
                 required
               />
 
-              {/* Occupation */}
-              <input
-                type="text"
-                name="occupation"
-                placeholder="Occupation"
-                value={formData.occupation}
-                onChange={handleFormChange}
-                required
-              />
-
-              {/* Sex */}
-              <select
-                name="sex"
-                value={formData.sex}
-                onChange={handleFormChange}
-                required
-              >
-                <option value="">Select Sex</option>
+              <select name="sex" value={formData.sex} onChange={handleFormChange} required>
+                <option value="">Select Gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
-                <option value="other">Other</option>
               </select>
 
-              {/* Age */}
-              <input
-                type="number"
-                name="age"
-                placeholder="Age"
-                value={formData.age}
-                onChange={handleFormChange}
-                required
-              />
-
-              {/* Select Course */}
-              <select
-                name="course"
-                value={formData.course}
-                onChange={handleFormChange}
-                required
-              >
+              <select name="course" value={formData.course} onChange={handleFormChange} required>
                 <option value="">Select Course</option>
                 <option value="ui-ux-design">UI/UX Design</option>
                 <option value="web-design-development">Web Design and Development</option>
@@ -124,17 +220,21 @@ const Account = () => {
                 <option value="arbitrum-stylus">Arbitrum Stylus</option>
               </select>
 
-              <button type="submit">Submit</button>
+              <button
+                type="submit"
+                className={styles.submitButton}
+                disabled={isLoading}  // Disable button during loading
+              >
+                {isLoading ? 'Submitting...' : 'Submit'}
+              </button>
             </form>
           ) : (
-            // Display Account Details After Submission
             <div className={styles.accountSection}>
               <div className={styles.accountHeader}>
                 <h2 className={styles.accountTitle}>My Account</h2>
                 <p className={styles.accountSubtitle}>Manage your profile and settings</p>
               </div>
 
-              {/* Account Details */}
               <div className={styles.accountDetails}>
                 <div className={styles.profilePictureContainer}>
                   <Image
@@ -153,7 +253,6 @@ const Account = () => {
                 </div>
               </div>
 
-              {/* Stats Section */}
               <div className={styles.stats}>
                 <h3 className={styles.statsTitle}>My Stats</h3>
                 <ul className={styles.statsList}>
@@ -174,7 +273,6 @@ const Account = () => {
                 </ul>
               </div>
 
-              {/* Settings Section */}
               <div className={styles.settings}>
                 <h3 className={styles.settingsTitle}>Account Settings</h3>
                 <ul className={styles.settingsList}>
@@ -188,6 +286,18 @@ const Account = () => {
           )}
         </div>
       </div>
+
+      {/* Wallet Connection Modal */}
+      {showModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Connect Your Wallet</h3>
+            <p>You need to connect your wallet to proceed.</p>
+            <button className={styles.modalButton} onClick={connectWallet}>Connect Wallet</button>
+            <button className={styles.modalClose} onClick={() => setShowModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

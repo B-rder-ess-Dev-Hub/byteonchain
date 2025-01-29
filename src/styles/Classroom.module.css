@@ -325,3 +325,124 @@
     margin-top: 50px;
   }
 }
+
+
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.modal p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.modalButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #fbbf24;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.modalButton:hover {
+  background-color: #f59e0b;
+}
+
+.modalClose {
+  width: 100%;
+  padding: 10px;
+  background: #ddd;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.modalClose:hover {
+  background: #ccc;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: scale(0.9);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+/* Update for no video available section */
+.noVideos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  width: 250px; /* Adjust width for a modern card look */
+  height: 250px; /* Fixed height for consistent design */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Adding shadow */
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+}
+
+.noVideos:hover {
+  transform: translateY(-5px); /* Add hover effect for modern feel */
+}
+
+.noVideos img {
+  width: 100px; /* Adjust image size */
+  height: 100px; /* Adjust image size */
+  object-fit: contain;
+  margin-bottom: 15px; /* Spacing between the image and text */
+}
+
+.noVideos p {
+  font-size: 16px;
+  color: #6c757d;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* Adding a soft background color and a subtle shadow to the container */
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+  gap: 20px;
+  margin-top: 20px;
+}
