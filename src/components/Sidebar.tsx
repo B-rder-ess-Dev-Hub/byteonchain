@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
-import { useState, useEffect } from 'react'; // Import useState and useEffect
-import axios from 'axios'; // Import axios for API calls
-import styles from '../styles/Sidebar.module.css';
-import avatar from '../../public/avatar.png';
-import logo from '../../public/byte.png'; // Add logo import
+import Link from "next/link";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { useState, useEffect } from "react"; // Import useState and useEffect
+import axios from "axios"; // Import axios for API calls
+import styles from "../styles/Sidebar.module.css";
+import avatar from "../../public/avatar.png";
+import logo from "../../public/byte.png"; // Add logo import
 
 const Sidebar = () => {
   const router = useRouter();
@@ -18,12 +18,13 @@ const Sidebar = () => {
   };
 
   const tabs = [
-    { path: '/', label: 'Home' },
-    { path: '/discovery', label: 'Discovery' }, // Discovery tab
-    { path: '/chat', label: 'Chat' },
-    { path: '/classroom', label: 'Classroom' },
-    { path: '/update', label: 'Update' },
-    { path: '/account', label: 'Account' },
+    { path: "/", label: "Home" },
+    { path: "/discovery", label: "Discovery" }, // Discovery tab
+    { path: "/chat", label: "Chat" },
+    { path: "/classroom", label: "Classroom" },
+    { path: "/quiz", label: "Quiz" },
+    { path: "/update", label: "Update" },
+    { path: "/account", label: "Account" },
   ];
 
   const toggleSidebar = () => {
@@ -43,15 +44,17 @@ const Sidebar = () => {
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
         setWalletAddress(accounts[0]);
         // Check if the wallet address exists in the database
         fetchUserData(accounts[0]);
       } catch (error) {
-        console.error('Error connecting wallet:', error);
+        console.error("Error connecting wallet:", error);
       }
     } else {
-      alert('MetaMask is not installed. Please install MetaMask to proceed.');
+      alert("MetaMask is not installed. Please install MetaMask to proceed.");
     }
   };
 
@@ -59,14 +62,16 @@ const Sidebar = () => {
   const checkWalletConnection = async () => {
     if (window.ethereum) {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        const accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
         if (accounts.length > 0) {
           setWalletAddress(accounts[0]);
           // Check if the wallet address exists in the database
           fetchUserData(accounts[0]);
         }
       } catch (error) {
-        console.error('Error checking wallet connection:', error);
+        console.error("Error checking wallet connection:", error);
       }
     }
   };
@@ -74,13 +79,15 @@ const Sidebar = () => {
   // Fetch user data based on wallet address
   const fetchUserData = async (address: string) => {
     try {
-      const response = await axios.get(`https://byteapi-two.vercel.app/api/user/${address}`);
-      if (response.data.status === 'success') {
+      const response = await axios.get(
+        `https://byteapi-two.vercel.app/api/user/${address}`
+      );
+      if (response.data.status === "success") {
         const { user } = response.data;
         setUser(user.fullname); // Set only the fullname
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error("Error fetching user data:", error);
     }
   };
 
@@ -88,15 +95,15 @@ const Sidebar = () => {
     <div>
       {/* Button to toggle sidebar */}
       <button
-        className={`${styles.toggleButton} ${isSidebarOpen ? styles.open : ''}`}
+        className={`${styles.toggleButton} ${isSidebarOpen ? styles.open : ""}`}
         onClick={toggleSidebar}
         aria-label="Toggle Sidebar"
       >
-        {isSidebarOpen ? '×' : '☰'} {/* Change to "X" when open */}
+        {isSidebarOpen ? "×" : "☰"} {/* Change to "X" when open */}
       </button>
 
       {/* Sidebar */}
-      <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ''}`}>
+      <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}>
         {/* Logo at the top */}
         <div className={styles.logoContainer}>
           <Image
@@ -111,19 +118,21 @@ const Sidebar = () => {
           <Link href={tab.path} key={tab.label}>
             <div
               className={`${styles.tabItem} ${
-                isActiveTab(tab.path) ? styles.activeTab : ''
+                isActiveTab(tab.path) ? styles.activeTab : ""
               }`}
             >
               <img
                 src={`/${tab.label.toLowerCase()}${
-                  isActiveTab(tab.path) ? 'active' : 'inactive'
+                  isActiveTab(tab.path) ? "active" : "inactive"
                 }.png`}
                 alt={`${tab.label} Icon`}
-                className={`${styles.icon} ${isActiveTab(tab.path) ? styles.activeDiscoveryIcon : ''}`}
+                className={`${styles.icon} ${
+                  isActiveTab(tab.path) ? styles.activeDiscoveryIcon : ""
+                }`}
               />
               <span
                 className={`${styles.label} ${
-                  isActiveTab(tab.path) ? styles.activeLabel : ''
+                  isActiveTab(tab.path) ? styles.activeLabel : ""
                 }`}
               >
                 {tab.label}
@@ -147,10 +156,11 @@ const Sidebar = () => {
             <div className={styles.userInfo}>
               {/* Show user fullname if available, otherwise show default text */}
               <span className={styles.username}>
-                {user ? user : 'Please join ByteonChain'}
+                {user ? user : "Please join ByteonChain"}
               </span>
               <span className={styles.role}>
-                {user ? 'Student' : ''} {/* You can customize the role based on your data */}
+                {user ? "Student" : ""}{" "}
+                {/* You can customize the role based on your data */}
               </span>
             </div>
           </div>
