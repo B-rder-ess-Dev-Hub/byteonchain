@@ -25,6 +25,7 @@ const Sidebar = () => {
     { path: "/quiz", label: "Quiz" },
     { path: "/update", label: "Update" },
     { path: "/account", label: "Account" },
+    { path: "/attestation/Attest", label: "Attest" },
   ];
 
   const toggleSidebar = () => {
