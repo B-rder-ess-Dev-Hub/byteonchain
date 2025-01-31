@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import styles from "../styles/Quiz.module.css";
-import Attest from "../../src/pages/attestation/utils/attestUser"; // Import the Attest component
+import Attest from "../../utils/attestUser"; // Import the Attest component
 
 const quizData = {
   "course_title": "Computer Appreciation Quiz",

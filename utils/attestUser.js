@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
-import { useSigner } from "../utils/wagmi-utils";
-import styles from "../../../styles/Attest.module.css"; // Import CSS for button styling
+import { useSigner } from "./wagmi-utils";
+import styles from "../src/styles/Attest.module.css"; // Import CSS for button styling
 
 const Attest = ({ walletAddress, score, course }) => {
   const signer = useSigner();
