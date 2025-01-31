@@ -7,6 +7,7 @@ import searchIcon from '../../public/search.png';
 import videoIcon from '../../public/video-circle.png';
 import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
+import QuizModal from '../components/Computerquizmodal';
 
 const Classroom = ({ walletConnected }) => {
   const [allVideoItems, setAllVideoItems] = useState([]);
@@ -16,6 +17,18 @@ const Classroom = ({ walletConnected }) => {
   const [userCourseCategory, setUserCourseCategory] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
   const [videoToWatch, setVideoToWatch] = useState(null); // Store selected video to watch
+  const [quizModalOpen, setQuizModalOpen] = useState(false); // State for quiz modal
+  const [computerAppreciation, setComputerAppreciation] = useState(true);
+
+  // Function to open quiz modal
+  const openQuizModal = () => {
+    setQuizModalOpen(true); // Open the quiz modal when the button is clicked
+  };
+
+  // Function to close quiz modal
+  const closeQuizModal = () => {
+    setQuizModalOpen(false); // Close the quiz modal
+  };
 
   // Function to check the wallet connection
   const checkWalletConnection = async () => {
@@ -152,15 +165,28 @@ const Classroom = ({ walletConnected }) => {
             </div>
           </div>
 
+          {/* Computer Appreciation Card */}
+          {computerAppreciation && (
+            <div className={styles.quizCard}>
+              <h2 className={styles.quizTitle}>Computer Appreciation</h2>
+              <button className={styles.takeQuizButton} onClick={openQuizModal}>
+                Take Quiz
+              </button>
+            </div>
+          )}
+
+          {quizModalOpen && (
+            <QuizModal isOpen={quizModalOpen} onClose={closeQuizModal} />
+          )}
+
           {/* Video Section */}
           <div className={styles.recentSection}>
             <div className={styles.videoGrid}>
-            {allVideoItems.length === 0 ? (
-  <div className={styles.noVideos}>
-    <Image src="/no-video.svg" alt="No videos available" width={100} height={100} />
-    <p>No videos available</p>
-  </div>
-
+              {allVideoItems.length === 0 ? (
+                <div className={styles.noVideos}>
+                  <Image src="/no-video.svg" alt="No videos available" width={100} height={100} />
+                  <p>No videos available</p>
+                </div>
               ) : (
                 allVideoItems.slice(0, visibleCourses).map((item, index) => (
                   <div key={index} className={styles.carouselCard}>

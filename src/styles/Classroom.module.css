@@ -446,3 +446,55 @@
   gap: 20px;
   margin-top: 20px;
 }
+
+/* Basic styling */
+.quizCard {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 500px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.quizTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.takeQuizButton {
+  background-color: #f59e0b;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.takeQuizButton:hover {
+  background-color: #45a049;
+}
+
+/* New modern strip style */
+.quizCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(90deg, #ff7f50, #ff6347);
+  border-radius: 10px 10px 0 0;
+}
+
+.takeQuizButton {
+  align-self: flex-start;
+  margin-top: 20px;
+}

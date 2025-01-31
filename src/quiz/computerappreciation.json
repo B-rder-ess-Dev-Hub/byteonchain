@@ -1,0 +1,208 @@
+{
+    "course_title": "Fundamentals of Computer Literacy",
+    "duration": "15 minutes",
+    "total_questions": 20,
+    "marks_per_question": 5,
+    "questions": [
+      {
+        "question": "Which component of a computer is responsible for executing instructions?",
+        "options": [
+          "Hard Drive",
+          "RAM",
+          "CPU",
+          "GPU"
+        ],
+        "answer": "CPU"
+      },
+      {
+        "question": "What is the primary difference between RAM and ROM?",
+        "options": [
+          "RAM is non-volatile, while ROM is volatile",
+          "RAM is temporary storage, while ROM is permanent storage",
+          "ROM is faster than RAM",
+          "ROM stores data permanently but is erased when power is off"
+        ],
+        "answer": "RAM is temporary storage, while ROM is permanent storage"
+      },
+      {
+        "question": "Which function key is commonly used to enter the BIOS/UEFI setup during boot?",
+        "options": [
+          "F1",
+          "F2",
+          "F8",
+          "F12"
+        ],
+        "answer": "F2"
+      },
+      {
+        "question": "Which of the following file formats is NOT used for storing images?",
+        "options": [
+          ".jpg",
+          ".png",
+          ".wav",
+          ".bmp"
+        ],
+        "answer": ".wav"
+      },
+      {
+        "question": "Which keyboard shortcut allows you to open Task Manager quickly in Windows?",
+        "options": [
+          "Ctrl + Shift + Esc",
+          "Ctrl + Alt + Delete",
+          "Win + R",
+          "Alt + F4"
+        ],
+        "answer": "Ctrl + Shift + Esc"
+      },
+      {
+        "question": "What is the primary advantage of an SSD over an HDD?",
+        "options": [
+          "Larger storage capacity",
+          "Lower power consumption and faster read/write speeds",
+          "Better for long-term storage",
+          "Less expensive"
+        ],
+        "answer": "Lower power consumption and faster read/write speeds"
+      },
+      {
+        "question": "Which of the following is NOT an example of system software?",
+        "options": [
+          "Windows 10",
+          "Linux Kernel",
+          "Google Chrome",
+          "macOS"
+        ],
+        "answer": "Google Chrome"
+      },
+      {
+        "question": "Which file system is commonly used by modern Windows operating systems?",
+        "options": [
+          "FAT32",
+          "NTFS",
+          "ext4",
+          "HFS+"
+        ],
+        "answer": "NTFS"
+      },
+      {
+        "question": "Which of the following is a programming file format?",
+        "options": [
+          ".exe",
+          ".docx",
+          ".py",
+          ".mp3"
+        ],
+        "answer": ".py"
+      },
+      {
+        "question": "What is the function of the Alt + Tab keyboard shortcut?",
+        "options": [
+          "Opens the Start menu",
+          "Switches between open applications",
+          "Shows the desktop",
+          "Closes the active window"
+        ],
+        "answer": "Switches between open applications"
+      },
+      {
+        "question": "Which hardware component determines how many programs can run simultaneously on a computer?",
+        "options": [
+          "RAM",
+          "CPU",
+          "GPU",
+          "Power Supply"
+        ],
+        "answer": "RAM"
+      },
+      {
+        "question": "What is the purpose of a graphics processing unit (GPU)?",
+        "options": [
+          "Manages internet connections",
+          "Processes graphics and visual data",
+          "Handles audio processing",
+          "Increases hard drive speed"
+        ],
+        "answer": "Processes graphics and visual data"
+      },
+      {
+        "question": "Which of the following file formats is used for compressed files?",
+        "options": [
+          ".exe",
+          ".zip",
+          ".mp4",
+          ".iso"
+        ],
+        "answer": ".zip"
+      },
+      {
+        "question": "What happens when you press Ctrl + Z on a computer?",
+        "options": [
+          "Redoes the last action",
+          "Undoes the last action",
+          "Copies text",
+          "Deletes a file permanently"
+        ],
+        "answer": "Undoes the last action"
+      },
+      {
+        "question": "Which operating system is based on the Linux kernel?",
+        "options": [
+          "Windows 11",
+          "macOS",
+          "Android",
+          "DOS"
+        ],
+        "answer": "Android"
+      },
+      {
+        "question": "Which of the following is considered volatile memory?",
+        "options": [
+          "HDD",
+          "SSD",
+          "RAM",
+          "Flash Drive"
+        ],
+        "answer": "RAM"
+      },
+      {
+        "question": "Which key is commonly used to cancel an operation or close a dialog box?",
+        "options": [
+          "Ctrl",
+          "Esc",
+          "Shift",
+          "Tab"
+        ],
+        "answer": "Esc"
+      },
+      {
+        "question": "What is the primary function of an operating system?",
+        "options": [
+          "Managing computer hardware and software resources",
+          "Providing internet access",
+          "Running antivirus programs",
+          "Enhancing gaming performance"
+        ],
+        "answer": "Managing computer hardware and software resources"
+      },
+      {
+        "question": "What does the acronym BIOS stand for?",
+        "options": [
+          "Basic Input Output System",
+          "Binary Integrated Operating System",
+          "Basic Internal Operations Software",
+          "Boot Integrated Output System"
+        ],
+        "answer": "Basic Input Output System"
+      },
+      {
+        "question": "What does the F12 key typically do in most web browsers?",
+        "options": [
+          "Opens developer tools",
+          "Refreshes the page",
+          "Closes the browser",
+          "Takes a screenshot"
+        ],
+        "answer": "Opens developer tools"
+      }
+    ]
+  }

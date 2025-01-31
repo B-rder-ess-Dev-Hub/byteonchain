@@ -1,0 +1,344 @@
+/* Modal Overlay */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+/* Modal Container */
+.modal {
+    background: linear-gradient(135deg, #fefefe, #f9f9f9);
+    width: 60%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: "Orbitron", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Quiz Header */
+.courseTitle {
+    font-size: 26px;
+    color: #222;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* Timer */
+.timerContainer {
+    color: #333;
+    font-size: 24px; /* Bigger font */
+    font-weight: bold;
+    padding: 2px 2px;
+    border-radius: 8px;
+    text-align: center;
+    width: 150px;
+    margin: 10px auto 10px auto;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+}
+
+/* Important Notice Container */
+.noticeContainer {
+    background: #ff6b6b; /* Brighter Red */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    width: 90%;
+    margin-bottom: 15px;
+}
+
+.noticeText {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Question */
+.questionText {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: #444;
+}
+
+/* Options Styling */
+.optionsList {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #f8f8f8; /* Off-white */
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover & Selected - Uses Previous Default State */
+.option:hover,
+.option.selected {
+    background: #FBBF24; /* Yellow */
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(251, 191, 36, 0.5);
+}
+
+/* Score Display */
+.score {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 25px;
+    color: #1abc9c;
+}
+
+/* Completed Quiz */
+.quizCompleted {
+    text-align: center;
+    padding: 20px;
+}
+
+
+.finalScore {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Close Button */
+.closeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.closeButton:hover {
+    background: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal {
+        width: 85%;
+        padding: 20px;
+    }
+
+    .courseTitle {
+        font-size: 22px;
+    }
+
+    .timerContainer {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+
+    .noticeContainer {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .questionText {
+        font-size: 20px;
+    }
+
+    .option {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .score {
+        font-size: 16px;
+    }
+
+    .finalScore {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .courseTitle {
+        font-size: 18px;
+    }
+
+    .timerContainer {
+        font-size: 16px;
+        padding: 6px 15px;
+    }
+
+    .noticeContainer {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .questionText {
+        font-size: 18px;
+    }
+
+    .option {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .score {
+        font-size: 14px;
+    }
+
+    .finalScore {
+        font-size: 16px;
+    }
+}
+
+
+/* Notice Container */
+.noticeContainer {
+    background: #ff6b6b; /* Brighter Red */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    width: 90%;
+    margin-bottom: 15px;
+}
+
+.noticeText {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Options Styling */
+.optionsList {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #f8f8f8; /* Off-white */
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover and Selected State */
+.option:hover,
+.option.selected {
+    background: #FBBF24; /* Previous default color */
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(251, 191, 36, 0.5);
+}
+
+
+
+/* Wallet Connection */
+.walletContainer {
+    margin: 20px 0;
+  }
+  
+  .connectButton {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .connectButton:hover {
+    background: #0056b3;
+  }
+  
+  /* Attest & Retake Buttons */
+  .attestButton {
+    background: #FBBF24; /* Green */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .attestButton:hover {
+    background: #F8A100;
+  }
+  
+  .retakeButton {
+    background: #dc3545; /* Red */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .retakeButton:hover {
+    background: #c82333;
+  }
