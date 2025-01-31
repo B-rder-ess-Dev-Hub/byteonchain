@@ -1,10 +1,8 @@
-import type { PublicClient, WalletClient } from "@wagmi/core";
-import { type HttpTransport } from "viem";
 import { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import { usePublicClient, useWalletClient } from "wagmi";
-import { ethers, JsonRpcProvider, JsonRpcSigner } from "ethers";
 
-export function publicClientToProvider(publicClient: PublicClient) {
+export function publicClientToProvider(publicClient) {
   const { chain, transport } = publicClient;
   const network = {
     chainId: chain.id,
@@ -13,14 +11,14 @@ export function publicClientToProvider(publicClient: PublicClient) {
   };
   if (transport.type === "fallback")
     return new ethers.FallbackProvider(
-      (transport.transports as ReturnType<HttpTransport>[]).map(
+      transport.transports.map(
         ({ value }) => new ethers.JsonRpcProvider(value?.url, network)
       )
     );
   return new ethers.JsonRpcProvider(transport.url, network);
 }
 
-export async function walletClientToSigner(walletClient: WalletClient) {
+export async function walletClientToSigner(walletClient) {
   const { account, chain, transport } = walletClient;
   const network = {
     chainId: chain.id,
@@ -34,7 +32,7 @@ export async function walletClientToSigner(walletClient: WalletClient) {
 export function useSigner() {
   const { data: walletClient } = useWalletClient();
 
-  const [signer, setSigner] = useState<JsonRpcSigner | undefined>(undefined);
+  const [signer, setSigner] = useState(undefined);
   useEffect(() => {
     async function getSigner() {
       if (!walletClient) return;
@@ -52,16 +50,14 @@ export function useSigner() {
 export function useProvider() {
   const publicClient = usePublicClient();
 
-  const [provider, setProvider] = useState<JsonRpcProvider | undefined>(
-    undefined
-  );
+  const [provider, setProvider] = useState(undefined);
   useEffect(() => {
     async function getSigner() {
       if (!publicClient) return;
 
       const tmpProvider = publicClientToProvider(publicClient);
 
-      setProvider(tmpProvider as JsonRpcProvider);
+      setProvider(tmpProvider);
     }
 
     getSigner();

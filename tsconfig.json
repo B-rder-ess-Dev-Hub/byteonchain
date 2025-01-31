@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/index.jsx", "src/components/Sidebar.tsx", "src/components/Computerquizmodal.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/index.jsx", "src/components/Sidebar.tsx", "src/components/Computerquizmodal.jsx", "src/pages/attestation/utils/wagmi-utils.js", "src/pages/attestation/utils/wagmi-utils.js"],
   "exclude": ["node_modules"]
 }
