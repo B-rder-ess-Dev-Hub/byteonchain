@@ -483,16 +483,7 @@
 }
 
 /* New modern strip style */
-.quizCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 10px;
-  background: linear-gradient(90deg, #ff7f50, #ff6347);
-  border-radius: 10px 10px 0 0;
-}
+
 
 .takeQuizButton {
   align-self: flex-start;
