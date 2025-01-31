@@ -1,7 +1,7 @@
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useSigner } from "./utils/wagmi-utils";
+import { useSigner } from "../../pages/attestation/utils/wagmi-utils";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
