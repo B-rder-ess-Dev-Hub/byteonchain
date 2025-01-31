@@ -22,10 +22,8 @@ const Sidebar = () => {
     { path: "/discovery", label: "Discovery" }, // Discovery tab
     { path: "/chat", label: "Chat" },
     { path: "/classroom", label: "Classroom" },
-    { path: "/quiz", label: "Quiz" },
     { path: "/update", label: "Update" },
     { path: "/account", label: "Account" },
-    { path: "/attestation/Attest", label: "Attest" },
   ];
 
   const toggleSidebar = () => {

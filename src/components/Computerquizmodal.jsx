@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import styles from "../styles/Quiz.module.css";
-
-interface Question {
-  question: string;
-  options: string[];
-  answer: string;
-}
-
-interface QuizProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+import Attest from "../../src/pages/attestation/utils/attestUser"; // Import the Attest component
 
 const quizData = {
   "course_title": "Computer Appreciation Quiz",
@@ -38,19 +28,19 @@ const quizData = {
       "question": "Which function key is commonly used to enter the BIOS/UEFI setup during boot?",
       "options": ["F1", "F2", "F8", "F12"],
       "answer": "F2"
-    },
+    }
   ]
 };
 
-const QuizModal: React.FC<QuizProps> = ({ isOpen, onClose }) => {
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [attempts, setAttempts] = useState<number>(0);
+const QuizModal = ({ isOpen, onClose }) => {
+  const [walletAddress, setWalletAddress] = useState(null);
+  const [attempts, setAttempts] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [timer, setTimer] = useState<number>(10 * 60); // 10 minutes in seconds
-  const [isTimerPaused, setIsTimerPaused] = useState<boolean>(false);
+  const [timer, setTimer] = useState(10 * 60); // 10 minutes in seconds
+  const [isTimerPaused, setIsTimerPaused] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -59,7 +49,7 @@ const QuizModal: React.FC<QuizProps> = ({ isOpen, onClose }) => {
         clearInterval(interval);
         if (timer <= 0) setIsCompleted(true);
       } else {
-        setTimer(timer - 1);
+        setTimer((prevTimer) => prevTimer - 1);
       }
     }, 1000);
     return () => clearInterval(interval);
@@ -95,22 +85,24 @@ const QuizModal: React.FC<QuizProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const handleAnswerClick = (option: string) => {
+  const handleAnswerClick = (option) => {
     setSelectedAnswer(option);
     if (option === quizData.questions[currentQuestion].answer) {
       setScore((prev) => prev + quizData.marks_per_question);
     }
-    if (currentQuestion < quizData.questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setSelectedAnswer(null);
-    } else {
-      setIsCompleted(true);
-      if (walletAddress) {
-        const newAttempts = attempts + 1;
-        setAttempts(newAttempts);
-        localStorage.setItem(`quizAttempts_${walletAddress}`, newAttempts.toString());
+    setTimeout(() => {
+      if (currentQuestion < quizData.questions.length - 1) {
+        setCurrentQuestion((prev) => prev + 1);
+        setSelectedAnswer(null);
+      } else {
+        setIsCompleted(true);
+        if (walletAddress) {
+          const newAttempts = attempts + 1;
+          setAttempts(newAttempts);
+          localStorage.setItem(`quizAttempts_${walletAddress}`, newAttempts.toString());
+        }
       }
-    }
+    }, 500);
   };
 
   if (!isOpen) return null;
@@ -118,7 +110,6 @@ const QuizModal: React.FC<QuizProps> = ({ isOpen, onClose }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        {/* Timer at the top */}
         <div className={styles.timerContainer}>
           <p className={styles.timer}>
             {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, "0")}
@@ -144,9 +135,11 @@ const QuizModal: React.FC<QuizProps> = ({ isOpen, onClose }) => {
               Final Score: <span>{score}</span> / {quizData.total_questions * quizData.marks_per_question}
             </p>
             {score >= 1 ? (
-              <button className={styles.attestButton} onClick={() => alert("Attesting...")}>
-                Attest
-              </button>
+              <Attest
+                walletAddress={walletAddress}
+                score={score}
+                course={quizData.course_title}
+              />
             ) : (
               <div>
                 <h4>You didn't pass the quiz.</h4>

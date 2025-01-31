@@ -47,9 +47,10 @@ const Attest = () => {
         data: {
           recipient: "0x0000000000000000000000000000000000000000",
           expirationTime: 0,
-          revocable: false, // Must be false if schema is not revocable
+          revocable: false,
           data: encodedData,
         },
+        overrides: { gasLimit: 1000000 },
       });
 
       const newAttestationUID = await tx.wait();
