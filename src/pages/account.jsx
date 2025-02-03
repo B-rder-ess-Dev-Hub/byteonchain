@@ -17,12 +17,14 @@ const Account = () => {
     email: '',
     phone: '',
     sex: '',
-    course: '',
+    countryCode: '+1', // Default country code
   });
   const [isLoading, setIsLoading] = useState(false);  // For handling the loading state of the submit button
   const [windowWidth, setWindowWidth] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
   const [confettiVisible, setConfettiVisible] = useState(false); // To control confetti visibility
+  const [countries, setCountries] = useState([]); // State for country list
+  const [countryCode, setCountryCode] = useState('+1'); // Default country code
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,6 +34,7 @@ const Account = () => {
     }
 
     checkWalletConnection();
+    fetchCountries(); // Fetch the countries and country codes
   }, []);
 
   useEffect(() => {
@@ -68,13 +71,40 @@ const Account = () => {
           email: user.email,
           phone: user.phone,
           sex: user.sex,
-          course: user.course,
+          course: user.course || null, // If course is undefined, set to null
+          countryCode: user.phone.slice(0, 3), // Extract country code from existing phone number
         });
         setFormSubmitted(true);  // Mark form as submitted if user exists in the database
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
-      toast.error('Failed to fetch user data. Please try again.', {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        // If user is not found, show the form for sign-up
+        setFormSubmitted(false);
+      } else {
+        console.error('Error fetching user data:', error);
+        toast.error('Failed to fetch user data. Please try again.', {
+          position: "top-right",
+          autoClose: 5000,
+        });
+      }
+    }
+  };
+
+  const fetchCountries = async () => {
+    try {
+      const response = await axios.get('https://restcountries.com/v3.1/all');
+      const countriesData = response.data.map((country) => ({
+        name: country.name.common,
+        code: country.idd?.root + (country.idd?.suffixes?.[0] || ''),
+      }));
+      
+      // Sort countries alphabetically by name
+      countriesData.sort((a, b) => a.name.localeCompare(b.name));
+      
+      setCountries(countriesData);
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+      toast.error('Failed to fetch countries. Please try again later.', {
         position: "top-right",
         autoClose: 5000,
       });
@@ -105,6 +135,14 @@ const Account = () => {
     });
   };
 
+  const handleCountryChange = (e) => {
+    const selectedCountryCode = e.target.value;
+    setFormData({
+      ...formData,
+      countryCode: selectedCountryCode,
+    });
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
   
@@ -124,6 +162,7 @@ const Account = () => {
           phone: formData.phone,
           sex: formData.sex,
           course: formData.course,
+          country:formData.countryCode,
           wallet_address: walletAddress,
         },
         {
@@ -195,14 +234,28 @@ const Account = () => {
                 required
               />
 
-              <input
-                type="text"
-                name="phone"
-                placeholder="Phone Number"
-                value={formData.phone}
-                onChange={handleFormChange}
-                required
-              />
+              <div className={styles.phoneContainer}>
+                <select 
+                  className={styles.countryCode} 
+                  value={formData.countryCode}
+                  onChange={handleCountryChange} // Handle country change
+                >
+                  {countries.map((country, index) => (
+                    <option key={index} value={country.code}>
+                      {country.name} ({country.code})
+                    </option>
+                  ))}
+                </select>
+
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={handleFormChange}
+                  required
+                />
+              </div>
 
               <select name="sex" value={formData.sex} onChange={handleFormChange} required>
                 <option value="">Select Gender</option>
@@ -210,22 +263,21 @@ const Account = () => {
                 <option value="female">Female</option>
               </select>
 
-              <select name="course" value={formData.course} onChange={handleFormChange} required>
+              <select name="course" value={formData.course || ''} onChange={handleFormChange} required>
                 <option value="">Select Course</option>
                 <option value="ui-ux-design">UI/UX Design</option>
                 <option value="web-design-development">Web Design and Development</option>
                 <option value="cyber-security">Cyber Security</option>
                 <option value="embedded-systems-design">Embedded Systems Design</option>
-                <option value="solidity">Solidity</option>
-                <option value="arbitrum-stylus">Arbitrum Stylus</option>
+                <option value="digital-marketing">Digital Marketing</option>
               </select>
 
               <button
                 type="submit"
                 className={styles.submitButton}
-                disabled={isLoading}  // Disable button during loading
+                disabled={isLoading}
               >
-                {isLoading ? 'Submitting...' : 'Submit'}
+                {isLoading ? 'Loading...' : 'Sign Up'}
               </button>
             </form>
           ) : (
@@ -259,14 +311,14 @@ const Account = () => {
                   <li className={styles.statItem}>
                     <span>Total Courses Taken</span>
                     <div className={styles.coursesContainer}>
-                      <span className={styles.statValue}>15</span>
+                      <span className={styles.statValue}>0</span>
                       <button className={styles.viewButton}>View</button>
                     </div>
                   </li>
                   <li className={styles.statItem}>
                     <span>Certificates</span>
                     <div className={styles.certificatesContainer}>
-                      <span className={styles.statValue}>8</span>
+                      <span className={styles.statValue}>0</span>
                       <button className={styles.viewButton}>View</button>
                     </div>
                   </li>
@@ -302,4 +354,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Account; 

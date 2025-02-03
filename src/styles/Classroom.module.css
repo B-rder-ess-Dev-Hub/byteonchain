@@ -450,22 +450,28 @@
 /* Basic styling */
 .quizCard {
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 6px; /* Reduced border radius */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 16px; /* Reduced padding */
   max-width: 500px;
   margin: 20px auto;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between; /* Align items horizontally */
+  align-items: center; /* Center items vertically */
   transition: all 0.3s ease-in-out;
+}
+
+.quizCardContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .quizTitle {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin: 0; /* Remove margin to align with button */
 }
 
 .takeQuizButton {
@@ -473,19 +479,12 @@
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 50px;
+  border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-left: 16px; /* Add margin to separate from text */
 }
 
 .takeQuizButton:hover {
-  background-color: #45a049;
-}
-
-/* New modern strip style */
-
-
-.takeQuizButton {
-  align-self: flex-start;
-  margin-top: 20px;
+  background-color: #f59f0b8d;
 }

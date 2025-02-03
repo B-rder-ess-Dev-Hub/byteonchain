@@ -203,6 +203,151 @@
           "Takes a screenshot"
         ],
         "answer": "Opens developer tools"
+      },
+      {
+        "question": "What is a computer?",
+        "options": ["A device for processing data", "A type of software", "A network of devices", "A storage medium"],
+        "answer": "A device for processing data"
+      },
+      {
+        "question": "What does the IPO cycle stand for?",
+        "options": ["Input, Process, Output", "Input, Print, Output", "Input, Program, Output", "Input, Process, Organize"],
+        "answer": "Input, Process, Output"
+      },
+      {
+        "question": "What layout is commonly used on standard keyboards?",
+        "options": ["AZERTY", "Dvorak", "QWERTY", "Colemak"],
+        "answer": "QWERTY"
+      },
+      {
+        "question": "What is a compact keyboard?",
+        "options": ["A keyboard with fewer keys", "A keyboard for gaming", "A keyboard with a numeric pad", "A keyboard with backlighting"],
+        "answer": "A keyboard with fewer keys"
+      },
+      {
+        "question": "What is the purpose of the Shift key?",
+        "options": ["To type uppercase letters", "To delete text", "To save files", "To open applications"],
+        "answer": "To type uppercase letters"
+      },
+      {
+        "question": "What does Ctrl+C do?",
+        "options": ["Copy selected text", "Paste copied text", "Cut selected text", "Undo last action"],
+        "answer": "Copy selected text"
+      },
+      {
+        "question": "What is the function of the F1 key?",
+        "options": ["Open help menu", "Refresh page", "Open developer tools", "Close application"],
+        "answer": "Open help menu"
+      },
+      {
+        "question": "What is the primary function of a mouse?",
+        "options": ["To type text", "To navigate and select items", "To print documents", "To store data"],
+        "answer": "To navigate and select items"
+      },
+      {
+        "question": "What is a file?",
+        "options": ["A collection of data", "A type of software", "A hardware component", "A network connection"],
+        "answer": "A collection of data"
+      },
+      {
+        "question": "What does it mean to zip a folder?",
+        "options": ["To compress files", "To delete files", "To rename files", "To move files"],
+        "answer": "To compress files"
+      },
+      {
+        "question": "What is an archive?",
+        "options": ["A collection of files", "A type of software", "A hardware component", "A network connection"],
+        "answer": "A collection of files"
+      },
+      {
+        "question": "What file format is commonly used for documents?",
+        "options": [".jpg", ".mp3", ".docx", ".zip"],
+        "answer": ".docx"
+      },
+      {
+        "question": "What does .jpg represent?",
+        "options": ["Audio file", "Image file", "Document file", "Compressed file"],
+        "answer": "Image file"
+      },
+      {
+        "question": "What is the purpose of a CPU?",
+        "options": ["To store data", "To process instructions", "To manage input devices", "To connect to the internet"],
+        "answer": "To process instructions"
+      },
+      {
+        "question": "What is a GUI?",
+        "options": ["Graphical User Interface", "General User Interface", "Global User Interface", "Graphical Universal Interface"],
+        "answer": "Graphical User Interface"
+      },
+      {
+        "question": "What is the function of the Alt key?",
+        "options": ["To type special characters", "To switch between applications", "To save files", "To open the task manager"],
+        "answer": "To switch between applications"
+      },
+      {
+        "question": "What does the term 'file path' refer to?",
+        "options": ["The location of a file in a system", "The size of a file", "The type of a file", "The content of a file"],
+        "answer": "The location of a file in a system"
+      },
+      {
+        "question": "What is the purpose of the Esc key?",
+        "options": ["To exit menus or applications", "To save files", "To open settings", "To refresh the page"],
+        "answer": "To exit menus or applications"
+      },
+      {
+        "question": "What is the role of a file extension?",
+        "options": ["To indicate the file type", "To encrypt the file", "To compress the file", "To rename the file"],
+        "answer": "To indicate the file type"
+      },
+      {
+        "question": "What is the function of the right-click on a mouse?",
+        "options": ["To select an item", "To open a context menu", "To scroll", "To double-click"],
+        "answer": "To open a context menu"
+      },
+      {
+        "question": "What is the purpose of a software update?",
+        "options": ["To add new features and fix bugs", "To delete old files", "To compress files", "To change the file format"],
+        "answer": "To add new features and fix bugs"
+      },
+      {
+        "question": "What does the term 'cloud storage' refer to?",
+        "options": ["Storing data on local devices", "Storing data on remote servers", "Storing data on external drives", "Storing data in RAM"],
+        "answer": "Storing data on remote servers"
+      },
+      {
+        "question": "What is the purpose of a firewall?",
+        "options": ["To protect a network from unauthorized access", "To store data", "To manage user accounts", "To provide internet connectivity"],
+        "answer": "To protect a network from unauthorized access"
+      },
+      {
+        "question": "What does the term 'URL' stand for?",
+        "options": ["Uniform Resource Locator", "Universal Resource Locator", "Uniform Resource Link", "Universal Resource Link"],
+        "answer": "Uniform Resource Locator"
+      },
+      {
+        "question": "What is the function of the Ctrl+S shortcut?",
+        "options": ["Save the current document", "Open a new document", "Close the application", "Print the document"],
+        "answer": "Save the current document"
+      },
+      {
+        "question": "What is the purpose of a web server?",
+        "options": ["To host websites and serve content", "To create documents", "To manage files", "To browse the internet"],
+        "answer": "To host websites and serve content"
+      },
+      {
+        "question": "What is the role of a motherboard?",
+        "options": ["To connect all components of a computer", "To store data", "To process data", "To manage power supply"],
+        "answer": "To connect all components of a computer"
+      },
+      {
+        "question": "What does the term 'bandwidth' refer to?",
+        "options": ["The amount of data that can be transmitted in a given time", "The speed of a processor", "The size of a hard drive", "The capacity of RAM"],
+        "answer": "The amount of data that can be transmitted in a given time"
+      },
+      {
+        "question": "What is the function of the Ctrl+F shortcut?",
+        "options": ["To find text in a document", "To save files", "To close applications", "To refresh the page"],
+        "answer": "To find text in a document"
       }
     ]
   }

@@ -3,10 +3,11 @@ import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useSigner } from "./wagmi-utils";
 import styles from "../src/styles/Attest.module.css"; // Import CSS for button styling
 
-const Attest = ({ walletAddress, score, course }) => {
+const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
   const signer = useSigner();
   const [loading, setLoading] = useState(false);
-  const [userName, setUserName] = useState(null); 
+  const [userName, setUserName] = useState(null);
+  const [attestationUID, setAttestationUID] = useState(null);
 
   // Fetch user's name using wallet address
   useEffect(() => {
@@ -18,7 +19,7 @@ const Attest = ({ walletAddress, score, course }) => {
         if (!response.ok) throw new Error("Failed to fetch user data");
 
         const data = await response.json();
-        setUserName(data.user.fullname || "Unknown User"); 
+        setUserName(data.user.fullname || "Unknown User");
       } catch (error) {
         console.error("Error fetching user name:", error);
         setUserName("Unknown User");
@@ -48,10 +49,10 @@ const Attest = ({ walletAddress, score, course }) => {
 
       const schemaEncoder = new SchemaEncoder("string Name,string Course,uint256 Score,string Issuer");
       const encodedData = schemaEncoder.encodeData([
-        { name: "Name", value: userName, type: "string" }, 
+        { name: "Name", value: userName, type: "string" },
         { name: "Course", value: course, type: "string" },
         { name: "Score", value: score || 0, type: "uint256" },
-        { name: "Issuer", value: "Borderless Community", type: "string" },
+        { name: "Issuer", value: "Borderless Developers Programme", type: "string" },
       ]);
 
       const tx = await eas.attest({
@@ -67,14 +68,27 @@ const Attest = ({ walletAddress, score, course }) => {
 
       const newAttestationUID = await tx.wait();
       if (newAttestationUID) {
-        window.open(`https://arbitrum.easscan.org/attestation/view/${newAttestationUID}`);
+        setAttestationUID(newAttestationUID);
+        onAttestationSuccess(newAttestationUID); // Notify parent component of successful attestation
       }
-      console.log("New attestation UID:", newAttestationUID);
     } catch (error) {
       console.error("Attestation failed:", error);
     } finally {
       setLoading(false);
     }
+  }
+
+  if (attestationUID) {
+    return (
+      <a
+        href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.attestButton}
+      >
+        View Attestation
+      </a>
+    );
   }
 
   return (

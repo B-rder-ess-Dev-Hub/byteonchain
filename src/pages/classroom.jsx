@@ -8,6 +8,7 @@ import videoIcon from '../../public/video-circle.png';
 import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
 import QuizModal from '../components/Computerquizmodal';
+import { useRouter } from 'next/router';
 
 const Classroom = ({ walletConnected }) => {
   const [allVideoItems, setAllVideoItems] = useState([]);
@@ -16,18 +17,19 @@ const Classroom = ({ walletConnected }) => {
   const [userFullName, setUserFullName] = useState('');
   const [userCourseCategory, setUserCourseCategory] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
-  const [videoToWatch, setVideoToWatch] = useState(null); // Store selected video to watch
-  const [quizModalOpen, setQuizModalOpen] = useState(false); // State for quiz modal
-  const [computerAppreciation, setComputerAppreciation] = useState(true);
+  const [videoToWatch, setVideoToWatch] = useState(null);
+  const [quizModalOpen, setQuizModalOpen] = useState(false);
+  const [computerAppreciation, setComputerAppreciation] = useState(true); // Set to true or false to control visibility
+  const router = useRouter();
 
   // Function to open quiz modal
   const openQuizModal = () => {
-    setQuizModalOpen(true); // Open the quiz modal when the button is clicked
+    setQuizModalOpen(true);
   };
 
   // Function to close quiz modal
   const closeQuizModal = () => {
-    setQuizModalOpen(false); // Close the quiz modal
+    setQuizModalOpen(false);
   };
 
   // Function to check the wallet connection
@@ -37,9 +39,9 @@ const Classroom = ({ walletConnected }) => {
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
         if (accounts.length > 0) {
           setWalletAddress(accounts[0]);
-          fetchUserDetails(accounts[0]); // Fetch user details when wallet is connected
+          fetchUserDetails(accounts[0]);
         } else {
-          setShowModal(true); // Show wallet connect modal if no wallet is connected
+          setShowModal(true);
         }
       } catch (error) {
         console.error('Error checking wallet connection:', error);
@@ -51,22 +53,31 @@ const Classroom = ({ walletConnected }) => {
   };
 
   useEffect(() => {
-    checkWalletConnection(); // Check wallet connection when the component mounts
+    checkWalletConnection();
   }, []);
 
   // Function to fetch user details from the backend using the wallet address
   const fetchUserDetails = async (walletAddress) => {
     try {
       const response = await fetch(`https://byteapi-two.vercel.app/api/user/${walletAddress}`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          // Redirect to account page if no user is found
+          router.push('/account');
+          return;
+        }
+        throw new Error('Failed to fetch user details');
+      }
       const data = await response.json();
 
       if (data && data.user) {
         setUserFullName(data.user.fullname);
-        setUserCourseCategory(data.user.course); // Set the user's course category
-        fetchVideos(data.user.course); // Fetch videos based on the user's course
+        setUserCourseCategory(data.user.course);
+        fetchVideos(data.user.course);
       }
     } catch (error) {
       console.error('Error fetching user details:', error);
+      router.push('/account'); // Redirect to account page on any error
     }
   };
 
@@ -76,16 +87,11 @@ const Classroom = ({ walletConnected }) => {
       const response = await fetch('https://byteapi-two.vercel.app/api/videos');
       const data = await response.json();
 
-      // Filter out "Orientation" category videos
       const filteredVideos = data.videos.filter((video) => video.category !== 'Orientation');
-
-      // Split videos into two groups: those that match the course and those that don't
       const matchingVideos = filteredVideos.filter((video) => video.category === courseCategory);
       const otherVideos = filteredVideos.filter((video) => video.category !== courseCategory);
-
-      // Combine matching videos first, followed by other videos
       const sortedVideos = [...matchingVideos, ...otherVideos];
-      setAllVideoItems(sortedVideos); // Update video list
+      setAllVideoItems(sortedVideos);
     } catch (error) {
       console.error('Error fetching videos:', error);
     }
@@ -93,7 +99,7 @@ const Classroom = ({ walletConnected }) => {
 
   // Function to handle "Load More" button click
   const handleLoadMore = () => {
-    setVisibleCourses((prev) => prev + 8); // Increase the number of visible courses
+    setVisibleCourses((prev) => prev + 8);
   };
 
   // Function to connect the wallet when "Connect Wallet" button is clicked
@@ -102,8 +108,8 @@ const Classroom = ({ walletConnected }) => {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setWalletAddress(accounts[0]);
-        setShowModal(false); // Close the wallet connect modal after connection
-        fetchUserDetails(accounts[0]); // Fetch user details after wallet connection
+        setShowModal(false);
+        fetchUserDetails(accounts[0]);
       } catch (error) {
         console.error('Error connecting wallet:', error);
       }
@@ -114,13 +120,13 @@ const Classroom = ({ walletConnected }) => {
 
   // Function to open video modal when "Watch Video" is clicked
   const openVideoModal = (videoUrl) => {
-    setVideoToWatch(videoUrl); // Set the selected video to be watched
-    setShowModal(true); // Open the modal
+    setVideoToWatch(videoUrl);
+    setShowModal(true);
   };
 
   // Function to close video modal
   const closeVideoModal = () => {
-    setVideoToWatch(null); // Clear the video when closing
+    setVideoToWatch(null);
     setShowModal(false);
   };
 
@@ -143,7 +149,7 @@ const Classroom = ({ walletConnected }) => {
             {userFullName ? (
               <p className={styles.userName}>{userFullName}</p>
             ) : (
-              <p className={styles.userName}>Please connect your wallet</p>
+              <p className={styles.userName}>Unknown User</p>
             )}
           </div>
 
@@ -168,10 +174,12 @@ const Classroom = ({ walletConnected }) => {
           {/* Computer Appreciation Card */}
           {computerAppreciation && (
             <div className={styles.quizCard}>
-              <h2 className={styles.quizTitle}>Computer Appreciation</h2>
-              <button className={styles.takeQuizButton} onClick={openQuizModal}>
-                Take Quiz
-              </button>
+              <div className={styles.quizCardContent}>
+                <h2 className={styles.quizTitle}>Computer Appreciation</h2>
+                <button className={styles.takeQuizButton} onClick={openQuizModal}>
+                  Take Quiz
+                </button>
+              </div>
             </div>
           )}
 
@@ -205,7 +213,7 @@ const Classroom = ({ walletConnected }) => {
                         className={styles.videoIcon}
                         width={40}
                         height={40}
-                        onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])} // Open video modal with extracted video ID
+                        onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])}
                       />
                     </div>
                     <div className={styles.cardContent}>
@@ -301,6 +309,11 @@ const Classroom = ({ walletConnected }) => {
           </div>
         </div>
       )}
+
+      {/* Quiz Modal
+      {quizModalOpen && (
+        <QuizModal closeModal={closeQuizModal} />
+      )} */}
     </div>
   );
 };

@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState, useEffect } from "react"; // Import useState and useEffect
-import axios from "axios"; // Import axios for API calls
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "../styles/Sidebar.module.css";
 import avatar from "../../public/avatar.png";
-import logo from "../../public/byte.png"; // Add logo import
+import logo from "../../public/byte.png";
 
 const Sidebar = () => {
   const router = useRouter();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to toggle sidebar visibility
-  const [user, setUser] = useState<string | null>(null); // State to store user fullname
-  const [walletAddress, setWalletAddress] = useState<string | null>(null); // State to store wallet address
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [user, setUser] = useState<string | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const isActiveTab = (path: string) => {
     return router.pathname === path;
@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   const tabs = [
     { path: "/", label: "Home" },
-    { path: "/discovery", label: "Discovery" }, // Discovery tab
+    { path: "/discovery", label: "Discovery" },
     { path: "/chat", label: "Chat" },
     { path: "/classroom", label: "Classroom" },
     { path: "/update", label: "Update" },
@@ -27,27 +27,49 @@ const Sidebar = () => {
   ];
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar visibility
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Fetch user data when the component mounts or wallet address changes
   useEffect(() => {
-    checkWalletConnection(); // Check wallet connection on mount
+    checkWalletConnection();
+  }, []);
 
-    if (walletAddress) {
-      fetchUserData(walletAddress); // Fetch user data if wallet address is available
+  const checkWalletConnection = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum.request({ method: "eth_accounts" });
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+          fetchUserData(accounts[0]);
+        }
+      } catch (error) {
+        console.error("Error checking wallet connection:", error);
+      }
     }
-  }, [walletAddress]);
+  };
 
-  // Function to connect to wallet and get the address
+  const fetchUserData = async (address: string) => {
+    try {
+      const response = await axios.get(`https://byteapi-two.vercel.app/api/user/${address}`);
+      if (response.data.status === "success") {
+        const { user } = response.data;
+        setUser(user.fullname);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        // Redirect to account page if no user is found
+        router.push('/account');
+      } else {
+        console.error("Error fetching user data:", error);
+      }
+    }
+  };
+
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         setWalletAddress(accounts[0]);
-        // Check if the wallet address exists in the database
         fetchUserData(accounts[0]);
       } catch (error) {
         console.error("Error connecting wallet:", error);
@@ -57,59 +79,23 @@ const Sidebar = () => {
     }
   };
 
-  // Function to check if the wallet is already connected
-  const checkWalletConnection = async () => {
-    if (window.ethereum) {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_accounts",
-        });
-        if (accounts.length > 0) {
-          setWalletAddress(accounts[0]);
-          // Check if the wallet address exists in the database
-          fetchUserData(accounts[0]);
-        }
-      } catch (error) {
-        console.error("Error checking wallet connection:", error);
-      }
-    }
-  };
-
-  // Fetch user data based on wallet address
-  const fetchUserData = async (address: string) => {
-    try {
-      const response = await axios.get(
-        `https://byteapi-two.vercel.app/api/user/${address}`
-      );
-      if (response.data.status === "success") {
-        const { user } = response.data;
-        setUser(user.fullname); // Set only the fullname
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
   return (
     <div>
-      {/* Button to toggle sidebar */}
       <button
         className={`${styles.toggleButton} ${isSidebarOpen ? styles.open : ""}`}
         onClick={toggleSidebar}
         aria-label="Toggle Sidebar"
       >
-        {isSidebarOpen ? "×" : "☰"} {/* Change to "X" when open */}
+        {isSidebarOpen ? "×" : "☰"}
       </button>
 
-      {/* Sidebar */}
       <div className={`${styles.sidebar} ${isSidebarOpen ? styles.open : ""}`}>
-        {/* Logo at the top */}
         <div className={styles.logoContainer}>
           <Image
             src={logo}
             alt="Byte Logo"
-            width={120} // Adjust the width as needed
-            height={60} // Increased height for the logo
+            width={120}
+            height={60}
           />
         </div>
 
@@ -153,13 +139,11 @@ const Sidebar = () => {
               />
             </div>
             <div className={styles.userInfo}>
-              {/* Show user fullname if available, otherwise show default text */}
               <span className={styles.username}>
                 {user ? user : "Please join ByteonChain"}
               </span>
               <span className={styles.role}>
-                {user ? "Student" : ""}{" "}
-                {/* You can customize the role based on your data */}
+                {user ? "Student" : ""}
               </span>
             </div>
           </div>
