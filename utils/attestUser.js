@@ -7,7 +7,6 @@ const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
   const signer = useSigner();
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState(null);
-  const [attestationUID, setAttestationUID] = useState(null);
 
   // Fetch user's name using wallet address
   useEffect(() => {
@@ -68,7 +67,6 @@ const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
 
       const newAttestationUID = await tx.wait();
       if (newAttestationUID) {
-        setAttestationUID(newAttestationUID);
         onAttestationSuccess(newAttestationUID); // Notify parent component of successful attestation
       }
     } catch (error) {
@@ -76,19 +74,6 @@ const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
     } finally {
       setLoading(false);
     }
-  }
-
-  if (attestationUID) {
-    return (
-      <a
-        href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.attestButton}
-      >
-        View Attestation
-      </a>
-    );
   }
 
   return (

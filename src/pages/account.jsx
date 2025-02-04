@@ -17,15 +17,18 @@ const Account = () => {
     email: '',
     phone: '',
     sex: '',
-    countryCode: '+1', // Default country code
+    countryCode: '+234', // Default country code
   });
   const [isLoading, setIsLoading] = useState(false);  // For handling the loading state of the submit button
   const [windowWidth, setWindowWidth] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
   const [confettiVisible, setConfettiVisible] = useState(false); // To control confetti visibility
   const [countries, setCountries] = useState([]); // State for country list
-  const [countryCode, setCountryCode] = useState('+1'); // Default country code
-
+  const [countryCode, setCountryCode] = useState('+234'); // Default country code
+  const [showCoursesModal, setShowCoursesModal] = useState(false);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [courses, setCourses] = useState({});
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Client-side only code
@@ -52,14 +55,17 @@ const Account = () => {
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
         if (accounts.length > 0) {
           setWalletAddress(accounts[0]);
-          // Check if the wallet address exists in the database
-          fetchUserData(accounts[0]);
+          await fetchUserData(accounts[0]);
         }
       } catch (error) {
         console.error('Error checking wallet connection:', error);
+      } finally {
+        setIsLoadingUser(false);
       }
+    } else {
+      setIsLoadingUser(false);
     }
-  };
+  }
 
   const fetchUserData = async (address) => {
     try {
@@ -71,23 +77,25 @@ const Account = () => {
           email: user.email,
           phone: user.phone,
           sex: user.sex,
-          course: user.course || null, // If course is undefined, set to null
-          countryCode: user.phone.slice(0, 3), // Extract country code from existing phone number
+          country: user.country,
+          course: user.course,
         });
-        setFormSubmitted(true);  // Mark form as submitted if user exists in the database
+
+        if (user.course_id) {
+          setCourses(user.course_id);
+        }
+
+        setFormSubmitted(true);
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
-        // If user is not found, show the form for sign-up
         setFormSubmitted(false);
       } else {
         console.error('Error fetching user data:', error);
-        toast.error('Failed to fetch user data. Please try again.', {
-          position: "top-right",
-          autoClose: 5000,
-        });
+        toast.error('Failed to fetch user data. Please try again.', { position: "top-right", autoClose: 5000 });
       }
     }
+    setIsLoading(false);
   };
 
   const fetchCountries = async () => {
@@ -146,6 +154,7 @@ const Account = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
   
+    // Check if wallet is connected
     if (!walletAddress) {
       setShowModal(true);
       return;
@@ -191,7 +200,6 @@ const Account = () => {
       );
     }
   };
-
   return (
     <div className={styles.accountContainer}>
       {/* Show Confetti on Successful Sign-up for 5 seconds */}
@@ -212,7 +220,12 @@ const Account = () => {
         <Sidebar />
 
         <div className={styles.mainContent}>
-          {!formSubmitted ? (
+        {isLoadingUser ? (
+            <div className={styles.loadingContainer}>
+              <div className={styles.loadingSpinner}></div>
+              <p>Loading account information...</p>
+            </div>
+          ) : !formSubmitted ? (
             <form onSubmit={handleFormSubmit} className={styles.formContainer}>
               <h2>Fill in your details</h2>
 
@@ -268,8 +281,9 @@ const Account = () => {
                 <option value="ui-ux-design">UI/UX Design</option>
                 <option value="web-design-development">Web Design and Development</option>
                 <option value="cyber-security">Cyber Security</option>
-                <option value="embedded-systems-design">Embedded Systems Design</option>
-                <option value="digital-marketing">Digital Marketing</option>
+                <option value="data-analysis">Data Analysis</option>
+                <option value="solidity">Solidity</option>
+                <option value="arbitrum-stylus">Arbitrum Stylus</option>
               </select>
 
               <button
@@ -311,13 +325,13 @@ const Account = () => {
                   <li className={styles.statItem}>
                     <span>Total Courses Taken</span>
                     <div className={styles.coursesContainer}>
-                      <span className={styles.statValue}>0</span>
-                      <button className={styles.viewButton}>View</button>
+                      <span className={styles.statValue}>{Object.keys(courses).length}</span>
+                      <button className={styles.viewButton} onClick={() => setShowCoursesModal(true)}>View</button>
                     </div>
                   </li>
                   <li className={styles.statItem}>
                     <span>Certificates</span>
-                    <div className={styles.certificatesContainer}>
+                    <div className={styles.coursesContainer}>
                       <span className={styles.statValue}>0</span>
                       <button className={styles.viewButton}>View</button>
                     </div>
@@ -338,6 +352,32 @@ const Account = () => {
           )}
         </div>
       </div>
+
+      {showCoursesModal && (
+  <div className={styles.modalOverlay}>
+    <div className={styles.modal}>
+      <h3 className={styles.modalTitle}>My Courses</h3>
+      <ul className={styles.courseList}>
+        {Object.entries(courses).map(([courseName, attestationUID]) => (
+          <li key={attestationUID} className={styles.courseItem}>
+            <span className={styles.courseName}>{courseName}</span>
+            <a
+              href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.attestationButton}
+            >
+              View Attestation
+            </a>
+          </li>
+        ))}
+      </ul>
+      <button className={styles.modalClose} onClick={() => setShowCoursesModal(false)}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
 
       {/* Wallet Connection Modal */}
       {showModal && (

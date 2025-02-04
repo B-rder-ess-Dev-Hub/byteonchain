@@ -300,6 +300,196 @@ const quizData = {
       "answer": "To exit menus or applications"
     },
     {
+      "question": "_____ and _____ are the primary components of a computer's central processing unit (CPU).",
+      "options": [
+        "ALU and Control Unit",
+        "CPU and RAM",
+        "Motherboard and CPU",
+        "Processor and Hard Drive"
+      ],
+      "answer": "ALU and Control Unit"
+    },
+    {
+      "question": "_____ and _____ are the most common operating systems used on personal computers.",
+      "options": [
+        "Windows and Linux",
+        "Windows and macOS",
+        "macOS and Ubuntu",
+        "Windows and Android"
+      ],
+      "answer": "Windows and macOS"
+    },
+    {
+      "question": "_____ and _____ are examples of input devices used in computing.",
+      "options": [
+        "Keyboard and Mouse",
+        "Monitor and Printer",
+        "Speaker and Microphone",
+        "Monitor and Keyboard"
+      ],
+      "answer": "Keyboard and Mouse"
+    },
+    {
+      "question": "_____ and _____ are the two main types of memory in a computer system.",
+      "options": [
+        "RAM and ROM",
+        "Cache and ROM",
+        "RAM and Hard Disk",
+        "ROM and SSD"
+      ],
+      "answer": "RAM and ROM"
+    },
+    {
+      "question": "_____ and _____ are key differences between a solid-state drive (SSD) and a hard disk drive (HDD).",
+      "options": [
+        "Speed and Power Consumption",
+        "Price and Storage Capacity",
+        "Size and Portability",
+        "Price and Speed"
+      ],
+      "answer": "Speed and Power Consumption"
+    },
+    {
+      "question": "_____ and _____ are the most important factors affecting computer performance.",
+      "options": [
+        "Processor Speed and RAM Size",
+        "Hard Drive and GPU",
+        "RAM Size and Software Updates",
+        "Operating System and Processor Speed"
+      ],
+      "answer": "Processor Speed and RAM Size"
+    },
+    {
+      "question": "_____ and _____ are the primary tasks performed by an operating system.",
+      "options": [
+        "Managing Memory and Running Applications",
+        "Running Applications and Managing Hardware",
+        "Managing Hardware and Software Updates",
+        "Running Applications and Networking"
+      ],
+      "answer": "Managing Memory and Running Applications"
+    },
+    {
+      "question": "_____ and _____ are common types of file systems used in modern computers.",
+      "options": [
+        "NTFS and FAT32",
+        "exFAT and EXT4",
+        "NTFS and EXT4",
+        "FAT32 and exFAT"
+      ],
+      "answer": "NTFS and EXT4"
+    },
+    {
+      "question": "_____ and _____ are examples of network protocols used to transmit data over the internet.",
+      "options": [
+        "HTTP and FTP",
+        "TCP and UDP",
+        "HTTP and UDP",
+        "FTP and SMTP"
+      ],
+      "answer": "HTTP and FTP"
+    },
+    {
+      "question": "_____ and _____ are typical functions of the control unit in a CPU.",
+      "options": [
+        "Fetching and Decoding Instructions",
+        "Performing Arithmetic Operations and Writing Data",
+        "Reading Data and Writing Instructions",
+        "Executing Operations and Controlling Input Devices"
+      ],
+      "answer": "Fetching and Decoding Instructions"
+    },
+    {
+      "question": "_____ and _____ are the main functions of the input and output devices in a computer system.",
+      "options": [
+        "Accepting Data and Displaying Data",
+        "Storing Data and Printing Data",
+        "Sending Data and Receiving Data",
+        "Providing Data and Controlling Software"
+      ],
+      "answer": "Accepting Data and Displaying Data"
+    },
+    {
+      "question": "_____ and _____ are critical components of a computer's motherboard.",
+      "options": [
+        "CPU and RAM",
+        "Processor and Hard Drive",
+        "RAM and Graphics Card",
+        "Chipset and Processor"
+      ],
+      "answer": "Chipset and Processor"
+    },
+    {
+      "question": "_____ and _____ are examples of types of software used for word processing and document editing.",
+      "options": [
+        "Word and Excel",
+        "Word and Google Docs",
+        "Word and Pages",
+        "Excel and PowerPoint"
+      ],
+      "answer": "Word and Google Docs"
+    },
+    {
+      "question": "_____ and _____ are the primary differences between hardware and software.",
+      "options": [
+        "Physical and Non-Physical",
+        "Temporary and Permanent",
+        "Expensive and Cheap",
+        "External and Internal"
+      ],
+      "answer": "Physical and Non-Physical"
+    },
+    {
+      "question": "_____ and _____ are the two primary functions of a graphics card (GPU).",
+      "options": [
+        "Rendering Images and Accelerating Processing",
+        "Displaying Images and Storing Data",
+        "Processing Data and Printing Documents",
+        "Decoding Video and Editing Images"
+      ],
+      "answer": "Rendering Images and Accelerating Processing"
+    },
+    {
+      "question": "_____ and _____ are the main types of cables used for connecting a computer to external devices.",
+      "options": [
+        "USB and HDMI",
+        "USB and VGA",
+        "VGA and HDMI",
+        "Ethernet and VGA"
+      ],
+      "answer": "USB and HDMI"
+    },
+    {
+      "question": "_____ and _____ are common reasons for a computer to slow down over time.",
+      "options": [
+        "Too many files and outdated software",
+        "Low RAM and high CPU usage",
+        "Too many applications running and insufficient storage",
+        "Low storage and outdated graphics card"
+      ],
+      "answer": "Too many applications running and insufficient storage"
+    },
+    {
+      "question": "_____ and _____ are examples of storage devices that can be used for backing up data.",
+      "options": [
+        "USB Flash Drive and External Hard Drive",
+        "External SSD and Flash Drive",
+        "Cloud Storage and Optical Disks",
+        "External Hard Drive and Cloud Storage"
+      ],
+      "answer": "External Hard Drive and Cloud Storage"
+    },
+    {
+      "question": "_____ and _____ are common network topologies used in local area networks (LANs).",
+      "options": [
+        "Bus and Star",
+        "Star and Mesh",
+        "Ring and Tree",
+        "Bus and Mesh"
+      ],
+      "answer": "Bus and Star"
+    },
+    {
       "question": "What is the role of a file extension?",
       "options": ["To indicate the file type", "To encrypt the file", "To compress the file", "To rename the file"],
       "answer": "To indicate the file type"
@@ -357,6 +547,10 @@ const quizData = {
   ]
 };
 
+
+
+
+
 // Function to shuffle an array using Fisher-Yates algorithm
 const shuffleArray = (array) => {
   let shuffled = [...array];
@@ -369,17 +563,16 @@ const shuffleArray = (array) => {
 
 const QuizModal = ({ isOpen, onClose }) => {
   const [walletAddress, setWalletAddress] = useState(null);
-  const [attempts, setAttempts] = useState(0);
-  const [questions, setQuestions] = useState([]); // Store shuffled questions
+  const [quizAttempts, setQuizAttempts] = useState(0);
+  const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [timer, setTimer] = useState(10 * 60); // 10 minutes in seconds
+  const [timer, setTimer] = useState(10 * 60); // 10 minutes
   const [isTimerPaused, setIsTimerPaused] = useState(false);
-  const [userName, setUserName] = useState("Primidac");
+  const [userName, setUserName] = useState("Unknown User");
   const [attestationUID, setAttestationUID] = useState(null);
-
 
   useEffect(() => {
     if (!isOpen) return;
@@ -388,7 +581,7 @@ const QuizModal = ({ isOpen, onClose }) => {
     setSelectedAnswer(null);
     setScore(0);
     setIsCompleted(false);
-    setTimer(10 * 60); // Reset timer to 10 minutes
+    setTimer(10 * 60);
   }, [isOpen]);
 
   useEffect(() => {
@@ -414,23 +607,22 @@ const QuizModal = ({ isOpen, onClose }) => {
       const accounts = await provider.send("eth_accounts", []);
       if (accounts.length > 0) {
         setWalletAddress(accounts[0]);
-        const storedAttempts = localStorage.getItem(`quizAttempts_${accounts[0]}`);
-        setAttempts(storedAttempts ? parseInt(storedAttempts, 10) : 0);
-        fetchUserName(accounts[0]); // Fetch user's name after wallet is connected
+        fetchUserData(accounts[0]); // Fetch user data
       }
     }
   };
 
-  // Fetch user's name using wallet address
-  const fetchUserName = async (address) => {
+  const fetchUserData = async (address) => {
     try {
       const response = await fetch(`https://byteapi-two.vercel.app/api/user/${address}`);
       if (!response.ok) throw new Error("Failed to fetch user data");
       const data = await response.json();
       setUserName(data.user.fullname || "Unknown User");
+      setQuizAttempts(data.user.quiz_attempts || 0); // Set quiz attempts from database
     } catch (error) {
-      console.error("Error fetching user name:", error);
+      console.error("Error fetching user data:", error);
       setUserName("Unknown User");
+      setQuizAttempts(0);
     }
   };
 
@@ -443,9 +635,7 @@ const QuizModal = ({ isOpen, onClose }) => {
     const accounts = await provider.send("eth_requestAccounts", []);
     if (accounts.length > 0) {
       setWalletAddress(accounts[0]);
-      const storedAttempts = localStorage.getItem(`quizAttempts_${accounts[0]}`);
-      setAttempts(storedAttempts ? parseInt(storedAttempts, 10) : 0);
-      fetchUserName(accounts[0]); // Fetch user's name after wallet is connected
+      fetchUserData(accounts[0]); // Fetch user data after connecting wallet
     }
   };
 
@@ -461,12 +651,30 @@ const QuizModal = ({ isOpen, onClose }) => {
       } else {
         setIsCompleted(true);
         if (walletAddress) {
-          const newAttempts = attempts + 1;
-          setAttempts(newAttempts);
-          localStorage.setItem(`quizAttempts_${walletAddress}`, newAttempts.toString());
+          updateQuizAttempts(walletAddress);
         }
       }
     }, 500);
+  };
+
+  const updateQuizAttempts = async (address) => {
+    try {
+      const newAttempts = quizAttempts + 1;
+      setQuizAttempts(newAttempts); // Update state immediately
+
+      const response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${address}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quiz_attempts: newAttempts }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update quiz attempts");
+      console.log("Quiz attempts updated successfully!");
+    } catch (error) {
+      console.error("Error updating quiz attempts:", error);
+    }
   };
 
   const handleAttestationSuccess = (uid) => {
@@ -476,35 +684,23 @@ const QuizModal = ({ isOpen, onClose }) => {
 
   const updateCourseIdInDatabase = async (uid) => {
     try {
-      // Fetch the user's data
       const response = await fetch(`https://byteapi-two.vercel.app/api/user/${walletAddress}`);
       if (!response.ok) throw new Error("Failed to fetch user data");
       const userData = await response.json();
-
-      // Check if course_id exists and get the previous course data
       const prevCourseId = userData.user.course_id || {};
 
-      // If the course_id doesn't exist yet, initialize it as an empty object
       const updatedCourseId = {
         ...prevCourseId,
-        [quizData.course_title]: uid, // Add the new course and attestation UID
+        [quizData.course_title]: uid,
       };
 
-      // Update the course_id in the user's record
       const updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${walletAddress}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          course_id: updatedCourseId, // Update with the new course_id object
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ course_id: updatedCourseId }),
       });
 
-      if (!updateResponse.ok) {
-        throw new Error("Failed to update course_id in the database");
-      }
-
+      if (!updateResponse.ok) throw new Error("Failed to update course_id");
       console.log("Course ID updated successfully!");
     } catch (error) {
       console.error("Error updating course_id:", error);
@@ -513,9 +709,7 @@ const QuizModal = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
-  // Calculate the passing score (80% of total marks)
-  const totalMarks = quizData.total_questions * quizData.marks_per_question;
-  const passingScore = 0.8 * totalMarks; 
+  const progress = ((currentQuestion + 1) / quizData.total_questions) * 100;
 
   return (
     <div className={styles.modalOverlay}>
@@ -533,7 +727,7 @@ const QuizModal = ({ isOpen, onClose }) => {
               Connect Wallet
             </button>
           </div>
-        ) : attempts >= 3 ? (
+        ) : quizAttempts >= 3 ? (
           <div className={styles.limitContainer}>
             <h3>You have reached the maximum attempt limit.</h3>
             <p>You cannot retake the quiz again.</p>
@@ -542,11 +736,24 @@ const QuizModal = ({ isOpen, onClose }) => {
           <div className={styles.quizCompleted}>
             <h3>Quiz Completed!</h3>
             <p className={styles.finalScore}>
-              Final Score: <span>{score}</span> / {totalMarks}
+              Final Score: <span>{score}</span> / {quizData.total_questions * quizData.marks_per_question}
             </p>
-            {score >= passingScore ? (
+            {attestationUID ? (
               <>
-                <p className={styles.passText}>Congratulations! You passed the quiz.</p>
+                <a
+                  href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.attestButton}
+                >
+                  View Attestation
+                </a>
+                <button className={styles.closeButton} onClick={onClose}>
+                  Close
+                </button>
+              </>
+            ) : (
+              <>
                 <Attest
                   walletAddress={walletAddress}
                   score={score}
@@ -555,41 +762,60 @@ const QuizModal = ({ isOpen, onClose }) => {
                   userName={userName}
                   onAttestationSuccess={handleAttestationSuccess}
                 />
+                <button
+                  className={styles.retakeButton}
+                  onClick={() => {
+                    setQuestions(shuffleArray(quizData.questions));
+                    setCurrentQuestion(0);
+                    setSelectedAnswer(null);
+                    setScore(0);
+                    setIsCompleted(false);
+                    setTimer(10 * 60);
+                  }}
+                >
+                  Retake Quiz
+                </button>
               </>
-            ) : (
-              <p className={styles.failText}>You did not pass the quiz. Please try again.</p>
             )}
           </div>
         ) : (
           <>
-            <div className={styles.noticeContainer}>
-              <p className={styles.noticeText}>
-                Please read carefully before answering. You cannot go back once you answer.
-              </p>
-            </div>
+          <div className={styles.noticeContainer}>
+            <p className={styles.noticeText}>
+              Please read carefully before answering. You cannot go back once you answer.
+            </p>
+          </div>
 
-            <h3 className={styles.questionText}>
-              {questions[currentQuestion].question}
-            </h3>
-            <div className={styles.questionCounter}>
-              <span>
-                {currentQuestion + 1} / {quizData.total_questions}
-              </span>
-            </div>
-            <ul className={styles.optionsList}>
-              {questions[currentQuestion].options.map((option, index) => (
-                <li
-                  key={index}
-                  className={`${styles.option} ${
-                    selectedAnswer === option ? styles.selected : ""
-                  }`}
-                  onClick={() => handleAnswerClick(option)}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-          </>
+          {/* Progress Bar */}
+          <div className={styles.progressBarContainer}>
+            <div
+              className={styles.progressBar}
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+
+          <h3 className={styles.questionText}>
+            {questions[currentQuestion].question}
+          </h3>
+          <div className={styles.questionCounter}>
+            <span>
+              {currentQuestion + 1} / {quizData.total_questions}
+            </span>
+          </div>
+          <ul className={styles.optionsList}>
+            {questions[currentQuestion].options.map((option, index) => (
+              <li
+                key={index}
+                className={`${styles.option} ${
+                  selectedAnswer === option ? styles.selected : ""
+                }`}
+                onClick={() => handleAnswerClick(option)}
+              >
+                {option}
+              </li>
+            ))}
+          </ul>
+        </>
         )}
       </div>
     </div>
