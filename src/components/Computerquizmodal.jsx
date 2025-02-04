@@ -644,23 +644,20 @@ const QuizModal = ({ isOpen, onClose }) => {
     if (option === questions[currentQuestion].answer) {
       setScore((prev) => prev + quizData.marks_per_question);
     }
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion((prev) => prev + 1);
-        setSelectedAnswer(null);
-      } else {
-        setIsCompleted(true);
-        if (walletAddress) {
-          updateQuizAttempts(walletAddress);
-        }
-      }
-    }, 500);
+
+    if (currentQuestion >= 49) { 
+      setIsCompleted(true); 
+    } else {
+      setCurrentQuestion((prev) => prev + 1);
+    }
+
+    setSelectedAnswer(null); 
   };
 
   const updateQuizAttempts = async (address) => {
     try {
       const newAttempts = quizAttempts + 1;
-      setQuizAttempts(newAttempts); // Update state immediately
+      setQuizAttempts(newAttempts); 
 
       const response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${address}`, {
         method: "PUT",
@@ -711,6 +708,9 @@ const QuizModal = ({ isOpen, onClose }) => {
 
   const progress = ((currentQuestion + 1) / quizData.total_questions) * 100;
 
+  // Check if user has reached the limit of 2 attempts
+  const maxAttempts = 2;
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
@@ -727,7 +727,7 @@ const QuizModal = ({ isOpen, onClose }) => {
               Connect Wallet
             </button>
           </div>
-        ) : quizAttempts >= 3 ? (
+        ) : quizAttempts >= maxAttempts ? (
           <div className={styles.limitContainer}>
             <h3>You have reached the maximum attempt limit.</h3>
             <p>You cannot retake the quiz again.</p>
@@ -771,6 +771,7 @@ const QuizModal = ({ isOpen, onClose }) => {
                     setScore(0);
                     setIsCompleted(false);
                     setTimer(10 * 60);
+                    updateQuizAttempts(walletAddress); // Update quiz attempts after retaking quiz
                   }}
                 >
                   Retake Quiz
