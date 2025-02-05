@@ -19,7 +19,7 @@ const Classroom = ({ walletConnected }) => {
   const [walletAddress, setWalletAddress] = useState('');
   const [videoToWatch, setVideoToWatch] = useState(null);
   const [quizModalOpen, setQuizModalOpen] = useState(false);
-  const [computerAppreciation, setComputerAppreciation] = useState(true); // Set to true or false to control visibility
+  const [computerAppreciation, setComputerAppreciation] = useState(false); // Set to true or false to control visibility
   const router = useRouter();
 
   // Function to open quiz modal

@@ -771,7 +771,7 @@ const QuizModal = ({ isOpen, onClose }) => {
                     setScore(0);
                     setIsCompleted(false);
                     setTimer(10 * 60);
-                    updateQuizAttempts(walletAddress); // Update quiz attempts after retaking quiz
+                    updateQuizAttempts(walletAddress);
                   }}
                 >
                   Retake Quiz
