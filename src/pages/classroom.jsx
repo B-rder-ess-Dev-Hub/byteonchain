@@ -7,7 +7,6 @@ import searchIcon from '../../public/search.png';
 import videoIcon from '../../public/video-circle.png';
 import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
-// import QuizModal from '../components/Computerquizmodal';
 import QuizModal from '../components/Bukquizmodal';
 
 import { useRouter } from 'next/router';
@@ -173,21 +172,33 @@ const Classroom = ({ walletConnected }) => {
             </div>
           </div>
 
-          {/* Computer Appreciation Card */}
-          {quizview && (
-            <div className={styles.quizCard}>
-              <div className={styles.quizCardContent}>
-                <h2 className={styles.quizTitle}>Buk Quiz</h2>
-                <button className={styles.takeQuizButton} onClick={openQuizModal}>
-                  Take Quiz
-                </button>
+
+          <div className={styles.quizContainer}>
+            {/* Computer Appreciation Card */}
+            <div className={styles.computerquizCard}>
+              <div className={styles.computerquizCardContent}>
+                <h2 className={styles.computerquizTitle}>Computer Appreciation</h2>
+                <h4 className={styles.computerquizSubtitle}>👤 37 Participants</h4>
+                <button className={styles.computertakeQuizButton}>Expired</button>
               </div>
             </div>
-          )}
 
-          {quizModalOpen && (
-            <QuizModal isOpen={quizModalOpen} onClose={closeQuizModal} />
-          )}
+            {/* BUK Quiz Card */}
+            {quizview && (
+              <div className={styles.computerquizCard}>
+                <div className={styles.computerquizCardContent}>
+                  <h2 className={styles.computerquizTitle}>BUK Quiz</h2>
+                  <h4 className={styles.computerquizSubtitleactive}>0 Participants</h4>
+                  <button className={styles.computertakeQuizButtonactive} onClick={openQuizModal}>
+                    Take Quiz
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Quiz Modal */}
+            {quizModalOpen && <QuizModal isOpen={quizModalOpen} onClose={closeQuizModal} />}
+          </div>
 
           {/* Video Section */}
           <div className={styles.recentSection}>

@@ -296,7 +296,7 @@
   }
   
   .connectButton {
-    background: #007bff;
+    background: #FBBF24;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -307,7 +307,7 @@
   }
   
   .connectButton:hover {
-    background: #0056b3;
+    background: #FBBF24;
   }
   
   /* Attest & Retake Buttons */

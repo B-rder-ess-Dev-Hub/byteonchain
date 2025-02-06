@@ -457,7 +457,7 @@
   margin: 20px auto;
   display: flex;
   justify-content: space-between; /* Align items horizontally */
-  align-items: center; /* Center items vertically */
+  align-items:baseline; /* Center items vertically */
   transition: all 0.3s ease-in-out;
 }
 
@@ -469,9 +469,16 @@
 }
 
 .quizTitle {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   margin: 0; /* Remove margin to align with button */
+}
+
+
+.quizTitlesmall {
+  font-size: 10px;
+  font-weight: bold;
+  margin: 0; 
 }
 
 .takeQuizButton {
@@ -487,4 +494,111 @@
 
 .takeQuizButton:hover {
   background-color: #f59f0b8d;
+}
+
+
+
+/* Quiz Card under test */
+/* Main Container to Align Cards Horizontally */
+.quizContainer {
+  display: flex;
+  gap: 20px; /* Spacing between the cards */
+  justify-content: center; /* Center horizontally */
+  flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+}
+
+/* Card Container */
+.computerquizCard {
+  width: 320px;
+  background: rgba(255, 255, 255, 0.2); /* Light Glassmorphism Effect */
+  backdrop-filter: blur(10px); /* Blur Effect */
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15); /* Soft Shadow */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Hover Effect */
+.computerquizCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Content */
+.computerquizCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Quiz Title */
+.computerquizTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+/* Subtitle */
+.computerquizSubtitle {
+  font-size: 16px;
+  color: #e0e0e0;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.computerquizSubtitleactive {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+/* Expired Button */
+.computertakeQuizButton {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  transform: skewX(-10deg);
+  box-shadow: 0px 4px 15px rgba(255, 75, 43, 0.3);
+}
+
+/* Button Hover Effect */
+.computertakeQuizButton:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  box-shadow: 0px 6px 20px rgba(255, 75, 43, 0.5);
+  transform: skewX(-10deg) scale(1.05);
+}
+
+
+.computertakeQuizButtonactive {
+  background: linear-gradient(135deg, #FBBF24, #f59e0b);
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  transform: skewX(-10deg);
+  box-shadow: 0px 4px 15px rgba(255, 75, 43, 0.3);
+}
+
+/* Button Hover Effect */
+.computertakeQuizButtonactive:hover {
+  background: linear-gradient(135deg, #f59e0b, #ff416c);
+  box-shadow: 0px 6px 20px rgba(255, 75, 43, 0.5);
+  transform: skewX(-10deg) scale(1.05);
 }

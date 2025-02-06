@@ -1,5 +1,5 @@
 .attestButton {
-    background-color: #4caf50;
+    background-color: #FBBF24;
     color: white;
     font-size: 16px;
     padding: 12px 20px;
@@ -12,7 +12,7 @@
   }
   
   .attestButton:hover {
-    background-color: #45a049;
+    background-color: #FBBF24;
   }
   
   .attestButton:disabled {
