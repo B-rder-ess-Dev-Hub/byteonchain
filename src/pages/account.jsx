@@ -28,7 +28,7 @@ const Account = () => {
   const [showCoursesModal, setShowCoursesModal] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [courses, setCourses] = useState({});
-  
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       // Client-side only code
@@ -66,6 +66,10 @@ const Account = () => {
       setIsLoadingUser(false);
     }
   }
+
+  const onboardingOptions = [
+    "BUK",
+  ];
 
   const fetchUserData = async (address) => {
     try {
@@ -105,10 +109,10 @@ const Account = () => {
         name: country.name.common,
         code: country.idd?.root + (country.idd?.suffixes?.[0] || ''),
       }));
-      
+
       // Sort countries alphabetically by name
       countriesData.sort((a, b) => a.name.localeCompare(b.name));
-      
+
       setCountries(countriesData);
     } catch (error) {
       console.error('Error fetching countries:', error);
@@ -153,7 +157,7 @@ const Account = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Check if wallet is connected
     if (!walletAddress) {
       setShowModal(true);
@@ -164,14 +168,14 @@ const Account = () => {
 
     try {
       const response = await axios.post(
-        'https://byteapi-two.vercel.app/api/signup', // Ensure this is the correct API URL
+        'https://byteapi-two.vercel.app/api/signup',
         {
           fullname: formData.fullName,
           email: formData.email,
           phone: formData.phone,
           sex: formData.sex,
           course: formData.course,
-          country:formData.countryCode,
+          country: formData.countryCode,
           wallet_address: walletAddress,
         },
         {
@@ -220,7 +224,7 @@ const Account = () => {
         <Sidebar />
 
         <div className={styles.mainContent}>
-        {isLoadingUser ? (
+          {isLoadingUser ? (
             <div className={styles.loadingContainer}>
               <div className={styles.loadingSpinner}></div>
               <p>Loading account information...</p>
@@ -248,8 +252,8 @@ const Account = () => {
               />
 
               <div className={styles.phoneContainer}>
-                <select 
-                  className={styles.countryCode} 
+                <select
+                  className={styles.countryCode}
                   value={formData.countryCode}
                   onChange={handleCountryChange} // Handle country change
                 >
@@ -276,16 +280,22 @@ const Account = () => {
                 <option value="female">Female</option>
               </select>
 
-              <select name="course" value={formData.course || ''} onChange={handleFormChange} required>
-                <option value="">Select Course</option>
+              <select name="course" value={formData.course} onChange={handleFormChange} required>
+                <option value="">Select Course/Purpose</option>
                 <option value="ui-ux-design">UI/UX Design</option>
                 <option value="web-design-development">Web Design and Development</option>
                 <option value="cyber-security">Cyber Security</option>
                 <option value="data-analysis">Data Analysis</option>
                 <option value="solidity">Solidity</option>
                 <option value="arbitrum-stylus">Arbitrum Stylus</option>
+                <option disabled>──────────</option>
+                <option disabled>Onboarding Options</option>
+                {onboardingOptions.map((option, index) => (
+                  <option key={index} value={`Onboarding ${option}`}>
+                    {option} Onboarding 
+                  </option>
+                ))}
               </select>
-
               <button
                 type="submit"
                 className={styles.submitButton}
@@ -354,30 +364,30 @@ const Account = () => {
       </div>
 
       {showCoursesModal && (
-  <div className={styles.modalOverlay}>
-    <div className={styles.modal}>
-      <h3 className={styles.modalTitle}>My Courses</h3>
-      <ul className={styles.courseList}>
-        {Object.entries(courses).map(([courseName, attestationUID]) => (
-          <li key={attestationUID} className={styles.courseItem}>
-            <span className={styles.courseName}>{courseName}</span>
-            <a
-              href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.attestationButton}
-            >
-              View Attestation
-            </a>
-          </li>
-        ))}
-      </ul>
-      <button className={styles.modalClose} onClick={() => setShowCoursesModal(false)}>
-        Close
-      </button>
-    </div>
-  </div>
-)}
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3 className={styles.modalTitle}>My Courses</h3>
+            <ul className={styles.courseList}>
+              {Object.entries(courses).map(([courseName, attestationUID]) => (
+                <li key={attestationUID} className={styles.courseItem}>
+                  <span className={styles.courseName}>{courseName}</span>
+                  <a
+                    href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.attestationButton}
+                  >
+                    View Attestation
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <button className={styles.modalClose} onClick={() => setShowCoursesModal(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Wallet Connection Modal */}
       {showModal && (

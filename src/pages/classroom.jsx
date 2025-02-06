@@ -7,7 +7,9 @@ import searchIcon from '../../public/search.png';
 import videoIcon from '../../public/video-circle.png';
 import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
-import QuizModal from '../components/Computerquizmodal';
+// import QuizModal from '../components/Computerquizmodal';
+import QuizModal from '../components/Bukquizmodal';
+
 import { useRouter } from 'next/router';
 
 const Classroom = ({ walletConnected }) => {
@@ -19,7 +21,7 @@ const Classroom = ({ walletConnected }) => {
   const [walletAddress, setWalletAddress] = useState('');
   const [videoToWatch, setVideoToWatch] = useState(null);
   const [quizModalOpen, setQuizModalOpen] = useState(false);
-  const [computerAppreciation, setComputerAppreciation] = useState(false); // Set to true or false to control visibility
+  const [quizview, setquizview] = useState(true); // Set to true or false to control visibility
   const router = useRouter();
 
   // Function to open quiz modal
@@ -172,10 +174,10 @@ const Classroom = ({ walletConnected }) => {
           </div>
 
           {/* Computer Appreciation Card */}
-          {computerAppreciation && (
+          {quizview && (
             <div className={styles.quizCard}>
               <div className={styles.quizCardContent}>
-                <h2 className={styles.quizTitle}>Computer Appreciation</h2>
+                <h2 className={styles.quizTitle}>Buk Quiz</h2>
                 <button className={styles.takeQuizButton} onClick={openQuizModal}>
                   Take Quiz
                 </button>
