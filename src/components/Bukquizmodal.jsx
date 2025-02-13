@@ -4,39 +4,142 @@ import styles from "../styles/Quiz.module.css";
 import Attest from "../../utils/attestUserOnboarding"; // Import the Attest component
 
 const quizData = {
-    "course_title": "BUK Onboarding Quiz",
-    "duration": "10 minutes",
-    "total_questions": 3,
-    "marks_per_question": 1,
-    "questions": [
+  "course_title": "Web3 Configuration - BUK",
+  "duration": "15 minutes",
+  "total_questions": 13,
+  "marks_per_question": 1,
+  "questions": [
       {
-        "question": "Who is the tech lead for BUK?",
-        "options": [
-          "Chioma Jesus",
-          "Ifeanyichukwu",
-          "Emmanuel aka Quantum trades."
-        ],
-        "answer": "Emmanuel aka Quantum trades."
+          "question": "What is a key difference between Web3 and Web2?",
+          "options": [
+              "Web3 relies on centralized servers, while Web2 is decentralized.",
+              "Web3 is built on blockchain technology, while Web2 relies on centralized databases.",
+              "Web3 does not require the internet, while Web2 does.",
+              "Web3 eliminates user-generated content, unlike Web2."
+          ],
+          "answer": "Web3 is built on blockchain technology, while Web2 relies on centralized databases."
       },
       {
-        "question": "Who was the highest funder for B<>rder/ess last year.?",
-        "options": [
-          "Octant",
-          "Gitcon",
-          "Nobody Knows"
-        ],
-        "answer": "Octant"
+          "question": "What is a major benefit of Web3?",
+          "options": [
+              "It ensures all transactions are private and untraceable.",
+              "It allows users to have control and ownership over their data.",
+              "It makes the internet faster without using blockchain.",
+              "It is only accessible to large corporations."
+          ],
+          "answer": "It allows users to have control and ownership over their data."
       },
       {
-        "question": "What is byteonchain.xyz?",
-        "options": [
-          "A web3 education and on boarding tool.",
-          "An airdrop tool🌝",
-          "Nobody cares"
-        ],
-        "answer": "A web3 education and on boarding tool."
+          "question": "Which of the following is an example of a Web3 technology?",
+          "options": [
+              "Social media platforms like Facebook and Instagram",
+              "Cloud storage solutions like Google Drive",
+              "Smart contracts on Ethereum",
+              "Traditional banking apps"
+          ],
+          "answer": "Smart contracts on Ethereum"
+      },
+      {
+          "question": "How does Web3 improve financial transactions?",
+          "options": [
+              "By requiring intermediaries like banks to validate transactions",
+              "By enabling peer-to-peer transactions through decentralized finance (DeFi)",
+              "By increasing the cost of sending money across borders",
+              "By limiting access to financial services"
+          ],
+          "answer": "By enabling peer-to-peer transactions through decentralized finance (DeFi)"
+      },
+      {
+          "question": "What is a smart contract?",
+          "options": [
+              "A legal agreement that requires a lawyer to execute",
+              "A program stored on the blockchain that automatically executes actions",
+              "A contract used only by developers for coding purposes",
+              "A document that outlines blockchain regulations"
+          ],
+          "answer": "A program stored on the blockchain that automatically executes actions"
+      },
+      {
+          "question": "Which of these is NOT a common Web3 application?",
+          "options": [
+              "Decentralized Finance (DeFi)",
+              "Non-Fungible Tokens (NFTs)",
+              "Traditional banking apps",
+              "Metaverse platforms"
+          ],
+          "answer": "Traditional banking apps"
+      },
+      {
+          "question": "What is the main purpose of a blockchain in Web3?",
+          "options": [
+              "To provide centralized storage for user data",
+              "To create a network controlled by a single authority",
+              "To secure and verify transactions in a decentralized manner",
+              "To replace social media networks"
+          ],
+          "answer": "To secure and verify transactions in a decentralized manner"
+      },
+      {
+          "question": "What makes DAOs unique compared to traditional organizations?",
+          "options": [
+              "DAOs have a CEO who makes all decisions.",
+              "DAOs operate through smart contracts and community governance.",
+              "DAOs require government approval to function.",
+              "DAOs rely on a central bank for funding."
+          ],
+          "answer": "DAOs operate through smart contracts and community governance."
+      },
+      {
+          "question": "Who is the Tech Lead for borderless Tech club KANO?",
+          "options": [
+              "Emmybabs",
+              "Xenotheking",
+              "Vicky",
+              "Mallam Ali"
+          ],
+          "answer": "Emmybabs"
+      },
+      {
+          "question": "Who is B<>rder/ess Tech organization?",
+          "options": [
+              "Some guys talking about web3",
+              "B<>rder/ess is a public group, raising the next generation of web3 developers, builders and contributors.",
+              "B<>rder/ess is beautiful people in web3",
+              "B<>rder/ess is a love organization"
+          ],
+          "answer": "B<>rder/ess is a public group, raising the next generation of web3 developers, builders and contributors."
+      },
+      {
+          "question": "Who is the Lead Partner for B<>rder/ess world wide?",
+          "options": [
+              "Vitalik Buterin",
+              "Satoshi Nakamoto",
+              "KarlaGod",
+              "Davido"
+          ],
+          "answer": "KarlaGod"
+      },
+      {
+          "question": "Who are the latest partners of B<>rder/ess in February?",
+          "options": [
+              "Sonic",
+              "Binance",
+              "Octant",
+              "Bybit"
+          ],
+          "answer": "Sonic"
+      },
+      {
+          "question": "What are cipher sessions in B<>rder/ess?",
+          "options": [
+              "Times people buy cryptocurrencies",
+              "Time people invest in connections",
+              "A session people acquire web3 skills",
+              "A session when people watch film together"
+          ],
+          "answer": "A session people acquire web3 skills"
       }
-    ]
+  ]
 };
 
 
@@ -200,8 +303,7 @@ const QuizModal = ({ isOpen, onClose }) => {
 
   const progress = ((currentQuestion + 1) / quizData.total_questions) * 100;
 
-  // Check if user has reached the limit of 2 attempts
-  const maxAttempts = 2;
+  const maxAttempts = 5;
 
   return (
     <div className={styles.modalOverlay}>

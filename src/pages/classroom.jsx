@@ -187,7 +187,7 @@ const Classroom = ({ walletConnected }) => {
             {quizview && (
               <div className={styles.computerquizCard}>
                 <div className={styles.computerquizCardContent}>
-                  <h2 className={styles.computerquizTitle}>BUK Quiz</h2>
+                  <h2 className={styles.computerquizTitle}>Web3 Onboarding - BUK Quiz</h2>
                   <h4 className={styles.computerquizSubtitleactive}>0 Participants</h4>
                   <button className={styles.computertakeQuizButtonactive} onClick={openQuizModal}>
                     Take Quiz
