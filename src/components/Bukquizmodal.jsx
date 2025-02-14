@@ -103,11 +103,11 @@ const quizData = {
           "question": "Who is B<>rder/ess Tech organization?",
           "options": [
               "Some guys talking about web3",
-              "B<>rder/ess is a public group, raising the next generation of web3 developers, builders and contributors.",
+              "B<>rder/ess is a public good, raising the next generation of web3 developers, builders and contributors.",
               "B<>rder/ess is beautiful people in web3",
               "B<>rder/ess is a love organization"
           ],
-          "answer": "B<>rder/ess is a public group, raising the next generation of web3 developers, builders and contributors."
+          "answer": "B<>rder/ess is a public good, raising the next generation of web3 developers, builders and contributors."
       },
       {
           "question": "Who is the Lead Partner for B<>rder/ess world wide?",
