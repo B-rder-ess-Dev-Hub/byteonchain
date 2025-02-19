@@ -3,6 +3,7 @@
   flex-direction: column;
   height: 100vh;
   background-color: #fff;
+  font-family: 'Inter', sans-serif;
 }
 
 .contentWrapper {
@@ -12,38 +13,72 @@
 }
 
 .sidebarWrapper {
-  width: 250px; /* Fixed width for sidebar */
+  width: 250px; /* Sidebar width for desktop */
   flex-shrink: 0;
-  background-color: #f8f9fa; /* Light background for sidebar */
-  border-right: 1px solid #e5e7eb; /* Separator for sidebar */
-  overflow-y: auto; /* Allow scrolling for longer sidebar */
+  overflow: hidden;
 }
 
 .mainContent {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
 }
 
 .pageTitle {
   font-size: 2rem;
-  color: #333;
+  color: #1e293b;
   margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.categoryFilters {
+  display: flex;
+  flex-wrap: wrap; /* Allow filters to wrap into multiple rows */
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.categoryPill {
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  background-color: rgba(251, 191, 36, 0.1);
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1 1 auto; /* Allow pills to grow and shrink */
+  text-align: center; /* Center text in pills */
+}
+
+.categoryPill:hover {
+  background-color: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.5);
+}
+
+.categoryPill.active {
+  background-color: #fbbf24;
+  border-color: #fbbf24;
+  color: #fff;
 }
 
 .videoGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
 
 .videoCard {
-  background: #ffffff;
-  border: 2px solid #fbbf24;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(251, 191, 36, 0.3);
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .videoCard:hover {
@@ -55,7 +90,7 @@
   width: 100%;
   height: 150px;
   object-fit: cover;
-  border-bottom: 2px solid #fbbf24;
+  border-bottom: 2px solid rgba(251, 191, 36, 0.3);
 }
 
 .videoInfo {
@@ -64,7 +99,7 @@
 
 .videoTitle {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   color: #1e293b;
   margin: 0 0 5px 0;
 }
@@ -79,8 +114,8 @@
   margin: 20px auto;
   padding: 10px 20px;
   font-size: 1rem;
-  font-weight: bold;
-  color: #ffffff;
+  font-weight: 600;
+  color: #fff;
   background-color: #fbbf24;
   border: none;
   border-radius: 8px;
@@ -90,7 +125,7 @@
 }
 
 .loadMoreButton:hover {
-  background-color: #fbbe246d;
+  background-color: rgba(251, 191, 36, 0.8);
 }
 
 .loadMoreButton:active {
@@ -104,12 +139,52 @@
   }
 
   .sidebarWrapper {
-    width: 100%; /* Sidebar takes full width on mobile */
+    width: 100%;
     border-right: none;
-    border-bottom: 1px solid #e5e7eb; /* Separator below sidebar */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .mainContent {
+    padding: 15px; /* Reduce padding for smaller screens */
+  }
+
+  .pageTitle {
+    font-size: 1.5rem; /* Smaller title for mobile */
+  }
+
+  .categoryFilters {
+    gap: 8px; /* Reduce gap between filters */
+  }
+
+  .categoryPill {
+    padding: 8px 16px; /* Smaller padding for mobile */
+    font-size: 0.75rem; /* Smaller font size for mobile */
+    flex: 1 1 45%; /* Allow two pills per row with some spacing */
   }
 
   .videoGrid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller cards for mobile */
+    gap: 15px; /* Reduce gap between cards */
+  }
+
+  .videoCard {
+    border-radius: 8px; /* Slightly smaller border radius */
+  }
+
+  .thumbnail {
+    height: 120px; /* Smaller thumbnail height */
+  }
+
+  .videoTitle {
+    font-size: 1rem; /* Smaller title for mobile */
+  }
+
+  .videoMeta {
+    font-size: 0.75rem; /* Smaller meta text for mobile */
+  }
+
+  .loadMoreButton {
+    padding: 8px 16px; /* Smaller button for mobile */
+    font-size: 0.875rem; /* Smaller font size for mobile */
   }
 }

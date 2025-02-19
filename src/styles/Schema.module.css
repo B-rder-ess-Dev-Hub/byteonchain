@@ -1,0 +1,151 @@
+/* General Page Styling */
+.schemaPage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Allow page to grow beyond viewport */
+    background-color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow: auto; /* Enables scrolling */
+}
+
+/* Header Styling */
+.headerWrapper {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    padding: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.07);
+}
+
+/* Sidebar & Content Wrapper */
+.contentWrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar Styling */
+.sidebarWrapper {
+    width: 250px; /* Sidebar width for desktop */
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Page Title */
+.pageTitle {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Page Description */
+.pageDescription {
+    font-size: 18px;
+    text-align: center;
+    max-width: 600px;
+    opacity: 0.8;
+    margin-bottom: 40px;
+}
+
+/* Schema Container */
+.schemasContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: center;
+}
+
+/* Schema Card (Glassmorphism + Neumorphism) */
+.schemaCard {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    border-radius: 14px;
+    padding: 25px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), 
+                -8px -8px 16px rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.schemaCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.12),
+                -12px -12px 24px rgba(255, 255, 255, 0.9);
+}
+
+/* Schema Title */
+.schemaTitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 12px;
+}
+
+/* Schema Description */
+.schemaDescription {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* Schema Button (Golden Accent) */
+.schemaButton {
+    display: inline-block;
+    padding: 14px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: #feb800; /* Golden Yellow */
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1),
+                -6px -6px 12px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Button Hover */
+.schemaButton:hover {
+    background: #e0a800; /* Slightly Darker Golden */
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15),
+                -3px -3px 8px rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contentWrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .sidebarWrapper {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .mainContent {
+        padding: 20px;
+    }
+    .schemasContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+}

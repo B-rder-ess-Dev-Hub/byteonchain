@@ -23,6 +23,8 @@ const Sidebar = () => {
     { path: "/chat", label: "Chat" },
     { path: "/classroom", label: "Classroom" },
     { path: "/update", label: "Update" },
+    { path: "/quiz", label: "Quiz" },
+    { path: "/schema", label: "Schema" },
     { path: "/account", label: "Account" },
   ];
 
@@ -94,7 +96,7 @@ const Sidebar = () => {
           <Image
             src={logo}
             alt="Byte Logo"
-            width={120}
+            width={100}
             height={60}
           />
         </div>
