@@ -1,0 +1,348 @@
+/* Quiz Page Container */
+.quizPage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #f8f8f8;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Header Styling */
+.headerWrapper {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Sidebar & Content */
+.contentWrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.sidebarWrapper {
+    width: 250px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+/* Full-Width Banner */
+.banner {
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+    background: #f3f4f6;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+/* Banner Text */
+.bannerText {
+    font-size: 1em;
+    color: #333;
+    font-weight: normal;
+}
+
+.userName {
+    font-size: 3em;
+    font-weight: bold;
+    color: #555;
+    margin-top: 20px;
+}
+
+/* Search */
+.searchWrapper {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    background-color: #f3f4f6;
+    border-radius: 25px;
+    padding: 12px 16px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.searchIcon {
+    margin-right: 10px;
+}
+
+.searchInput {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 1em;
+    background-color: transparent;
+    color: #333;
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+/* Quiz Cards Container */
+.quizCardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+/* Quiz Card */
+.quizCard {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1),
+                -8px -8px 16px rgba(255, 255, 255, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.quizCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2),
+                -12px -12px 24px rgba(255, 255, 255, 0.9);
+}
+
+/* Status Pill */
+.statusPill {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.statusPill.active {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.statusPill.inactive {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+/* Quiz Card Title */
+.quizCard h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Quiz Card Description */
+.quizCard p {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Quiz Card Status */
+.quizCard .status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.quizCard .status.active {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.quizCard .status.expired {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+/* Quiz Card Action Buttons */
+.quizCard .actionButton {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quizCard .actionButton.active {
+    background: rgba(40, 167, 69, 0.9);
+    color: white;
+}
+
+.quizCard .actionButton.expired {
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    cursor: not-allowed;
+}
+
+.quizCard .actionButton:hover:not(.expired) {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Quiz Name */
+.quizCard h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Quiz Details */
+.quizDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.detailItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detailLabel {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.detailValue {
+    font-size: 1em;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Action Button */
+.actionButton {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.actionButton.active {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: white;
+}
+
+.actionButton.inactive {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    cursor: not-allowed;
+}
+
+.actionButton:hover:not(.inactive) {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contentWrapper {
+        flex-direction: column;
+    }
+
+    .quizCardsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .banner {
+        padding: 20px 10px;
+    }
+
+    .userName {
+        font-size: 2em;
+    }
+
+    .searchContainer {
+        padding: 10px;
+    }
+}
+
+
+/* Reset Container */
+.resetContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Styled Input Field */
+.resetInput {
+    width: 100px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+    background: rgba(255, 255, 255, 0.15); /* Glassmorphism effect */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Input Field Hover & Focus Effect */
+.resetInput:hover, 
+.resetInput:focus {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+/* Reset Button */
+.resetButton {
+    background: #feb800;
+    color: white;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Button Hover Effect */
+.resetButton:hover {
+    background: #e0a800;
+    transform: scale(1.05);
+}

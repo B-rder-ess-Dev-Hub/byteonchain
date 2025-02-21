@@ -51,7 +51,7 @@ const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
         { name: "Name", value: userName, type: "string" },
         { name: "Onboarding_Event", value: course, type: "string" },
         { name: "Score", value: score || 0, type: "uint256" },
-        { name: "Issuer", value: "BUK", type: "string" },
+        { name: "Issuer", value: "Borderless UNN", type: "string" },
       ]);
 
       const tx = await eas.attest({
