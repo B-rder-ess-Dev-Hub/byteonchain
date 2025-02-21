@@ -173,42 +173,6 @@ const Classroom = ({ walletConnected }) => {
           </div>
 
 
-          <div className={styles.quizContainer}>
-            {/* Computer Appreciation Card */}
-            <div className={styles.computerquizCard}>
-              <div className={styles.computerquizCardContent}>
-                <h2 className={styles.computerquizTitle}>Computer Appreciation</h2>
-                <h4 className={styles.computerquizSubtitle}>👤 37 Participants</h4>
-                <button className={styles.computertakeQuizButton}>Expired</button>
-              </div>
-            </div>
-
-            {/* BUK Quiz Card */}
-            <div className={styles.computerquizCard}>
-              <div className={styles.computerquizCardContent}>
-                <h2 className={styles.computerquizTitle}>BUK Web3 Onboarding Quiz</h2>
-                <h4 className={styles.computerquizSubtitle}>👤 38 Participants</h4>
-                <button className={styles.computertakeQuizButton}>Expired</button>
-              </div>
-            </div>
-
-            {/* Borderless UNN Hangout Quiz Card */}
-            {quizview && (
-              <div className={styles.computerquizCard}>
-                <div className={styles.computerquizCardContent}>
-                  <h2 className={styles.computerquizTitle}>Web3 Onboarding - BUK Quiz</h2>
-                  <h4 className={styles.computerquizSubtitleactive}>0 Participants</h4>
-                  <button className={styles.computertakeQuizButtonactive} onClick={openQuizModal}>
-                    Take Quiz
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Quiz Modal */}
-            {quizModalOpen && <QuizModal isOpen={quizModalOpen} onClose={closeQuizModal} />}
-          </div>
-
           
 
           {/* Video Section */}
