@@ -50,8 +50,8 @@ const Quiz = () => {
   useEffect(() => {
     const storedTimers = JSON.parse(localStorage.getItem("quizExpirationTimes")) || {
       "1": 0,
-      "2": 0,
-      "3": 86400,
+      "2": 7884000,
+      "3": 7884000,
     };
 
     setQuizData([
