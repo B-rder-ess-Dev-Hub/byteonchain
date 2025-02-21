@@ -2,22 +2,18 @@ import React, { useState, useEffect } from "react";
 import styles from "../styles/QuizPage.module.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import QuizModal from "../components/UNNquizmodal";
+import QuizUNNModal from "../components/UNNquizmodal";
+import QuizBUKModal from "../components/Bukquizmodal";
 
 const Quiz = () => {
   const [userFullName, setUserFullName] = useState("");
   const [walletAddress, setWalletAddress] = useState(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [quizData, setQuizData] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [resetTimes, setResetTimes] = useState({});
+  const [quizStates, setQuizStates] = useState({});
   const [quizModalOpen, setQuizModalOpen] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
-
-  const checkAdmin = async (walletAddress) => {
-    const adminWallets = ["0x6bd6109fb3bf59f67c86cab3bc09adb8b77485b7"];
-    setIsAdmin(adminWallets.includes(walletAddress));
-  };
+  const [quizType, setQuizType] = useState(null); // Track which modal to show
 
   const fetchWalletAddress = async () => {
     if (window.ethereum) {
@@ -26,7 +22,6 @@ const Quiz = () => {
         if (accounts.length > 0) {
           setWalletAddress(accounts[0]);
           setIsWalletConnected(true);
-          checkAdmin(accounts[0]);
           fetchUserDetails(accounts[0]);
         }
       } catch (error) {
@@ -48,11 +43,14 @@ const Quiz = () => {
   };
 
   useEffect(() => {
-    const storedTimers = JSON.parse(localStorage.getItem("quizExpirationTimes")) || {
-      "1": 0,
-      "2": 7884000,
-      "3": 7884000,
+    // **Manually Set Quiz States Here** (true = active, false = expired)
+    const manualQuizStates = {
+      "1": false,
+      "2": true,
+      "3": true,
     };
+
+    setQuizStates(manualQuizStates);
 
     setQuizData([
       {
@@ -61,7 +59,6 @@ const Quiz = () => {
         participants: 37,
         access: "Public",
         date: "2025-02-25",
-        expiresIn: storedTimers["1"],
       },
       {
         id: 2,
@@ -69,7 +66,6 @@ const Quiz = () => {
         participants: 38,
         access: "Private",
         date: "2025-02-28",
-        expiresIn: storedTimers["2"],
       },
       {
         id: 3,
@@ -77,7 +73,6 @@ const Quiz = () => {
         participants: 0,
         access: "Public",
         date: "2025-02-21",
-        expiresIn: storedTimers["3"],
       },
     ]);
   }, []);
@@ -89,48 +84,19 @@ const Quiz = () => {
   const openQuizModal = (quiz) => {
     setSelectedQuiz(quiz);
     setQuizModalOpen(true);
+
+    // Determine which modal to show based on quiz.id
+    if (quiz.id === 2) {
+      setQuizType("buk");
+    } else if (quiz.id === 3) {
+      setQuizType("unn");
+    }
   };
 
   const closeQuizModal = () => {
     setQuizModalOpen(false);
     setSelectedQuiz(null);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setQuizData((prevQuizData) => {
-        const updatedQuizData = prevQuizData.map((quiz) => ({
-          ...quiz,
-          expiresIn: quiz.expiresIn > 0 ? quiz.expiresIn - 1 : 0,
-        }));
-
-        const newTimers = Object.fromEntries(updatedQuizData.map((q) => [q.id, q.expiresIn]));
-        localStorage.setItem("quizExpirationTimes", JSON.stringify(newTimers));
-
-        return updatedQuizData;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const resetQuizTimer = (quizId) => {
-    const newTime = resetTimes[quizId] || 3600;
-    const storedTimers = JSON.parse(localStorage.getItem("quizExpirationTimes")) || {};
-    storedTimers[quizId] = newTime;
-    localStorage.setItem("quizExpirationTimes", JSON.stringify(storedTimers));
-
-    setQuizData((prevQuizData) =>
-      prevQuizData.map((quiz) => (quiz.id === quizId ? { ...quiz, expiresIn: newTime } : quiz))
-    );
-  };
-
-  const formatTime = (seconds) => {
-    if (seconds <= 0) return "Expired";
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hrs}h ${mins}m ${secs}s`;
+    setQuizType(null);
   };
 
   return (
@@ -179,41 +145,29 @@ const Quiz = () => {
                     <span className={styles.detailLabel}>Date:</span>
                     <span className={styles.detailValue}>{quiz.date}</span>
                   </div>
-                  <div className={styles.detailItem}>
-                    <span className={styles.detailLabel}>Time Left:</span>
-                    <span className={styles.detailValue}>{formatTime(quiz.expiresIn)}</span>
-                  </div>
                 </div>
 
                 <button
-                  className={`${styles.actionButton} ${quiz.expiresIn > 0 ? styles.active : styles.inactive}`}
-                  disabled={quiz.expiresIn <= 0}
+                  className={`${styles.actionButton} ${quizStates[quiz.id] ? styles.active : styles.inactive}`}
+                  disabled={!quizStates[quiz.id]}
                   onClick={() => openQuizModal(quiz)}
                 >
-                  {quiz.expiresIn > 0 ? "Take Quiz" : "Expired"}
+                  {quizStates[quiz.id] ? "Take Quiz" : "Expired"}
                 </button>
-
-                {isAdmin && (
-                  <div className={styles.resetContainer}>
-                    <input
-                      type="number"
-                      placeholder="Seconds"
-                      value={resetTimes[quiz.id] || ""}
-                      onChange={(e) => setResetTimes({ ...resetTimes, [quiz.id]: e.target.value })}
-                      className={styles.resetInput}
-                    />
-                    <button className={styles.resetButton} onClick={() => resetQuizTimer(quiz.id)}>
-                      Reset Timer
-                    </button>
-                  </div>
-                )}
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {quizModalOpen && <QuizModal isOpen={quizModalOpen} onClose={closeQuizModal} quiz={selectedQuiz} />}
+      {/* Conditionally Render Modals Based on Quiz Type */}
+      {quizModalOpen && quizType === "buk" && (
+        <QuizBUKModal isOpen={quizModalOpen} onClose={closeQuizModal} quiz={selectedQuiz} />
+      )}
+
+      {quizModalOpen && quizType === "unn" && (
+        <QuizUNNModal isOpen={quizModalOpen} onClose={closeQuizModal} quiz={selectedQuiz} />
+      )}
     </div>
   );
 };
