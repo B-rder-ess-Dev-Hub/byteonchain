@@ -2,8 +2,11 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import styles from "../styles/Schema.module.css";
+import fetchFilteredAttestations from "../../utils/filter"
+import Filter from "../../utils/filter";
 
 export default function Schema() {
+  const schemaUID = '0xadc627b3baae8680c1e7d1f080ea5e50738e7efcc93e95a35269e6841116fffe';
   return (
     <div className={styles.schemaPage}>
       {/* Header Component */}

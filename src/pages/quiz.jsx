@@ -14,8 +14,13 @@ const Quiz = () => {
   const [quizModalOpen, setQuizModalOpen] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [quizType, setQuizType] = useState(null); // Track which modal to show
+<<<<<<< HEAD
   const [participants, setParticipants] = useState({}); // Stores total participants for each quiz
+=======
+  const [searchQuery, setSearchQuery] = useState(""); // For search functionality
+>>>>>>> f5e2fa468e5b1e1e7bce3dc1c6b2d2427739aa23
 
+  // Fetch user's connected wallet address
   const fetchWalletAddress = async () => {
     if (window.ethereum) {
       try {
@@ -140,6 +145,11 @@ const Quiz = () => {
     quizData.forEach((quiz) => fetchParticipants(quiz.courseNames, quiz.id));
   };
 
+  // Filter quizzes based on search query
+  const filteredQuizzes = quizData.filter((quiz) =>
+    quiz.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className={styles.quizPage}>
       <div className={styles.headerWrapper}>
@@ -168,7 +178,22 @@ const Quiz = () => {
             <h1 className={styles.bannerText}>Select a quiz to begin😌!</h1>
           </div>
 
+          {/* Search Field */}
+          <div className={styles.searchWrapper}>
+            <div className={styles.searchContainer}>
+              <input
+                type="text"
+                placeholder="Search for a quiz..."
+                className={styles.searchInput}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Quiz Cards */}
           <div className={styles.quizCardsContainer}>
+<<<<<<< HEAD
             {quizData.map((quiz) => (
               <div key={quiz.id} className={styles.quizCard}>
                 <h3 style={{ textAlign: "center" }}>{quiz.name}</h3>
@@ -185,18 +210,40 @@ const Quiz = () => {
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Date:</span>
                     <span className={styles.detailValue}>{quiz.date}</span>
-                  </div>
-                </div>
+=======
+            {filteredQuizzes.length > 0 ? (
+              filteredQuizzes.map((quiz) => (
+                <div key={quiz.id} className={styles.quizCard}>
+                  <h3>{quiz.name}</h3>
 
-                <button
-                  className={`${styles.actionButton} ${quizStates[quiz.id] ? styles.active : styles.inactive}`}
-                  disabled={!quizStates[quiz.id]}
-                  onClick={() => openQuizModal(quiz)}
-                >
-                  {quizStates[quiz.id] ? "Take Quiz" : "Expired"}
-                </button>
-              </div>
-            ))}
+                  <div className={styles.quizDetails}>
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>Participants:</span>
+                      <span className={styles.detailValue}>👤 {quiz.participants}</span>
+                    </div>
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>Access:</span>
+                      <span className={styles.detailValue}>{quiz.access}</span>
+                    </div>
+                    <div className={styles.detailItem}>
+                      <span className={styles.detailLabel}>Date:</span>
+                      <span className={styles.detailValue}>{quiz.date}</span>
+                    </div>
+>>>>>>> f5e2fa468e5b1e1e7bce3dc1c6b2d2427739aa23
+                  </div>
+
+                  <button
+                    className={`${styles.actionButton} ${quizStates[quiz.id] ? styles.active : styles.inactive}`}
+                    disabled={!quizStates[quiz.id]}
+                    onClick={() => openQuizModal(quiz)}
+                  >
+                    {quizStates[quiz.id] ? "Take Quiz" : "Expired"}
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p className={styles.noResults}>No quizzes found for "{searchQuery}"</p>
+            )}
           </div>
         </div>
       </div>
