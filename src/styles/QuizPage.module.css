@@ -180,7 +180,7 @@
 
 .quizCard .status.expired {
     background: rgba(220, 53, 69, 0.2);
-    color: #dc3545;
+    color: #cdcdcd;
 }
 
 /* Quiz Card Action Buttons */
@@ -196,12 +196,12 @@
 }
 
 .quizCard .actionButton.active {
-    background: rgba(40, 167, 69, 0.9);
+    background: #feb800;
     color: white;
 }
 
 .quizCard .actionButton.expired {
-    background: rgba(220, 53, 69, 0.9);
+    background: #cdcdcd;
     color: white;
     cursor: not-allowed;
 }
@@ -262,7 +262,7 @@
 }
 
 .actionButton.inactive {
-    background: linear-gradient(135deg, #dc3545, #c82333);
+    background: #cdcdcd;
     color: white;
     cursor: not-allowed;
 }

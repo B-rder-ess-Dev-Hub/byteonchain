@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import styles from "../styles/Quiz.module.css";
-import Attest from "../../utils/attestUserOnboarding"; // Import the Attest component
+import Attest from "../../utils/attestUserOnboarding"; 
 
 const quizData = {
     "course_title": "B<>rder/ess UNN Hangout",
     "duration": "10 minutes",
+    "Issuer": "Borderless UNN",
     "total_questions": 3,
     "marks_per_question": 1,
     "questions": [

@@ -14,6 +14,7 @@ const Quiz = () => {
   const [quizModalOpen, setQuizModalOpen] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [quizType, setQuizType] = useState(null); // Track which modal to show
+  const [participants, setParticipants] = useState({}); // Stores total participants for each quiz
 
   const fetchWalletAddress = async () => {
     if (window.ethereum) {
@@ -42,6 +43,28 @@ const Quiz = () => {
     }
   };
 
+  const fetchParticipants = async (courseNames, quizId) => {
+    try {
+      let totalParticipants = 0;
+
+      for (const courseName of courseNames) {
+        const response = await fetch(
+          `https://byteapi-two.vercel.app/api/course-completion?course_name=${encodeURIComponent(courseName)}`
+        );
+        const data = await response.json();
+
+        if (data && typeof data.total_completed === "number") {
+          totalParticipants += data.total_completed;
+        }
+      }
+
+      setParticipants((prev) => ({ ...prev, [quizId]: totalParticipants }));
+    } catch (error) {
+      console.error(`Error fetching participants for ${courseNames.join(", ")}:`, error);
+      setParticipants((prev) => ({ ...prev, [quizId]: 0 }));
+    }
+  };
+
   useEffect(() => {
     // **Manually Set Quiz States Here** (true = active, false = expired)
     const manualQuizStates = {
@@ -52,20 +75,22 @@ const Quiz = () => {
 
     setQuizStates(manualQuizStates);
 
-    setQuizData([
+    const quizzes = [
       {
         id: 1,
         name: "Computer Appreciation",
-        participants: 37,
+        participants: 0, // Will be fetched dynamically
         access: "Public",
         date: "2025-02-25",
+        courseNames: ["Fundamentals of Computer Literacy"], // Single course
       },
       {
         id: 2,
         name: "BUK Web3 Onboarding",
-        participants: 38,
-        access: "Private",
+        participants: 0,
+        access: "Public",
         date: "2025-02-28",
+        courseNames: ["Web3 Configuration - BUK", "BUK Onboarding Quiz"], // Sum of 2 courses
       },
       {
         id: 3,
@@ -73,8 +98,21 @@ const Quiz = () => {
         participants: 0,
         access: "Public",
         date: "2025-02-21",
+        courseNames: ["B<>rder/ess UNN Hangout"], // Single course
       },
-    ]);
+    ];
+
+    setQuizData(quizzes);
+
+    // Fetch participant count for each quiz
+    quizzes.forEach((quiz) => fetchParticipants(quiz.courseNames, quiz.id));
+
+    // **Solution 1: Polling every 30 seconds**
+    const interval = setInterval(() => {
+      quizzes.forEach((quiz) => fetchParticipants(quiz.courseNames, quiz.id));
+    }, 30000); // Fetch every 30 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   useEffect(() => {
@@ -97,6 +135,9 @@ const Quiz = () => {
     setQuizModalOpen(false);
     setSelectedQuiz(null);
     setQuizType(null);
+
+    // **Solution 2: Refresh Data After Quiz Completion**
+    quizData.forEach((quiz) => fetchParticipants(quiz.courseNames, quiz.id));
   };
 
   return (
@@ -124,18 +165,18 @@ const Quiz = () => {
               </p>
             )}
 
-            <h1 className={styles.bannerText}>Select a course to begin your quiz journey!</h1>
+            <h1 className={styles.bannerText}>Select a quiz to begin😌!</h1>
           </div>
 
           <div className={styles.quizCardsContainer}>
             {quizData.map((quiz) => (
               <div key={quiz.id} className={styles.quizCard}>
-                <h3>{quiz.name}</h3>
+                <h3 style={{ textAlign: "center" }}>{quiz.name}</h3>
 
                 <div className={styles.quizDetails}>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Participants:</span>
-                    <span className={styles.detailValue}>👤 {quiz.participants}</span>
+                    <span className={styles.detailValue}>👤 {participants[quiz.id] ?? "Loading..."}</span>
                   </div>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>Access:</span>

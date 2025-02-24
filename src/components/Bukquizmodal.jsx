@@ -5,6 +5,7 @@ import Attest from "../../utils/attestUserOnboarding"; // Import the Attest comp
 
 const quizData = {
   "course_title": "Web3 Configuration - BUK",
+  "Issuer": "BUK",
   "duration": "15 minutes",
   "total_questions": 13,
   "marks_per_question": 1,
