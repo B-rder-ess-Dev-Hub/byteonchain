@@ -25,6 +25,7 @@ const Sidebar = () => {
     { path: "/update", label: "Update" },
     { path: "/quiz", label: "Quiz" },
     { path: "/schema", label: "Schema" },
+    { path: "/attestations", label: "attestations" },
     { path: "/account", label: "Account" },
   ];
 
