@@ -371,3 +371,39 @@
     background-color: #FBBF24;
     transition: width 0.3s ease-in-out;
   }
+
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Spacing between buttons */
+    margin-top: 15px;
+  }
+  
+  .shareButton {
+    background: #FBBF24; /* Green */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .shareButton:hover {
+    background-color: #ffcc33; /* Slightly lighter yellow on hover */
+  }
+  
+  .shareButton:disabled {
+    background-color: #b0bec5; /* Greyed out if disabled */
+    cursor: not-allowed;
+  }
+  
+  .shareButton img {
+    width: 20px; /* Twitter logo size */
+    height: 20px;
+  }

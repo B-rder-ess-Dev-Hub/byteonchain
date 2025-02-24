@@ -3,12 +3,11 @@ import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useSigner } from "./wagmi-utils";
 import styles from "../src/styles/Attest.module.css"; // Import CSS for button styling
 
-const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
+const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSuccess }) => {
   const signer = useSigner();
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState(null);
 
-  // Fetch user's name using wallet address
   useEffect(() => {
     const fetchName = async () => {
       try {
@@ -39,6 +38,11 @@ const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
       return;
     }
 
+    if (!issuer) {
+      alert("Issuer information is missing!");
+      return;
+    }
+
     setLoading(true);
     try {
       const easContractAddress = "0xbD75f629A22Dc1ceD33dDA0b68c546A1c035c458";
@@ -51,7 +55,7 @@ const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
         { name: "Name", value: userName, type: "string" },
         { name: "Course", value: course, type: "string" },
         { name: "Score", value: score || 0, type: "uint256" },
-        { name: "Issuer", value: "Borderless Developers Programme", type: "string" },
+        { name: "Issuer", value: issuer, type: "string" }, // 🔥 Issuer is now dynamic!
       ]);
 
       const tx = await eas.attest({
@@ -83,4 +87,4 @@ const Attest = ({ walletAddress, score, course, onAttestationSuccess }) => {
   );
 };
 
-export default Attest;
+export default AttestGeneral;

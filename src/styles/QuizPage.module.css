@@ -226,6 +226,11 @@
     margin-bottom: 20px;
 }
 
+.quizTitle {
+    text-align: center;
+    font-size: medium;
+}
+
 .detailItem {
     display: flex;
     justify-content: space-between;
