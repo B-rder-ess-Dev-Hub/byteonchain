@@ -7,7 +7,6 @@ import searchIcon from '../../public/search.png';
 import videoIcon from '../../public/video-circle.png';
 import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
-import QuizModal from '../components/Bukquizmodal';
 
 import { useRouter } from 'next/router';
 
