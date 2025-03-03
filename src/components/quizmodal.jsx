@@ -22,7 +22,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [correctAnswerIndex, setCorrectAnswerIndex] = useState(null);
+  const [correctAnswer, setCorrectAnswer] = useState(null);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const [timer, setTimer] = useState(quiz?.duration ? parseInt(quiz.duration) * 60 : 600);
@@ -35,10 +35,14 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
   useEffect(() => {
     if (!isOpen || !quiz) return;
 
-    setQuestions(shuffleArray(quiz.questions || []));
+    // Shuffle questions while maintaining correct answers
+    const shuffledQuestions = shuffleArray(quiz.questions || []);
+    setQuestions(shuffledQuestions);
+
+    // Reset quiz state
     setCurrentQuestion(0);
     setSelectedAnswer(null);
-    setCorrectAnswerIndex(null);
+    setCorrectAnswer(null);
     setScore(0);
     setIsCompleted(false);
     setTimer(quiz.duration ? parseInt(quiz.duration) * 60 : 600);
@@ -99,21 +103,23 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
     }
   };
 
-  const handleAnswerClick = (index) => {
-    setSelectedAnswer(index);
-    setCorrectAnswerIndex(parseInt(questions[currentQuestion].answer));
+  const handleAnswerClick = (selectedOption) => {
+    setSelectedAnswer(selectedOption);
+    const correctOption = questions[currentQuestion].answer;
+    setCorrectAnswer(correctOption);
 
-    if (index === parseInt(questions[currentQuestion].answer)) {
+    // Compare selected option with correct answer from DB
+    if (selectedOption === correctOption) {
       setScore((prev) => prev + (quiz?.marks_per_question || 1));
     }
 
     setTimeout(() => {
-      if (currentQuestion >= (quiz?.total_questions || 1) - 1) {
+      if (currentQuestion >= questions.length - 1) {
         setIsCompleted(true);
       } else {
         setCurrentQuestion((prev) => prev + 1);
         setSelectedAnswer(null);
-        setCorrectAnswerIndex(null);
+        setCorrectAnswer(null);
       }
     }, 1000);
   };
@@ -133,7 +139,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
 
   if (!isOpen || !quiz) return null;
 
-  const progress = ((currentQuestion + 1) / quiz.total_questions) * 100;
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
   const maxAttempts = 5;
 
   return (
@@ -170,16 +176,11 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
               Connect Wallet
             </button>
           </div>
-        ) : quizAttempts >= maxAttempts ? (
-          <div className={styles.limitContainer}>
-            <h3>You have reached the maximum attempt limit.</h3>
-            <p>You cannot retake the quiz again.</p>
-          </div>
         ) : isCompleted ? (
           <div className={styles.quizCompleted}>
             <h3>🎉 Quiz Completed!</h3>
             <p className={styles.finalScore}>
-              Final Score: <span>{score}</span> / {quiz.total_questions * quiz.marks_per_question}
+              Final Score: <span>{score}</span> / {questions.length * quiz.marks_per_question}
             </p>
             {attestationUID ? (
               <div className={styles.buttonContainer}>
@@ -197,7 +198,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
             <h3 className={styles.questionText}>{questions[currentQuestion]?.question}</h3>
             <ul className={styles.optionsList}>
               {questions[currentQuestion]?.options.map((option, index) => (
-                <li key={index} className={styles.option} onClick={() => handleAnswerClick(index)}>
+                <li key={index} className={styles.option} onClick={() => handleAnswerClick(option)}>
                   {option}
                 </li>
               ))}
