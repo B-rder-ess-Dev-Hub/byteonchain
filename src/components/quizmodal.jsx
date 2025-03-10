@@ -137,6 +137,84 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
     window.open(twitterUrl, "_blank");
   };
 
+  const updateCourseIdInDatabase = async (uid) => {
+    try {
+      // First fetch the current user data
+      const response = await fetch(`https://byteapi-two.vercel.app/api/user/${walletAddress}`);
+      if (!response.ok) throw new Error("Failed to fetch user data");
+      const userData = await response.json();
+      
+      // Get existing course_id object or initialize empty object
+      const prevCourseId = userData.user.course_id || {};
+  
+      // Create updated course_id object - just store the UID directly
+      const updatedCourseId = {
+        ...prevCourseId,
+        [quiz.course_title]: uid
+      };
+  
+      // Update the database with new course_id
+      const updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${walletAddress}`, {
+        method: "PUT",
+        headers: { 
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+          course_id: updatedCourseId
+        })
+      });
+  
+      if (!updateResponse.ok) {
+        throw new Error("Failed to update course_id");
+      }
+      
+      console.log("Course ID updated successfully!");
+    } catch (error) {
+      console.error("Error updating course_id:", error);
+      throw error;
+    }
+  };
+  
+  const updateQuizAttempts = async (address) => {
+    try {
+      const newAttempts = quizAttempts + 1;
+      
+      const response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${address}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ 
+          quiz_attempts: newAttempts,
+          last_quiz_attempt: new Date().toISOString()
+        })
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Failed to update quiz attempts: ${errorData.message || 'Unknown error'}`);
+      }
+  
+      setQuizAttempts(newAttempts); // Update state after successful API call
+      console.log("Quiz attempts updated successfully!");
+    } catch (error) {
+      console.error("Error updating quiz attempts:", error);
+      throw error; // Propagate error to handle it in the calling function
+    }
+  };
+  
+  const handleAttestationSuccess = async (uid) => {
+    try {
+      setAttestationUID(uid);
+      await updateCourseIdInDatabase(uid);
+      await updateQuizAttempts(walletAddress);
+    } catch (error) {
+      console.error("Error in handleAttestationSuccess:", error);
+      // You might want to show an error message to the user here
+    }
+  };
+
   if (!isOpen || !quiz) return null;
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
@@ -176,6 +254,11 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
               Connect Wallet
             </button>
           </div>
+        ) : quizAttempts >= maxAttempts ? (
+          <div className={styles.quizCompleted}>
+            <h3>❌ Maximum Attempts Reached</h3>
+            <p>You have reached the maximum number of attempts for this quiz.</p>
+          </div>
         ) : isCompleted ? (
           <div className={styles.quizCompleted}>
             <h3>🎉 Quiz Completed!</h3>
@@ -190,7 +273,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
                 <button className={styles.shareButton} onClick={shareOnTwitter}>🚀 Share</button>
               </div>
             ) : (
-              <Attest walletAddress={walletAddress} score={score} course={quiz.course_title} issuer={quiz.issuer} userName={userName} onAttestationSuccess={setAttestationUID} />
+              <Attest walletAddress={walletAddress} score={score} course={quiz.course_title} issuer={quiz.issuer} userName={userName} onAttestationSuccess={handleAttestationSuccess} />
             )}
           </div>
         ) : (

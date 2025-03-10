@@ -18,7 +18,7 @@ const Header = () => {
 
   const handleWalletClick = () => {
     if (isConnected) {
-      setShowDisconnectModal(true); // Show confirmation modal instead of disconnecting immediately
+      setShowDisconnectModal(true);
     } else if (openConnectModal) {
       openConnectModal();
     }
