@@ -4,8 +4,9 @@ import styles from '../styles/Update.module.css';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import exampleImage from '../../public/img.png';
+import WalletWrapper from '../components/WalletWrapper';
 
-const Update = ({ description }) => {
+const UpdateContent = ({ description }) => {
   const truncateDescription = (desc) => {
     const words = desc.split(' '); // Split description into words
     const truncated = words.slice(0, 9).join(' '); // Get first 9 words
@@ -137,6 +138,14 @@ const Update = ({ description }) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Update = () => {
+  return (
+    <WalletWrapper>
+      <UpdateContent />
+    </WalletWrapper>
   );
 };
 

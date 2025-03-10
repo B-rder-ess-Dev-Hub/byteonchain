@@ -7,10 +7,11 @@ import searchIcon from '../../public/search.png';
 import videoIcon from '../../public/video-circle.png';
 import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
+import WalletWrapper from '../components/WalletWrapper';
 
 import { useRouter } from 'next/router';
 
-const Classroom = ({ walletConnected }) => {
+const ClassroomContent = ({ walletConnected }) => {
   const [allVideoItems, setAllVideoItems] = useState([]);
   const [visibleCourses, setVisibleCourses] = useState(8);
   const [showModal, setShowModal] = useState(false);
@@ -302,6 +303,14 @@ const Classroom = ({ walletConnected }) => {
         <QuizModal closeModal={closeQuizModal} />
       )} */}
     </div>
+  );
+};
+
+const Classroom = () => {
+  return (
+    <WalletWrapper>
+      <ClassroomContent />
+    </WalletWrapper>
   );
 };
 

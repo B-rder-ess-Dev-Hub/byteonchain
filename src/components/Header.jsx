@@ -8,19 +8,36 @@ import searchIcon from '../../public/search.png';
 import walletIcon from '../../public/wallet-3.png';
 import { useAccount, useDisconnect } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useChainId, useSwitchChain } from 'wagmi';
 import DisconnectModal from './DisconnectModal';
+import NetworkModal from './NetworkModal';
 
 const Header = () => {
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect();
   const { openConnectModal } = useConnectModal();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
+  const [showNetworkModal, setShowNetworkModal] = useState(false);
 
   const handleWalletClick = () => {
     if (isConnected) {
       setShowDisconnectModal(true);
-    } else if (openConnectModal) {
-      openConnectModal();
+    } else {
+      setShowNetworkModal(true);
+    }
+  };
+
+  const handleNetworkSelect = async (network) => {
+    setShowNetworkModal(false);
+    try {
+      await switchChain({ chainId: network.chainId });
+      if (openConnectModal) {
+        openConnectModal();
+      }
+    } catch (error) {
+      console.error('Failed to switch network:', error);
     }
   };
 
@@ -83,6 +100,12 @@ const Header = () => {
         isOpen={showDisconnectModal}
         onClose={() => setShowDisconnectModal(false)}
         onConfirm={handleDisconnect}
+      />
+
+      <NetworkModal
+        isOpen={showNetworkModal}
+        onClose={() => setShowNetworkModal(false)}
+        onNetworkSelect={handleNetworkSelect}
       />
     </>
   );

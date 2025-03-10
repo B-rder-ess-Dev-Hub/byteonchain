@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from '../styles/Chat.module.css';
 import Sidebar from '../components/Sidebar'; 
+import WalletWrapper from '../components/WalletWrapper';
 
-const Chat = () => {
+const ChatContent = () => {
   return (
     <div className={styles.chatContainer}>
       <Sidebar />
@@ -12,6 +13,14 @@ const Chat = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Chat= () => {
+  return (
+    <WalletWrapper>
+      <ChatContent />
+    </WalletWrapper>
   );
 };
 

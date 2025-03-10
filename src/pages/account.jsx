@@ -7,8 +7,9 @@ import styles from '../styles/Account.module.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Confetti from 'react-confetti';
+import WalletWrapper from '../components/WalletWrapper';
 
-const Account = () => {
+const AccountContent = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [walletAddress, setWalletAddress] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -401,6 +402,15 @@ const Account = () => {
         </div>
       )}
     </div>
+  );
+};
+
+
+const Account = () => {
+  return (
+    <WalletWrapper>
+      <AccountContent />
+    </WalletWrapper>
   );
 };
 

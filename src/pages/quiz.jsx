@@ -3,10 +3,11 @@ import styles from "../styles/QuizPage.module.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import QuizModal from "../components/quizmodal";
+import WalletWrapper from '../components/WalletWrapper';
 
 const API_BASE_URL = "https://byteapi-two.vercel.app/api";
 
-const Quiz = () => {
+const QuizContent = () => {
   const [userFullName, setUserFullName] = useState("");
   const [walletAddress, setWalletAddress] = useState(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
@@ -198,6 +199,14 @@ const QuizCard = ({ quiz, openQuizModal }) => {
         {quiz.status === "active" ? "🎯 Take Quiz" : "❌ Expired"}
       </button>
     </div>
+  );
+};
+
+const Quiz = () => {
+  return (
+    <WalletWrapper>
+      <QuizContent />
+    </WalletWrapper>
   );
 };
 

@@ -1,0 +1,96 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modalContent {
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modalContent h3 {
+  font-size: 24px;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.modalContent p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+.networkList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Add these new styles to your existing NetworkModal.module.css */
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  background: #f3f4f6 !important;
+}
+
+.disabledLogo {
+  filter: grayscale(100%);
+}
+
+.comingSoon {
+  font-size: 12px;
+  color: #9CA3AF;
+  margin-left: auto;
+  font-style: italic;
+}
+
+/* Update the networkButton to accommodate the coming soon text */
+.networkButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.networkButton:not(.disabled):hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.networkLogo {
+  border-radius: 50%;
+}
+
+.closeButton {
+  padding: 12px 24px;
+  background: #FBBF24;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.closeButton:hover {
+  background: #F59E0B;
+}
