@@ -64,7 +64,7 @@ const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSucc
       ]);
 
       const tx = await eas.attest({
-        schema: matchingNetwork.schemaUID,
+        schema: matchingNetwork.courseSchemaUID,
         data: {
           recipient: walletAddress,
           expirationTime: 0,

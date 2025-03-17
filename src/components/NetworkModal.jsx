@@ -18,18 +18,11 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       isActive: true
     },
     { 
-      id: 'ethereum',
-      name: 'Ethereum',
+      id: 'base',
+      name: 'Base',
       logo: ethereumLogo,
-      chainId: 1,
-      isActive: false 
-    },
-    { 
-      id: 'polygon',
-      name: 'Polygon',
-      logo: polygonLogo,
-      chainId: 137,
-      isActive: false 
+      chainId: 8453,
+      isActive: true 
     },
     { 
       id: 'optimism',
@@ -43,8 +36,15 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       name: 'Celo',
       chainId: 42220,
       logo: polygonLogo,
-      isActive: false
+      isActive: true
     },
+     // { 
+    //   id: 'polygon',
+    //   name: 'Polygon',
+    //   logo: polygonLogo,
+    //   chainId: 137,
+    //   isActive: false 
+    // },
     // { 
     //   id: 'metis andromeda',
     //   name: 'Metis Andromeda',

@@ -274,7 +274,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
             </p>
             {attestationUID ? (
               <div className={styles.buttonContainer}>
-                <a href={`${matchingNetwork.baseURL}/${attestationUID}`} target="_blank" rel="noopener noreferrer" className={styles.attestButton}>
+                <a href={`${matchingNetwork.baseURL}/attestation/view/${attestationUID}`} target="_blank" rel="noopener noreferrer" className={styles.attestButton}>
                   View Attestation
                 </a>
                 <button className={styles.shareButton} onClick={shareOnTwitter}>🚀 Share</button>

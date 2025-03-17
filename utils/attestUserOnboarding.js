@@ -63,12 +63,12 @@ const Attest = ({ walletAddress, score, course, issuer, onAttestationSuccess }) 
         { name: "Name", value: userName, type: "string" },
         { name: "Onboarding_Event", value: course, type: "string" },
         { name: "Score", value: score || 0, type: "uint256" },
-        { name: "Issuer", value: issuer, type: "string" }, // **Issuer now dynamic!**
-      ]);
+        { name: "Issuer", value: issuer, type: "string" },
+      ]); // **Issuer now dynamic!**
 
 
       const tx = await eas.attest({
-        schema: matchingNetwork.OnboardingschemaUID,
+        schema: matchingNetwork.OnboardingSchemaUID,
         data: {
           recipient: walletAddress,
           expirationTime: 0,
