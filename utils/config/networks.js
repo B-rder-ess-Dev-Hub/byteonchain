@@ -1,4 +1,4 @@
-const networks = [
+export const networks = [
     {
         id: 'arbitrum',
         name: 'Arbitrum',

@@ -20,7 +20,8 @@ const shuffleArray = (array) => {
 
 
 const QuizModal = ({ isOpen, onClose, quiz }) => {
-  const chainId = useChainId()
+  const chainId = useChainId();
+  const matchingNetwork = networks.find(network => network.chainId === chainId);
   const [walletAddress, setWalletAddress] = useState(null);
   const [quizAttempts, setQuizAttempts] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -33,7 +34,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
   const [isTimerPaused, setIsTimerPaused] = useState(false);
   const [userName, setUserName] = useState("Unknown User");
   const [attestationUID, setAttestationUID] = useState(null);
-  const matchingNetwork = networks.find(network => network.chainId === chainId);
+  
   
 
   const Attest = quiz?.purpose === "onboarding" ? AttestOnboarding : AttestGeneral;
