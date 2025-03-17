@@ -12,7 +12,7 @@ const Filter = ({ searchQuery, setFilteredAttestations, setCourseAttestations })
   const matchingNetwork = networks.find(network => network.chainId === chainId);
   const CUSTOM_SCHEMA_UID = [
     {
-      uid: matchingNetwork.OnboardingschemaUID,
+      uid: matchingNetwork.OnboardingSchemaUID,
       decoder: new SchemaEncoder("string Name,string Onboarding_Event,uint256 Score,string Issuer"),
       searchField: "Onboarding_Event",
       
