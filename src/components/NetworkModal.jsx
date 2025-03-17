@@ -10,10 +10,48 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
   if (!isOpen) return null;
 
   const networks = [
-    { id: 'arbitrum', name: 'Arbitrum', logo: arbitrumLogo, chainId: 42161, isActive: true },
-    { id: 'ethereum', name: 'Ethereum', logo: ethereumLogo, chainId: 1, isActive: false },
-    { id: 'polygon', name: 'Polygon', logo: polygonLogo, chainId: 137, isActive: false },
-    { id: 'optimism', name: 'Optimism', logo: optimismLogo, chainId: 10, isActive: false }
+    { 
+      id: 'arbitrum',
+      name: 'Arbitrum',
+      logo: arbitrumLogo,
+      chainId: 42161,
+      isActive: true
+    },
+    { 
+      id: 'ethereum',
+      name: 'Ethereum',
+      logo: ethereumLogo,
+      chainId: 1,
+      isActive: false 
+    },
+    { 
+      id: 'polygon',
+      name: 'Polygon',
+      logo: polygonLogo,
+      chainId: 137,
+      isActive: false 
+    },
+    { 
+      id: 'optimism',
+      name: 'Optimism',
+      logo: optimismLogo,
+      chainId: 10,
+      isActive: true 
+    },
+    { 
+      id: 'celo',
+      name: 'Celo',
+      chainId: 42220,
+      logo: polygonLogo,
+      isActive: false
+    },
+    // { 
+    //   id: 'metis andromeda',
+    //   name: 'Metis Andromeda',
+    //   logo: ethereumLogo,
+    //   chainId: 1088,
+    //   isActive: false
+    // },
   ];
 
   return (

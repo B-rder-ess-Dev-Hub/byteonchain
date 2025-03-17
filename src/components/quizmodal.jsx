@@ -5,6 +5,8 @@ import styles from "../styles/Quiz.module.css";
 // Dynamically import the correct Attestation component
 import AttestOnboarding from "../../utils/attestUserOnboarding";
 import AttestGeneral from "../../utils/attestUser";
+import { useAccount, useSwitchChain, useChainId, } from 'wagmi';
+import { networks } from '../../utils/config/networks';
 
 // Function to shuffle an array using Fisher-Yates algorithm
 const shuffleArray = (array) => {
@@ -16,7 +18,9 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
+
 const QuizModal = ({ isOpen, onClose, quiz }) => {
+  const chainId = useChainId()
   const [walletAddress, setWalletAddress] = useState(null);
   const [quizAttempts, setQuizAttempts] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -29,6 +33,8 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
   const [isTimerPaused, setIsTimerPaused] = useState(false);
   const [userName, setUserName] = useState("Unknown User");
   const [attestationUID, setAttestationUID] = useState(null);
+  const matchingNetwork = networks.find(network => network.chainId === chainId);
+  
 
   const Attest = quiz?.purpose === "onboarding" ? AttestOnboarding : AttestGeneral;
 
@@ -127,7 +133,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
   const shareOnTwitter = () => {
     if (!attestationUID) return;
 
-    const attestationLink = `https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
+    const attestationLink = `${matchingNetwork.baseURL}/${attestationUID}`;
     const tweetText =
       quiz?.purpose === "onboarding"
         ? `🚀 Just got onboarded to #Web3 via byteonchain.xyz, built by @borderlessdev! Signed my first attestation ever and ready to build #onchain with the #borderlesscommunity.\n\n💡 #ByteOnchain\n\n${attestationLink}`
@@ -267,7 +273,7 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
             </p>
             {attestationUID ? (
               <div className={styles.buttonContainer}>
-                <a href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`} target="_blank" rel="noopener noreferrer" className={styles.attestButton}>
+                <a href={`${matchingNetwork.baseURL}/${attestationUID}`} target="_blank" rel="noopener noreferrer" className={styles.attestButton}>
                   View Attestation
                 </a>
                 <button className={styles.shareButton} onClick={shareOnTwitter}>🚀 Share</button>

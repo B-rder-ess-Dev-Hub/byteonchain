@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useSigner } from "./wagmi-utils";
 import styles from "../src/styles/Attest.module.css"; // Import CSS for button styling
+import { useAccount, useSwitchChain, useChainId, } from 'wagmi';
+import { networks } from './config/networks';
 
 const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSuccess }) => {
   const signer = useSigner();
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState(null);
+  const chainId = useChainId()
+  const matchingNetwork = networks.find(network => network.chainId === chainId);
+
 
   useEffect(() => {
     const fetchName = async () => {
@@ -45,8 +50,8 @@ const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSucc
 
     setLoading(true);
     try {
-      const easContractAddress = "0xbD75f629A22Dc1ceD33dDA0b68c546A1c035c458";
-      const schemaUID = "0xe9a059a2f6cf3a119b0f8c1d5dc022711a447c7fbb94baf6ce670ca2e6faeaeb";
+
+      const easContractAddress = matchingNetwork.easContractAddress;
       const eas = new EAS(easContractAddress);
       await eas.connect(signer);
 
@@ -59,7 +64,7 @@ const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSucc
       ]);
 
       const tx = await eas.attest({
-        schema: schemaUID,
+        schema: matchingNetwork.schemaUID,
         data: {
           recipient: walletAddress,
           expirationTime: 0,

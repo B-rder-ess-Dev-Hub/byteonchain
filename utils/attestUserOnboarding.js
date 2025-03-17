@@ -2,11 +2,17 @@ import { useState, useEffect } from "react";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useSigner } from "./wagmi-utils";
 import styles from "../src/styles/Attest.module.css"; // Import CSS for button styling
+import { useAccount, useSwitchChain, useChainId, } from 'wagmi';
+import { networks } from './config/networks';
 
 const Attest = ({ walletAddress, score, course, issuer, onAttestationSuccess }) => {
   const signer = useSigner();
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState(null);
+  const chainId = useChainId()
+  const matchingNetwork = networks.find(network => network.chainId === chainId);
+  
+  
 
   // Fetch user's name using wallet address
   useEffect(() => {
@@ -43,11 +49,12 @@ const Attest = ({ walletAddress, score, course, issuer, onAttestationSuccess }) 
       alert("Issuer information is missing!");
       return;
     }
+    
 
     setLoading(true);
     try {
-      const easContractAddress = "0xbD75f629A22Dc1ceD33dDA0b68c546A1c035c458";
-      const OnboardingschemaUID = "0xadc627b3baae8680c1e7d1f080ea5e50738e7efcc93e95a35269e6841116fffe";
+      console.log(`Matching network found: ${matchingNetwork.name} Chain ID: ${matchingNetwork.chainId}`);
+      const easContractAddress = matchingNetwork.easContractAddress;
       const eas = new EAS(easContractAddress);
       eas.connect(signer);
 
@@ -59,8 +66,9 @@ const Attest = ({ walletAddress, score, course, issuer, onAttestationSuccess }) 
         { name: "Issuer", value: issuer, type: "string" }, // **Issuer now dynamic!**
       ]);
 
+
       const tx = await eas.attest({
-        schema: OnboardingschemaUID,
+        schema: matchingNetwork.OnboardingschemaUID,
         data: {
           recipient: walletAddress,
           expirationTime: 0,

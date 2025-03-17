@@ -3,19 +3,22 @@ import { useState, useEffect } from "react";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import axios from "axios";
 import styles from "../src/styles/Attest.module.css";
+import { useAccount, useSwitchChain, useChainId, } from 'wagmi';
+import { networks } from './config/networks';
 
 const Filter = ({ searchQuery, setFilteredAttestations, setCourseAttestations }) => {
   const [loading, setLoading] = useState(false);
-  const baseURL = "https://arbitrum.easscan.org";
-  // const CUSTOM_SCHEMA_UID = "0xadc627b3baae8680c1e7d1f080ea5e50738e7efcc93e95a35269e6841116fffe";
+  const chainId = useChainId()
+  const matchingNetwork = networks.find(network => network.chainId === chainId);
   const CUSTOM_SCHEMA_UID = [
     {
-      uid: "0xadc627b3baae8680c1e7d1f080ea5e50738e7efcc93e95a35269e6841116fffe",
+      uid: matchingNetwork.OnboardingschemaUID,
       decoder: new SchemaEncoder("string Name,string Onboarding_Event,uint256 Score,string Issuer"),
       searchField: "Onboarding_Event",
+      
     },
     {
-      uid: "0xe9a059a2f6cf3a119b0f8c1d5dc022711a447c7fbb94baf6ce670ca2e6faeaeb",
+      uid: matchingNetwork.courseSchemaUID,
       decoder: new SchemaEncoder("string Name,string Course,uint256 Score,string Issuer"),
       searchField: "Course",
     },
@@ -93,7 +96,7 @@ const Filter = ({ searchQuery, setFilteredAttestations, setCourseAttestations })
     setLoading(true);
     try {
       const response = await axios.post(
-        `${baseURL}/graphql`,
+        `${matchingNetwork.baseURL}/graphql`,
         {
           query: `
             query Attestations($schemaId: String!) {

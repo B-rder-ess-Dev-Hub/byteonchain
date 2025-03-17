@@ -4,7 +4,6 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import QuizModal from "../components/quizmodal";
 import WalletWrapper from '../components/WalletWrapper';
-
 const API_BASE_URL = "https://byteapi-two.vercel.app/api";
 
 const QuizContent = () => {
