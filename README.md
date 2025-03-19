@@ -1,4 +1,4 @@
-# byteonchain
+# Byteonchain
 ByteOnChain dApp
 
 ## Attestation Overview
