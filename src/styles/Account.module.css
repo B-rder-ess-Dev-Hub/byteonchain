@@ -31,7 +31,7 @@
   background-color: #ffffff;
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.03);
   z-index: 10;
-  display: none;
+  /* display: none; */
 }
 
 /* Adding certificate section and settings section cards */
@@ -112,6 +112,9 @@
 .certificateItem:last-child {
   border-bottom: none;
 }
+
+
+
 
 .certificateInfo {
   display: flex;
@@ -206,6 +209,248 @@
   transform: translateY(-5px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
+
+/* Form Card Styling - Updated for modern look */
+.formCard {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    max-width: 600px;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .formCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  }
+  
+  .formHeader {
+    padding: 30px;
+    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .formHeader::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+  
+  .formHeader::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    width: 160px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+  }
+  
+  .formHeader h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .formHeader p {
+    font-size: 16px;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .formContainer {
+    padding: 30px;
+  }
+  
+  .formRow {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .formRow .formGroup {
+    flex: 1;
+  }
+  
+  .formGroup {
+    margin-bottom: 24px;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4B5563;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  
+  .formContainer input,
+  .formContainer select,
+  .formContainer textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background-color: #F9FAFB;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+  }
+  
+  .formContainer input:hover,
+  .formContainer select:hover,
+  .formContainer textarea:hover {
+    border-color: #D1D5DB;
+  }
+  
+  .formContainer input:focus,
+  .formContainer select:focus,
+  .formContainer textarea:focus {
+    outline: none;
+    border-color: #FBBF24;
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.15);
+    background-color: #ffffff;
+  }
+  
+  .formGroup:focus-within label {
+    color: #FBBF24;
+  }
+  
+  .phoneContainer {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .countryCode {
+    width: 40%;
+    padding: 14px 18px;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 15px;
+    background-color: #F9FAFB;
+    transition: all 0.3s ease;
+  }
+  
+  .countryCode:focus {
+    outline: none;
+    border-color: #FBBF24;
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.15);
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 16px;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .submitButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(251, 191, 36, 0.4);
+  }
+  
+  .submitButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+  }
+  
+  .submitButton:disabled {
+    background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
+    color: #9CA3AF;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .submitButton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .submitButton:hover::after {
+    opacity: 1;
+  }
+  
+  /* Form validation styles */
+  .formError {
+    color: #EF4444;
+    font-size: 13px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .formSuccess {
+    color: #10B981;
+    font-size: 13px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  /* Form field with icon */
+  .inputWithIcon {
+    position: relative;
+  }
+  
+  .inputWithIcon input {
+    padding-left: 48px;
+  }
+  
+  .inputIcon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+    transition: color 0.2s ease;
+  }
+  
+  .inputWithIcon:focus-within .inputIcon {
+    color: #FBBF24;
+  }
+  
+  /* Form helper text */
+  .helperText {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 6px;
+  }
 
 .settingsHeader {
   display: flex;
