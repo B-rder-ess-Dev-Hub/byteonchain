@@ -437,3 +437,26 @@
   background-color: rgba(0, 0, 0, 0.08);
   border-color: rgba(0, 0, 0, 0.2);
 }
+
+.xButton {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.xButton:hover {
+  background-color: #333333;
+}
+
+.xIcon {
+  font-size: 16px;
+  font-weight: bold;
+}

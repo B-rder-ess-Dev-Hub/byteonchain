@@ -144,17 +144,17 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
     }, 800); // Shorter delay since we're not showing feedback
   };
 
-  const shareOnTwitter = () => {
+  const shareOnX = () => {
     if (!attestationUID) return;
 
     const attestationLink = `${matchingNetwork.baseURL}/${attestationUID}`;
-    const tweetText =
+    const postText =
       quiz?.purpose === "onboarding"
         ? `🚀 Just got onboarded to #Web3 via byteonchain.xyz, built by @borderlessdev! Signed my first attestation ever and ready to build #onchain with the #borderlesscommunity.\n\n💡 #ByteOnchain\n\n${attestationLink}`
         : `📚 Just completed a #Web3 course on byteonchain.xyz, powered by @borderlessdev! Leveling up my skills and diving deeper onchain as a web3 contributor. 💡 #ByteOnchain #borderlesscommunity\n\n${attestationLink}`;
 
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-    window.open(twitterUrl, "_blank");
+    const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(postText)}`;
+    window.open(xUrl, "_blank");
   };
 
   const updateCourseIdInDatabase = async (uid) => {
@@ -324,8 +324,8 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
                 >
                   View Attestation
                 </a>
-                <button className={styles.shareButton} onClick={shareOnTwitter}>
-                  <span className={styles.shareIcon}>🚀</span> Share on Twitter
+                <button className={`${styles.shareButton} ${styles.xButton}`} onClick={shareOnX}>
+                  <span className={styles.xIcon}>𝕏</span> Share on X
                 </button>
               </div>
             ) : (
