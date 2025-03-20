@@ -140,21 +140,26 @@ const ClassroomContent = ({ walletConnected }) => {
 
       {/* Sidebar and Main Content */}
       <div className={styles.contentWrapper}>
-        <div className={styles.sidebarWrapper}>
-          <Sidebar />
-        </div>
+        <Sidebar />
         <div className={styles.mainContent}>
-          {/* Banner */}
+          {/* Banner - Updated to match quiz page style */}
           <div className={styles.banner}>
-            <h1 className={styles.bannerText}>Welcome to your class</h1>
-            {userFullName ? (
-              <p className={styles.userName}>{userFullName}</p>
-            ) : (
-              <p className={styles.userName}>Unknown User</p>
-            )}
+            <div className={styles.bannerContent}>
+              <h1 className={styles.bannerTitle}>Welcome to your class</h1>
+              {userFullName ? (
+                <p className={styles.bannerSubtitle}>{userFullName}</p>
+              ) : (
+                <p className={styles.bannerSubtitle}>Unknown User</p>
+              )}
+            </div>
+            <div className={styles.bannerGraphic}>
+              <div className={styles.bannerCircle}></div>
+              <div className={styles.bannerCircle}></div>
+              <div className={styles.bannerCircle}></div>
+            </div>
           </div>
 
-          {/* Search Field */}
+          {/* Search Field - Modernized */}
           <div className={styles.searchWrapper}>
             <div className={styles.searchContainer}>
               <Image
@@ -172,16 +177,26 @@ const ClassroomContent = ({ walletConnected }) => {
             </div>
           </div>
 
-
-          
-
           {/* Video Section */}
           <div className={styles.recentSection}>
             <div className={styles.videoGrid}>
               {allVideoItems.length === 0 ? (
-                <div className={styles.noVideos}>
-                  <Image src="/no-video.svg" alt="No videos available" width={100} height={100} />
-                  <p>No videos available</p>
+                <div className={styles.emptyState}>
+                  <div className={styles.emptyStateCard}>
+                    <div className={styles.emptyStateIcon}>
+                      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#FBBF24" strokeWidth="2"/>
+                        <path d="M12 8V12L15 15" stroke="#FBBF24" strokeWidth="2" strokeLinecap="round"/>
+                      </svg>
+                    </div>
+                    <h3 className={styles.emptyStateTitle}>No videos available yet</h3>
+                    <p className={styles.emptyStateText}>
+                      We're working on adding new content for your course. Check back soon!
+                    </p>
+                    <button className={styles.emptyStateButton}>
+                      Refresh
+                    </button>
+                  </div>
                 </div>
               ) : (
                 allVideoItems.slice(0, visibleCourses).map((item, index) => (
@@ -195,14 +210,16 @@ const ClassroomContent = ({ walletConnected }) => {
                         width={200}
                         height={181}
                       />
-                      <Image
-                        src={videoIcon}
-                        alt="Play Video"
-                        className={styles.videoIcon}
-                        width={40}
-                        height={40}
-                        onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])}
-                      />
+                      <div className={styles.videoIconWrapper}>
+                        <Image
+                          src={videoIcon}
+                          alt="Play Video"
+                          className={styles.videoIcon}
+                          width={40}
+                          height={40}
+                          onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])}
+                        />
+                      </div>
                     </div>
                     <div className={styles.cardContent}>
                       <p className={styles.cardTitle}>{item.videoname}</p>
@@ -225,7 +242,10 @@ const ClassroomContent = ({ walletConnected }) => {
                         </div>
                       </div>
                       <div className={styles.buttonContainer}>
-                        <button className={styles.continueButton} onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])}>
+                        <button 
+                          className={styles.continueButton} 
+                          onClick={() => openVideoModal(item.videoembedlink.split('embed/')[1])}
+                        >
                           Watch Video
                         </button>
                         <button
@@ -245,11 +265,14 @@ const ClassroomContent = ({ walletConnected }) => {
               )}
             </div>
 
-            {/* Load More Button */}
+            {/* Load More Button - Modernized */}
             {visibleCourses < allVideoItems.length && (
               <div className={styles.loadMoreContainer}>
                 <button className={styles.loadMoreButton} onClick={handleLoadMore}>
                   Load More
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.loadMoreIcon}>
+                    <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </button>
               </div>
             )}
@@ -257,7 +280,7 @@ const ClassroomContent = ({ walletConnected }) => {
         </div>
       </div>
 
-      {/* Wallet Connect Modal */}
+      {/* Modals - Updated styling will be in CSS */}
       {showModal && !videoToWatch && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>

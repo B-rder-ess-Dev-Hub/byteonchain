@@ -27,578 +27,530 @@
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #f9fafb;
+  background-color: #ffffff; /* Changed from #f9fafb to white */
 }
 
 /* Banner */
 .banner {
-  background-color: #f3f4f6;
-  text-align: center;
-  padding: 30px 20px;
-  border-radius: 30px;
-  margin-bottom: 20px;
-}
-
-.bannerText {
-  font-size: 1em;
-  font-weight: normal;
-  color: #333;
-}
-
-.userName {
-  font-size: 3em;
-  font-weight: bold;
-  color: #555;
-  margin-top: 20px;
-}
-
-/* Search */
-.searchWrapper {
-  margin-bottom: 20px;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  border-radius: 16px;
+  padding: 3.5rem 2rem; /* Increased padding for more height */
+  margin-bottom: 2rem;
   display: flex;
-  justify-content: center; /* Center align the search bar */
-  padding-left: 20px;
-  padding-right: 20px; /* Add padding to balance the left and right sides */
+  flex-direction: column; /* Changed to column for central alignment */
+  justify-content: center;
+  align-items: center; /* Center align all content */
+  box-shadow: 
+    0 10px 15px -3px rgba(251, 191, 36, 0.1),
+    0 4px 6px -2px rgba(251, 191, 36, 0.05);
+  position: relative;
+  overflow: hidden;
+  min-height: 200px; /* Set minimum height */
+}
+
+.bannerContent {
+  z-index: 2;
+  text-align: center; /* Center text */
+}
+
+.bannerTitle {
+  font-size: 1.8rem; /* Reduced size for welcome text */
+  font-weight: 600;
+  color: white;
+  margin-bottom: 1rem; /* Increased spacing */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added text shadow for emphasis */
+}
+
+.bannerSubtitle {
+  font-size: 2.5rem; /* Increased font size for name - now bigger than title */
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700; /* Made font weight heavier */
+  letter-spacing: 0.5px; /* Added letter spacing for emphasis */
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Stronger text shadow for name */
+}
+
+.bannerGraphic {
+  position: absolute;
+  right: -50px;
+  top: -20px;
+}
+
+.bannerCircle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.bannerCircle:nth-child(1) {
+  width: 120px;
+  height: 120px;
+  right: 30px;
+  top: 20px;
+}
+
+.bannerCircle:nth-child(2) {
+  width: 80px;
+  height: 80px;
+  right: 0;
+  top: 60px;
+}
+
+.bannerCircle:nth-child(3) {
+  width: 40px;
+  height: 40px;
+  right: 100px;
+  top: 40px;
+}
+
+/* Search container - neomorphic style */
+.searchWrapper {
+  margin-bottom: 2rem;
 }
 
 .searchContainer {
   display: flex;
   align-items: center;
-  background-color: #f3f4f6;
-  border-radius: 25px;
-  padding: 12px 16px;
-  width: 100%;
-  max-width: 600px; /* Match the width to the banner */
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  box-shadow: 
+    inset 2px 2px 5px rgba(0, 0, 0, 0.05),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.searchContainer:focus-within {
+  box-shadow: 
+    0 0 0 2px rgba(251, 191, 36, 0.4),
+    inset 2px 2px 5px rgba(0, 0, 0, 0.05),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.5);
 }
 
 .searchIcon {
-  margin-right: 10px;
+  margin-right: 0.8rem;
+  opacity: 0.6;
 }
 
 .searchInput {
+  background: transparent;
   border: none;
   outline: none;
-  flex-grow: 1;
-  font-size: 1em;
-  background-color: transparent;
-  color: #333;
+  width: 100%;
+  font-size: 0.95rem;
+  color: #4B5563;
 }
 
-/* Recent Section */
-.recentSection {
-  padding: 16px;
-}
-
-.recentHeader {
+/* Empty state styling - modern and neomorphic */
+.emptyState {
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
+  min-height: 300px;
+  width: 100%;
 }
 
-.recentStrip {
-  width: 2px;
-  height: 15px;
-  background-color: #fbbf24;
-  margin-right: 8px;
+.emptyStateCard {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  text-align: center;
+  margin: auto;
+  max-width: 400px;
+  box-shadow: 
+    10px 10px 20px rgba(0, 0, 0, 0.05),
+    -10px -10px 20px rgba(255, 255, 255, 0.8);
 }
 
-.recentText {
-  font-size: 0.88em;
-  font-weight: 700;
-  color: #4b5563;
+.emptyStateIcon {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 
-/* Video Grid */
+.emptyStateTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 0.8rem;
+}
+
+.emptyStateText {
+  color: #6B7280;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.emptyStateButton {
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.1),
+    -4px -4px 8px rgba(255, 255, 255, 0.9);
+}
+
+.emptyStateButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    6px 6px 10px rgba(0, 0, 0, 0.15),
+    -6px -6px 10px rgba(255, 255, 255, 1);
+}
+
+/* Video card styling - modernized */
 .videoGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
-  gap: 16px; /* Space between cards */
-  width: 100%;
-  box-sizing: border-box;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-/* Video Card */
 .carouselCard {
-  width: 100%;
-  max-width: 250px; /* Prevent cards from growing beyond a fixed width */
-  height: 335px;
-  border: 1px solid #F3F4F6;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: transparent;
-  box-sizing: border-box;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 
+    5px 5px 10px rgba(0, 0, 0, 0.05),
+    -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.carouselCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    8px 8px 15px rgba(0, 0, 0, 0.08),
+    -8px -8px 15px rgba(255, 255, 255, 0.9);
 }
 
 .videoContainer {
   position: relative;
-  width: 100%;
-  height: 181px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
 }
 
 .carouselImage {
-  object-fit: cover;
-  border-radius: 15px;
   width: 100%;
-  height: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
-.videoIcon {
+.videoContainer:hover .carouselImage {
+  transform: scale(1.05);
+}
+
+.videoIconWrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.videoContainer:hover .videoIconWrapper {
+  opacity: 1;
 }
 
 .cardContent {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
+  padding: 1.2rem;
 }
 
 .cardTitle {
-  font-size: 14px;
   font-weight: 600;
-  color: #4b5563;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  word-wrap: break-word;
+  font-size: 1rem;
+  color: #1F2937;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
 }
 
+/* Load more button - modernized */
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.loadMoreButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.1),
+    -4px -4px 8px rgba(255, 255, 255, 0.9);
+}
+
+.loadMoreButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    6px 6px 10px rgba(0, 0, 0, 0.15),
+    -6px -6px 10px rgba(255, 255, 255, 1);
+}
+
+.loadMoreIcon {
+  transition: transform 0.3s ease;
+}
+
+.loadMoreButton:hover .loadMoreIcon {
+  transform: translateY(2px);
+}
+
+/* Tutor and video info styling */
 .infoContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 .tutorContainer {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .tutorImage {
   border-radius: 50%;
-  margin-right: 8px;
+  object-fit: cover;
 }
 
 .tutorName {
-  font-size: 14px;
+  font-size: 0.85rem;
+  color: #6B7280;
   font-weight: 500;
-  color: #9CA3AF;
 }
 
 .viewsAndDays {
   display: flex;
   align-items: center;
+  gap: 0.8rem;
 }
 
 .viewsContainer {
   display: flex;
   align-items: center;
+  gap: 0.3rem;
 }
 
 .views {
-  font-size: 12px;
-  font-weight: 400;
-  color: #9CA3AF;
+  font-size: 0.75rem;
+  color: #6B7280;
 }
 
-.separator {
-  margin-left: 8px;
-  margin-right: 8px;
-  color: #9CA3AF;
-}
-
-.days {
-  font-size: 12px;
-  font-weight: 400;
-  color: #9CA3AF;
-}
-
-/* Button */
+/* Button container */
 .buttonContainer {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 0.8rem;
+  margin-top: 1rem;
 }
 
 .continueButton {
-  background-color: #FBBF24;
-  color: #fff;
+  flex: 1;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  color: white;
   border: none;
-  width: 150px;
-  height: 40px;
-  border-radius: 12px;
-  text-align: center;
-  font-weight: 500;
-  font-size: 14px;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.continueButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(251, 191, 36, 0.3);
 }
 
 .shareButton {
-  background-color: #9CA3AF;
-  color: #fff;
+  background: #f3f4f6;
+  color: #4B5563;
   border: none;
-  width: 150px;
-  height: 40px;
-  border-radius: 12px;
-  text-align: center;
-  font-weight: 500;
-  font-size: 14px;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* Load More */
-.loadMoreContainer {
+.shareButton:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+}
+
+/* Video modal styling */
+.videoModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
-.loadMoreButton {
-  background-color: #FBBF24;
-  color: #fff;
-  border: none;
-  width: 140px;
-  height: 40px;
+.videoModalContent {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  aspect-ratio: 16/9;
+  background: #000;
   border-radius: 12px;
-  text-align: center;
-  font-weight: 500;
-  font-size: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.closeButton {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
   cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.3s ease;
 }
 
-.loadMoreButton:hover {
-  background-color: #fbbf24;
+.closeButton:hover {
+  transform: scale(1.1);
 }
 
-/* Responsive Styles */
+.videoIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Responsive adjustments */
 @media (min-width: 768px) {
   .contentWrapper {
     flex-direction: row;
   }
-
+  
   .sidebarWrapper {
-    display: block;
     width: 250px;
+    height: 100%;
   }
-
-  .videoGrid {
-    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  
+  .mainContent {
+    margin-left: 250px;
+    padding: 30px;
   }
 }
 
 @media (max-width: 768px) {
+  .banner {
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .bannerTitle {
+    font-size: 1.5rem;
+  }
+  
+  .bannerSubtitle {
+    font-size: 1rem;
+  }
+  
+  .bannerGraphic {
+    display: none;
+  }
+  
   .videoGrid {
-    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on tablet */
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
   }
-
-  .carouselCard {
-    width: 100%; /* Allow card to take full width */
-    max-width: none; /* Remove max-width constraint */
-    height: fit-content;
+  
+  .emptyStateCard {
+    padding: 1.5rem;
+    max-width: 300px;
   }
-}
-
-@media (max-width: 480px) {
-  .videoGrid {
-    grid-template-columns: repeat(1, 1fr); /* 1 card per row on smaller screens */
-    gap: 12px;
+  
+  .mainContent {
+    padding: 15px;
   }
-
-  .carouselCard {
-    width: 100%; /* Ensure card takes up full available width */
-  }
-
-  .carouselImage {
-    height: 130px; /* Further reduce image height on mobile */
-  }
-
-  .cardTitle {
-    font-size: 16px; /* Increase title font size on mobile */
-    margin-left: 5px; /* Reduce margin */
-    margin-bottom: 0px; /* Reduce margin for better fitting */
-    margin-top: 50px;
+  
+  .videoModalContent {
+    width: 95%;
   }
 }
 
-
-
-/* Modal Styles */
-.modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  width: 350px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.modal h3 {
-  margin-bottom: 10px;
-  font-size: 20px;
-}
-
-.modal p {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 15px;
-}
-
-.modalButton {
-  width: 100%;
-  padding: 12px;
-  background-color: #fbbf24;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-
-.modalButton:hover {
-  background-color: #f59e0b;
-}
-
-.modalClose {
-  width: 100%;
-  padding: 10px;
-  background: #ddd;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.modalClose:hover {
-  background: #ccc;
-}
-
-/* Animation */
+/* Animations */
 @keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: scale(0.9);
-  }
-  to {
-      opacity: 1;
-      transform: scale(1);
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Update for no video available section */
-.noVideos {
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.carouselCard {
+  animation: fadeIn 0.5s ease forwards, slideUp 0.5s ease forwards;
+}
+
+.emptyStateCard {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/* Floating action button for mobile */
+.floatingActionButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  color: white;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  width: 250px; /* Adjust width for a modern card look */
-  height: 250px; /* Fixed height for consistent design */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Adding shadow */
-  transition: all 0.3s ease-in-out;
-  text-align: center;
-}
-
-.noVideos:hover {
-  transform: translateY(-5px); /* Add hover effect for modern feel */
-}
-
-.noVideos img {
-  width: 100px; /* Adjust image size */
-  height: 100px; /* Adjust image size */
-  object-fit: contain;
-  margin-bottom: 15px; /* Spacing between the image and text */
-}
-
-.noVideos p {
-  font-size: 16px;
-  color: #6c757d;
-  font-weight: 500;
-  margin-top: 10px;
-}
-
-/* Adding a soft background color and a subtle shadow to the container */
-.videoGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
-  gap: 20px;
-  margin-top: 20px;
-}
-
-/* Basic styling */
-.quizCard {
-  background-color: #fff;
-  border-radius: 6px; /* Reduced border radius */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 16px; /* Reduced padding */
-  max-width: 500px;
-  margin: 20px auto;
-  display: flex;
-  justify-content: space-between; /* Align items horizontally */
-  align-items:baseline; /* Center items vertically */
-  transition: all 0.3s ease-in-out;
-}
-
-.quizCardContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.quizTitle {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0; /* Remove margin to align with button */
-}
-
-
-.quizTitlesmall {
-  font-size: 10px;
-  font-weight: bold;
-  margin: 0; 
-}
-
-.takeQuizButton {
-  background-color: #f59e0b;
-  color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-left: 16px; /* Add margin to separate from text */
+  z-index: 100;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.takeQuizButton:hover {
-  background-color: #f59f0b8d;
+.floatingActionButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 }
 
-
-
-/* Quiz Card under test */
-/* Main Container to Align Cards Horizontally */
-.quizContainer {
-  display: flex;
-  gap: 20px; /* Spacing between the cards */
-  justify-content: center; /* Center horizontally */
-  flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
-}
-
-/* Card Container */
-.computerquizCard {
-  width: 320px;
-  background: rgba(255, 255, 255, 0.2); /* Light Glassmorphism Effect */
-  backdrop-filter: blur(10px); /* Blur Effect */
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15); /* Soft Shadow */
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  cursor: pointer;
-  text-align: center;
-}
-
-/* Hover Effect */
-.computerquizCard:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.2);
-}
-
-/* Card Content */
-.computerquizCardContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Quiz Title */
-.computerquizTitle {
-  font-size: 22px;
-  font-weight: 600;
-  color: #333;
-  text-transform: capitalize;
-  margin-bottom: 10px;
-}
-
-/* Subtitle */
-.computerquizSubtitle {
-  font-size: 16px;
-  color: #e0e0e0;
-  font-weight: 400;
-  margin-bottom: 20px;
-}
-
-.computerquizSubtitleactive {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.2);
-  font-weight: 400;
-  margin-bottom: 20px;
-}
-
-/* Expired Button */
-.computertakeQuizButton {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  color: white;
-  font-size: 16px;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  text-transform: uppercase;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  transform: skewX(-10deg);
-  box-shadow: 0px 4px 15px rgba(255, 75, 43, 0.3);
-}
-
-/* Button Hover Effect */
-.computertakeQuizButton:hover {
-  background: linear-gradient(135deg, #ff4b2b, #ff416c);
-  box-shadow: 0px 6px 20px rgba(255, 75, 43, 0.5);
-  transform: skewX(-10deg) scale(1.05);
-}
-
-
-.computertakeQuizButtonactive {
-  background: linear-gradient(135deg, #FBBF24, #f59e0b);
-  color: white;
-  font-size: 16px;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  text-transform: uppercase;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  transform: skewX(-10deg);
-  box-shadow: 0px 4px 15px rgba(255, 75, 43, 0.3);
-}
-
-/* Button Hover Effect */
-.computertakeQuizButtonactive:hover {
-  background: linear-gradient(135deg, #f59e0b, #ff416c);
-  box-shadow: 0px 6px 20px rgba(255, 75, 43, 0.5);
-  transform: skewX(-10deg) scale(1.05);
+@media (min-width: 769px) {
+  .floatingActionButton {
+    display: none;
+  }
 }

@@ -96,8 +96,8 @@ const Recent = () => {
     return (
       <div className={styles.recentSection}>
         <div className={styles.loadingContainer}>
-          <div className={styles.loader}></div>
-          <p>Loading videos...</p>
+          <div className={styles.neomorphLoader}></div>
+          <p className={styles.loadingText}>Loading videos...</p>
         </div>
       </div>
     );
@@ -118,7 +118,7 @@ const Recent = () => {
             <h3>Oops! Something went wrong</h3>
             <p>{error}</p>
             <button 
-              className={styles.retryButton}
+              className={styles.neomorphButton}
               onClick={fetchVideos}
             >
               Try Again
@@ -165,13 +165,15 @@ const Recent = () => {
                   className={styles.videoContainer} 
                   onClick={() => openModal(video.videoembedlink)}
                 >
-                  <Image
-                    src={videoIcon}
-                    alt="Play Video"
-                    className={styles.videoIcon}
-                    width={50}
-                    height={50}
-                  />
+                  <div className={styles.playIconWrapper}>
+                    <Image
+                      src={videoIcon}
+                      alt="Play Video"
+                      className={styles.videoIcon}
+                      width={50}
+                      height={50}
+                    />
+                  </div>
                   <div className={styles.carouselImageWrapper}>
                     <Image
                       src={video.thumbnail}
@@ -189,7 +191,7 @@ const Recent = () => {
                     <span className={styles.author}>By {video.author}</span>
                   </div>
                   <button 
-                    className={styles.watchButton} 
+                    className={styles.neomorphButton} 
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();

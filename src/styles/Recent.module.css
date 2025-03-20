@@ -1,39 +1,47 @@
 .recentSection {
-  padding: 16px; /* Reduced padding by 20% */
+  /* padding: 16px; */
+  /* background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 
+    8px 8px 16px rgba(174, 174, 192, 0.4),
+    -8px -8px 16px rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px; */
 }
 
 .recentHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 8px; /* Reduced margin by 20% */
+  margin-bottom: 8px;
 }
 
 .recentStrip {
-  width: 2px; /* Reduced width by 20% */
-  height: 15px; /* Reduced height by 20% */
+  width: 2px;
+  height: 15px;
   background-color: #FBBF24;
-  margin-right: 8px; /* Reduced margin by 20% */
+  margin-right: 8px;
+  box-shadow: 1px 1px 2px rgba(251, 191, 36, 0.3);
 }
 
 .recentText {
-  font-size: 0.88em; /* Reduced font size by 20% */
+  font-size: 0.88em;
   font-weight: 700;
   color: #4B5563;
-  margin-right: 8px; /* Reduced margin by 20% */
+  margin-right: 8px;
 }
 
 .recentArrowIcon {
-  width: 16px; /* Reduced width by 20% */
-  height: 16px; /* Reduced height by 20% */
-  margin-left: 8px; /* Reduced margin by 20% */
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
 }
 
 .carouselWrapper {
   display: flex;
-  justify-content: flex-start;  /* Ensures no gap before carousel starts */
-  overflow: hidden;  /* Hide items outside of the 3 visible items */
-  padding: 0;  /* Ensure no extra padding */
-  margin: 0;  /* Remove any unwanted margin */
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  max-width: 720px;
 }
 
 .carousel {
@@ -48,38 +56,79 @@
   display: none;
 }
 
+/* Neomorphic card styling */
 .carouselCard {
-  min-width: 240px; /* Reduced width by 20% */
-  height: 300px; /* Reduced height by 20% */
-  border: 1px solid #F3F4F6;
-  border-radius: 16px; /* Reduced border-radius by 20% */
-  margin: 5px; /* Reduced margin by 20% */
+  min-width: 240px;
+  height: 300px;
+  border-radius: 16px;
+  margin: 5px;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 8px; /* Reduced padding by 20% */
+  padding: 8px;
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+}
+
+.carouselCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    8px 8px 16px rgba(174, 174, 192, 0.5),
+    -8px -8px 16px rgba(255, 255, 255, 0.9);
 }
 
 .videoContainer {
   position: relative;
   width: 100%;
-  height: 60%; /* Reduced height by 20% */
+  height: 60%;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.carouselImage {
-  object-fit: cover;
-  border-radius: 16px; /* Reduced border-radius by 20% */
+.carouselImageWrapper {
+  position: relative;
   width: 100%;
   height: 100%;
 }
 
-.videoIcon {
+.carouselImage {
+  object-fit: cover;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.videoContainer:hover .carouselImage {
+  transform: scale(1.05);
+}
+
+.playIconWrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.videoContainer:hover .playIconWrapper {
+  opacity: 1;
+}
+
+.videoIcon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .cardContent {
@@ -97,6 +146,9 @@
   margin-bottom: 8px;
   text-align: left;
   padding: 0 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .authorContainer {
@@ -110,89 +162,62 @@
   font-style: italic;
 }
 
-.percentage, .time {
-  font-size: 12px; /* Reduced font size by 20% */
-  /* font-weight: 700; */
-  color: #9CA3AF;
-}
-
-.progressContainer {
-  margin-bottom: 8px; /* Reduced margin by 20% */
-}
-
-.progressBarContainer {
-  width: 100%;
-  height: 6px; /* Reduced height by 20% */
-  background-color: #E5E7EB;
-  border-radius: 8px; /* Reduced border-radius by 20% */
-  overflow: hidden;
-}
-
-.progressBar {
-  height: 100%;
-  background-color: #FBBF24;
-  border-radius: 8px; /* Reduced border-radius by 20% */
-  width: 37%;
-}
-
-
-
-.continueIcon {
-  margin-left: 8px; /* Reduced margin by 20% */
-}
-
-/* Additional Style to Ensure Only 3 Items Are Visible at Once */
-.carouselWrapper {
-  max-width: 720px;  /* 3 * 240px (width of cards) + margins */
-  margin: 0;  /* Make sure no margin exists to cause gaps */
-}
-
-.carouselCard {
-  flex-shrink: 0;  /* Prevent cards from shrinking */
-}
-
-
-/* Additional CSS for Views Section */
-.infoContainer {
-  display: flex;
-  justify-content: flex-end; /* Aligns content to the right */
-  margin-bottom: 8px;
-}
-
-.viewsContainer {
-  display: flex;
-  align-items: center;
-  gap: 4px; /* Space between the text and icon */
-}
-
-.views {
-  font-size: 12px;
-  color: #9CA3AF; /* Grey text color */
-}
-
-
-/* Updated Button Styles */
-.watchButton {
-  height: 36px;
+/* Neomorphic button with primary color */
+.neomorphButton {
+  height: 90px; /* Increased height */
   width: 90%;
   background-color: #FBBF24;
   border: none;
-  border-radius: 8px;
-  color: #ffffff;
+  border-radius: 8px; /* Reduced border radius */
+  color: white;
   cursor: pointer;
-  font-size: 0.72em;
+  font-size: 0.8em;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 8px auto;
-  transition: background-color 0.2s;
-  padding: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 
+    4px 4px 8px rgba(251, 191, 36, 0.3),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
 }
 
-.watchButton:hover {
-  background-color: #F59E0B;
+.neomorphButton:hover {
+  color: white;
+  box-shadow: 
+    2px 2px 4px rgba(251, 191, 36, 0.3),
+    -2px -2px 4px rgba(255, 255, 255, 0.8);
+  transform: translateY(1px);
 }
 
+.neomorphButton:active {
+  box-shadow: inset 
+    2px 2px 4px rgba(245, 158, 11, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.4);
+}
+
+.neomorphButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transition: left 0.7s ease;
+}
+
+.neomorphButton:hover::before {
+  left: 100%;
+}
+
+/* Neomorphic loader */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -201,22 +226,49 @@
   min-height: 300px;
 }
 
-.loader {
-  border: 4px solid #f3f3f3;
+.neomorphLoader {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  border-top: 4px solid #3498db;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
+  background: #ffffff;
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 4px rgba(174, 174, 192, 0.4);
+  margin-bottom: 20px;
+  position: relative;
+  animation: pulse 1.5s infinite ease-in-out;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.neomorphLoader:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #FBBF24;
+  opacity: 0.7;
+  animation: pulse 1.5s infinite ease-in-out alternate;
 }
 
-.emptyState {
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.loadingText {
+  color: #6B7280;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 16px;
+}
+
+/* Neomorphic error and empty states */
+.errorState, .emptyState {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -224,71 +276,79 @@
   min-height: 300px;
 }
 
-.emptyStateCard {
-  background: #f8f9fa;
-  border-radius: 12px;
+.errorStateCard, .emptyStateCard {
+  background: #ffffff;
+  border-radius: 16px;
   padding: 32px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+  max-width: 400px;
 }
 
-.emptyStateIcon {
-  opacity: 0.5;
+.errorStateIcon, .emptyStateIcon {
+  opacity: 0.6;
   margin-bottom: 16px;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.emptyStateCard h3 {
-  margin: 0 0 8px 0;
-  color: #343a40;
+.errorStateCard h3, .emptyStateCard h3 {
+  margin: 0 0 12px 0;
+  color: #4B5563;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
-.emptyStateCard p {
-  margin: 0;
-  color: #6c757d;
-}
-
-.errorState {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
-}
-
-.errorStateCard {
-  background: #fff3f3;
-  border-radius: 12px;
-  padding: 32px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.errorStateIcon {
-  opacity: 0.5;
-  margin-bottom: 16px;
-}
-
-.errorStateCard h3 {
-  margin: 0 0 8px 0;
-  color: #dc3545;
-}
-
-.errorStateCard p {
+.errorStateCard p, .emptyStateCard p {
   margin: 0 0 16px 0;
-  color: #6c757d;
+  color: #6B7280;
+  font-size: 0.9rem;
 }
 
-.retryButton {
-  background-color: #FBBF24;
-  border: none;
+/* Keep other existing styles */
+.percentage, .time {
+  font-size: 12px;
+  color: #9CA3AF;
+}
+
+.progressContainer {
+  margin-bottom: 8px;
+}
+
+.progressBarContainer {
+  width: 100%;
+  height: 6px;
+  background-color: #E5E7EB;
   border-radius: 8px;
-  color: white;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
+  overflow: hidden;
 }
 
-.retryButton:hover {
-  background-color: #F59E0B;
+.progressBar {
+  height: 100%;
+  background-color: #FBBF24;
+  border-radius: 8px;
+  width: 37%;
+}
+
+.continueIcon {
+  margin-left: 8px;
+}
+
+/* Additional CSS for Views Section */
+.infoContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.viewsContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.views {
+  font-size: 12px;
+  color: #9CA3AF;
 }

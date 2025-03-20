@@ -19,6 +19,9 @@
   max-width: 400px;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  margin: auto; /* Add this to ensure centering */
+  position: relative; /* Add this for proper positioning */
+  transform: none; /* Reset any transforms */
 }
 
 .modalContent h3 {

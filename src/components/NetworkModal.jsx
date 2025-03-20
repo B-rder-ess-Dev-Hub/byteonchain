@@ -5,6 +5,8 @@ import arbitrumLogo from '../../public/arbitrum.png';
 import ethereumLogo from '../../public/ethereum.png';
 import polygonLogo from '../../public/polygon.webp';
 import optimismLogo from '../../public/optimisim.png';
+import celoLogo from '../../public/celo.png';
+import baseLogo from '../../public/base.svg';
 
 const NetworkModal = ({ isOpen, onNetworkSelect }) => {
   if (!isOpen) return null;
@@ -20,7 +22,7 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
     { 
       id: 'base',
       name: 'Base',
-      logo: ethereumLogo,
+      logo: baseLogo,
       chainId: 8453,
       isActive: true 
     },
@@ -35,7 +37,7 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       id: 'celo',
       name: 'Celo',
       chainId: 42220,
-      logo: polygonLogo,
+      logo: celoLogo,
       isActive: true
     },
      // { 

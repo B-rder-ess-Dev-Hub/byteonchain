@@ -1,28 +1,32 @@
-.recentSection {
+/* .recentSection {
   padding: 16px;
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-  overflow: hidden;
-}
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 
+    8px 8px 16px rgba(174, 174, 192, 0.4),
+    -8px -8px 16px rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+} */
 
 .recentHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+  margin-top: 10px;
 }
 
 .recentStrip {
-  width: 2px;
-  height: 15px;
+  width: 3px;
+  height: 18px;
   background-color: #FBBF24;
-  margin-right: 8px;
+  margin-right: 10px;
+  box-shadow: 1px 1px 2px rgba(251, 191, 36, 0.3);
 }
 
 .recentText {
-  font-size: 0.88em;
+  font-size: 1rem;
   font-weight: 700;
-  color: #4B5563;
+  color: #1F2937;
   margin-right: 8px;
 }
 
@@ -32,215 +36,313 @@
   margin-left: 8px;
 }
 
-.carouselContainer {
-  width: 100%;
-  padding: 20px;
-  background: #fafafa;
-  border-radius: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.carouselHeading {
-  font-size: 1.5em;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 16px;
+.carouselWrapper {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
 }
 
 .carousel {
   display: flex;
   overflow-x: auto;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   gap: 16px;
+  padding: 4px;
 }
 
-.newsItem {
-  background: white;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .carouselCard {
-  width: 300px;
-  min-width: 300px;
-  height: 350px;
-  flex: none;
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  min-width: 280px;
+  height: 320px;
   border-radius: 16px;
-  overflow: hidden;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  padding: 6px;
 }
 
 .carouselCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-5px);
+  box-shadow: 
+    8px 8px 16px rgba(174, 174, 192, 0.5),
+    -8px -8px 16px rgba(255, 255, 255, 0.9);
 }
 
 .imageContainer {
-  width: 100%;
-  height: 60%;
   position: relative;
+  width: 100%;
+  height: 180px;
   overflow: hidden;
+}
+
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.3) 100%);
+  z-index: 1;
 }
 
 .carouselImage {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  border-radius: 16px;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+  object-fit: cover;
+}
+
+.carouselCard:hover .carouselImage {
+  transform: scale(1.05);
 }
 
 .cardContent {
-  padding: 12px;
-  flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 16px;
+  flex: 1;
   justify-content: space-between;
-  overflow: hidden;
 }
 
 .cardTitle {
-  font-size: 0.9em;
+  font-size: 1rem;
   font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 8px;
+  color: #1F2937;
+  margin-bottom: 12px;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
   line-height: 1.4;
-  word-wrap: break-word;
 }
 
-.cardDescription {
-  font-size: 0.72em;
-  font-weight: 900;
-  color: #6B7280;
-  text-align: justify;
-}
-
-.loadingContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
-}
-
-.loader {
-  border: 4px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 4px solid #FBBF24;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.errorState {
+.neomorphButton {
+  height: 48px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-}
-
-.errorStateCard {
-  background: #fff3f3;
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-}
-
-.emptyState {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-}
-
-.emptyStateCard {
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 24px;
-  text-align: center;
-}
-
-.readMoreButton {
   background-color: #FBBF24;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   color: white;
-  padding: 8px 16px;
   cursor: pointer;
-  font-size: 0.8em;
-  transition: background-color 0.2s;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 
+    4px 4px 8px rgba(251, 191, 36, 0.3),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
 }
 
-.readMoreButton:hover {
+.neomorphButton:hover {
   background-color: #F59E0B;
+  box-shadow: 
+    2px 2px 4px rgba(251, 191, 36, 0.3),
+    -2px -2px 4px rgba(255, 255, 255, 0.8);
+  transform: translateY(1px);
+}
+
+.neomorphButton:active {
+  box-shadow: inset 
+    2px 2px 4px rgba(245, 158, 11, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.4);
 }
 
 .moreCard {
-  width: 300px;
-  min-width: 300px;
-  height: 350px;
-  flex: none;
-  background-color: #f8f9fa;
-  border: 2px dashed #e5e7eb;
+  min-width: 280px;
+  height: 320px;
   border-radius: 16px;
+  background-color: rgba(251, 191, 36, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
   cursor: pointer;
-  transition: all 0.2s;
-  text-decoration: none;
-  padding: 6px;
 }
 
 .moreCard:hover {
-  background-color: #f3f4f6;
-  border-color: #d1d5db;
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  background-color: rgba(251, 191, 36, 0.15);
+  box-shadow: 
+    8px 8px 16px rgba(174, 174, 192, 0.5),
+    -8px -8px 16px rgba(255, 255, 255, 0.9);
 }
 
 .moreContent {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 12px;
 }
 
 .moreContent p {
-  color: #6b7280;
-  font-size: 1em;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #F59E0B;
   margin: 0;
+}
+
+.moreIcon {
+  transform: rotate(90deg);
+  opacity: 0.8;
+  transition: transform 0.3s ease;
+}
+
+.moreCard:hover .moreIcon {
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Loading state */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.neomorphLoader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 4px rgba(174, 174, 192, 0.4);
+  margin-bottom: 20px;
+  position: relative;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.neomorphLoader:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #FBBF24;
+  opacity: 0.7;
+  animation: pulse 1.5s infinite ease-in-out alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.loadingText {
+  color: #6B7280;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Error state */
+.errorState {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.errorStateCard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+  max-width: 400px;
+}
+
+.errorStateCard h3 {
+  margin: 0 0 12px 0;
+  color: #4B5563;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.errorStateCard p {
+  margin: 0 0 16px 0;
+  color: #6B7280;
+  font-size: 0.9rem;
+}
+
+/* Empty state */
+.emptyState {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.emptyStateCard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 
+    6px 6px 12px rgba(174, 174, 192, 0.4),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
+  max-width: 400px;
+}
+
+.emptyStateCard h3 {
+  margin: 0 0 12px 0;
+  color: #4B5563;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.emptyStateCard p {
+  margin: 0 0 16px 0;
+  color: #6B7280;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
   .carouselCard, .moreCard {
-    width: 250px;
-    min-width: 250px;
+    min-width: 240px;
+    height: 300px;
   }
-}
-
-@media (max-width: 480px) {
-  .carouselCard, .moreCard {
-    width: 200px;
-    min-width: 200px;
+  
+  .imageContainer {
+    height: 160px;
+  }
+  
+  .cardTitle {
+    font-size: 0.9rem;
+  }
+  
+  .neomorphButton {
+    height: 40px;
+    font-size: 0.8rem;
   }
 }

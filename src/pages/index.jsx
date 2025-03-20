@@ -9,19 +9,21 @@ import WalletWrapper from '../components/WalletWrapper';
 
 const HomeContent = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.pageContainer}>
       <Header />
-      <div className={styles.layout}>
-        <div className={styles.sidebar}>
-          <Sidebar />
-        </div>
-        <div className={styles.content}>
-          <div className={styles.middleSection}>
-            <Recent />
-            <Tupdate />
+      <div className={styles.container}>
+        <div className={styles.layout}>
+          <div className={styles.sidebarContainer}>
+            <Sidebar />
           </div>
-          <div className={styles.calendarSection}>
-            <CustomCalendar />
+          <div className={styles.content}>
+            <div className={styles.middleSection}>
+              <Recent />
+              <Tupdate />
+            </div>
+            <div className={styles.calendarSection}>
+              <CustomCalendar />
+            </div>
           </div>
         </div>
       </div>

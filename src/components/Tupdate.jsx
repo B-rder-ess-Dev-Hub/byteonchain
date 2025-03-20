@@ -29,8 +29,22 @@ const Tupdate = () => {
       const data = await response.json();
       const newsArray = data.news || [];
       
-      // Only process the first 4 news items and use the imgurl from the API
-      const processedNews = newsArray.slice(0, MAX_VISIBLE_NEWS).map(item => ({
+      // Sort news by date (newest first) if date field exists
+      const sortedNews = [...newsArray].sort((a, b) => {
+        // If publishedAt exists, use it for sorting
+        if (a.publishedAt && b.publishedAt) {
+          return new Date(b.publishedAt) - new Date(a.publishedAt);
+        }
+        // If date exists, use it for sorting
+        if (a.date && b.date) {
+          return new Date(b.date) - new Date(a.date);
+        }
+        // Fallback to original order if no date fields
+        return 0;
+      });
+      
+      // Process the first 4 news items after sorting
+      const processedNews = sortedNews.slice(0, MAX_VISIBLE_NEWS).map(item => ({
         ...item,
         imageUrl: item.imgurl || '/up1.png' // Use imgurl from API or fallback to default
       }));
@@ -59,8 +73,8 @@ const Tupdate = () => {
     return (
       <div className={styles.recentSection}>
         <div className={styles.loadingContainer}>
-          <div className={styles.loader}></div>
-          <p>Loading news...</p>
+          <div className={styles.neomorphLoader}></div>
+          <p className={styles.loadingText}>Loading news...</p>
         </div>
       </div>
     );
@@ -73,7 +87,7 @@ const Tupdate = () => {
           <div className={styles.errorStateCard}>
             <h3>Oops! Something went wrong</h3>
             <p>{error}</p>
-            <button className={styles.retryButton} onClick={fetchNews}>
+            <button className={styles.neomorphButton} onClick={fetchNews}>
               Try Again
             </button>
           </div>
@@ -123,11 +137,12 @@ const Tupdate = () => {
                       style={{ objectFit: 'cover' }}
                       priority={index < 2}
                     />
+                    <div className={styles.imageOverlay}></div>
                   </div>
                   <div className={styles.cardContent}>
                     <p className={styles.cardTitle}>{item.title}</p>
                     <button 
-                      className={styles.readMoreButton}
+                      className={styles.neomorphButton}
                       onClick={(e) => {
                         e.stopPropagation();
                         openModal(item.url);
@@ -145,6 +160,7 @@ const Tupdate = () => {
                     alt="More news"
                     width={40}
                     height={40}
+                    className={styles.moreIcon}
                   />
                   <p>More Updates</p>
                 </div>

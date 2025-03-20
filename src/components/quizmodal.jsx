@@ -34,6 +34,8 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
   const [isTimerPaused, setIsTimerPaused] = useState(false);
   const [userName, setUserName] = useState("Unknown User");
   const [attestationUID, setAttestationUID] = useState(null);
+  const [isAnswering, setIsAnswering] = useState(false); // Add state to track if user is in the process of answering
+  const [answerFeedback, setAnswerFeedback] = useState(null); // Add feedback state
   
   
 
@@ -53,6 +55,8 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
     setScore(0);
     setIsCompleted(false);
     setTimer(quiz.duration ? parseInt(quiz.duration) * 60 : 600);
+    setIsAnswering(false);
+    setAnswerFeedback(null);
   }, [isOpen, quiz]);
 
   useEffect(() => {
@@ -111,15 +115,23 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
   };
 
   const handleAnswerClick = (selectedOption) => {
+    // Prevent multiple rapid clicks
+    if (isAnswering) return;
+    
+    setIsAnswering(true);
     setSelectedAnswer(selectedOption);
     const correctOption = questions[currentQuestion].answer;
     setCorrectAnswer(correctOption);
-
+  
     // Compare selected option with correct answer from DB
-    if (selectedOption === correctOption) {
+    const isCorrect = selectedOption === correctOption;
+    if (isCorrect) {
       setScore((prev) => prev + (quiz?.marks_per_question || 1));
     }
-
+    
+    // Remove feedback message and just proceed to next question
+    
+    // Add a delay before moving to the next question
     setTimeout(() => {
       if (currentQuestion >= questions.length - 1) {
         setIsCompleted(true);
@@ -128,7 +140,8 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
         setSelectedAnswer(null);
         setCorrectAnswer(null);
       }
-    }, 1000);
+      setIsAnswering(false);
+    }, 800); // Shorter delay since we're not showing feedback
   };
 
   const shareOnTwitter = () => {
@@ -226,36 +239,56 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
   const maxAttempts = 5;
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
-        <h2>{quiz.course_title}</h2>
+        <div className={styles.modalHeader}>
+          <h2>{quiz.course_title}</h2>
+          <button className={styles.closeButton} onClick={onClose}>×</button>
+        </div>
 
+        {/* Improved warning banner */}
         {!isCompleted && (
-          <div className={styles.noticeContainer}>
-            <p className={styles.noticeText}>
-              Please read carefully before answering. You cannot go back once you answer.
-            </p>
+          <div className={styles.warningCard}>
+            <div className={styles.warningCardContent}>
+              <span className={styles.warningIcon}>⚠️</span>
+              <p className={styles.warningText}>
+                Please read and answer carefully. Once you select an answer, you cannot change it or go back.
+              </p>
+            </div>
           </div>
         )}
 
         {!isCompleted && (
-          <div className={styles.timerContainer}>
-            <p className={styles.timer}>
-              {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, "0")}
-            </p>
-          </div>
-        )}
-
-        {!isCompleted && (
-          <div className={styles.progressBarContainer}>
-            <div className={styles.progressBar} style={{ width: `${progress}%` }}></div>
+          <div className={styles.quizInfo}>
+            <div className={styles.timerContainer}>
+              <div className={styles.timerIcon}>⏱️</div>
+              <div className={styles.timerText}>{formatTime(timer)}</div>
+            </div>
+            
+            <div className={styles.progressContainer}>
+              <div className={styles.progressText}>
+                Question {currentQuestion + 1} of {questions.length}
+              </div>
+              <div className={styles.progressBarContainer}>
+                <div 
+                  className={styles.progressBar} 
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+            </div>
           </div>
         )}
 
         {!walletAddress ? (
           <div className={styles.walletContainer}>
+            <div className={styles.walletIcon}>🔐</div>
             <p>Please connect your wallet to take the quiz.</p>
             <button className={styles.connectButton} onClick={connectWallet}>
               Connect Wallet
@@ -263,37 +296,73 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
           </div>
         ) : quizAttempts >= maxAttempts ? (
           <div className={styles.quizCompleted}>
-            <h3>❌ Maximum Attempts Reached</h3>
+            <div className={styles.completedIcon}>❌</div>
+            <h3>Maximum Attempts Reached</h3>
             <p>You have reached the maximum number of attempts for this quiz.</p>
           </div>
         ) : isCompleted ? (
           <div className={styles.quizCompleted}>
-            <h3>🎉 Quiz Completed!</h3>
-            <p className={styles.finalScore}>
-              Final Score: <span>{score}</span> / {questions.length * quiz.marks_per_question}
-            </p>
+            <div className={styles.completedIcon}>🎉</div>
+            <h3>Quiz Completed!</h3>
+            <div className={styles.scoreCard}>
+              <div className={styles.scoreHeader}>Your Score</div>
+              <div className={styles.scoreValue}>
+                {score} / {questions.length * quiz.marks_per_question}
+              </div>
+              <div className={styles.scorePercentage}>
+                {Math.round((score / (questions.length * quiz.marks_per_question)) * 100)}%
+              </div>
+            </div>
+            
             {attestationUID ? (
               <div className={styles.buttonContainer}>
-                <a href={`${matchingNetwork.baseURL}/attestation/view/${attestationUID}`} target="_blank" rel="noopener noreferrer" className={styles.attestButton}>
+                <a 
+                  href={`${matchingNetwork.baseURL}/attestation/view/${attestationUID}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={styles.attestButton}
+                >
                   View Attestation
                 </a>
-                <button className={styles.shareButton} onClick={shareOnTwitter}>🚀 Share</button>
+                <button className={styles.shareButton} onClick={shareOnTwitter}>
+                  <span className={styles.shareIcon}>🚀</span> Share on Twitter
+                </button>
               </div>
             ) : (
-              <Attest walletAddress={walletAddress} score={score} course={quiz.course_title} issuer={quiz.issuer} userName={userName} onAttestationSuccess={handleAttestationSuccess} />
+              <Attest 
+                walletAddress={walletAddress} 
+                score={score} 
+                course={quiz.course_title} 
+                issuer={quiz.issuer} 
+                userName={userName} 
+                onAttestationSuccess={handleAttestationSuccess} 
+              />
             )}
           </div>
         ) : (
-          <>
+          <div className={styles.questionContainer}>
             <h3 className={styles.questionText}>{questions[currentQuestion]?.question}</h3>
+            
+            {/* Remove the feedback message section */}
+            
             <ul className={styles.optionsList}>
               {questions[currentQuestion]?.options.map((option, index) => (
-                <li key={index} className={styles.option} onClick={() => handleAnswerClick(option)}>
-                  {option}
+                <li 
+                  key={index} 
+                  className={`${styles.option} 
+                    ${selectedAnswer === option ? styles.selectedOption : ''}
+                    ${isAnswering ? styles.disabled : ''}
+                  `}
+                  onClick={() => handleAnswerClick(option)}
+                >
+                  <span className={styles.optionLetter}>
+                    {String.fromCharCode(65 + index)}
+                  </span>
+                  <span className={styles.optionText}>{option}</span>
                 </li>
               ))}
             </ul>
-          </>
+          </div>
         )}
       </div>
     </div>
