@@ -6,7 +6,6 @@ const ConnectionStatusModal = ({ isConnected, address, isChecking, connectionSta
   const [animationComplete, setAnimationComplete] = useState(false);
   
   useEffect(() => {
-    // Animate progress bar for connected state - complete in 1.5 seconds
     if (connectionState === 'connected') {
       const timer = setInterval(() => {
         setProgress(prev => {
@@ -15,7 +14,7 @@ const ConnectionStatusModal = ({ isConnected, address, isChecking, connectionSta
             setAnimationComplete(true);
             return 100;
           }
-          return prev + 6.67; // Complete in ~1.5 seconds (100/15)
+          return prev + 6.67; 
         });
       }, 100);
       

@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from '../styles/NetworkModal.module.css';
 import arbitrumLogo from '../../public/arbitrum.png';
-import ethereumLogo from '../../public/ethereum.png';
-import polygonLogo from '../../public/polygon.webp';
 import optimismLogo from '../../public/optimisim.png';
 import celoLogo from '../../public/celo.png';
 import baseLogo from '../../public/base.svg';
 
 const NetworkModal = ({ isOpen, onNetworkSelect }) => {
+  const [switchingNetwork, setSwitchingNetwork] = useState(null);
+  const [error, setError] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+
   if (!isOpen) return null;
 
   const networks = [
@@ -17,6 +19,13 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       name: 'Arbitrum',
       logo: arbitrumLogo,
       chainId: 42161,
+      rpcUrl: 'https://arb1.arbitrum.io/rpc',
+      nativeCurrency: {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        decimals: 18
+      },
+      blockExplorerUrl: 'https://arbiscan.io',
       isActive: true
     },
     { 
@@ -24,6 +33,13 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       name: 'Base',
       logo: baseLogo,
       chainId: 8453,
+      rpcUrl: 'https://mainnet.base.org',
+      nativeCurrency: {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        decimals: 18
+      },
+      blockExplorerUrl: 'https://basescan.org',
       isActive: true 
     },
     { 
@@ -31,6 +47,13 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       name: 'Optimism',
       logo: optimismLogo,
       chainId: 10,
+      rpcUrl: 'https://mainnet.optimism.io',
+      nativeCurrency: {
+        name: 'Ethereum',
+        symbol: 'ETH',
+        decimals: 18
+      },
+      blockExplorerUrl: 'https://optimistic.etherscan.io',
       isActive: true 
     },
     { 
@@ -38,36 +61,115 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       name: 'Celo',
       chainId: 42220,
       logo: celoLogo,
+      rpcUrl: 'https://forno.celo.org',
+      nativeCurrency: {
+        name: 'Celo',
+        symbol: 'CELO',
+        decimals: 18
+      },
+      blockExplorerUrl: 'https://explorer.celo.org',
       isActive: true
     },
-     // { 
-    //   id: 'polygon',
-    //   name: 'Polygon',
-    //   logo: polygonLogo,
-    //   chainId: 137,
-    //   isActive: false 
-    // },
-    // { 
-    //   id: 'metis andromeda',
-    //   name: 'Metis Andromeda',
-    //   logo: ethereumLogo,
-    //   chainId: 1088,
-    //   isActive: false
-    // },
+    // Other networks remain commented out
   ];
+
+  // Connect wallet first
+  const connectWallet = async () => {
+    try {
+      setIsConnecting(true);
+      setError(null);
+      
+      if (!window.ethereum) {
+        throw new Error("No Ethereum wallet detected. Please install MetaMask or another web3 wallet.");
+      }
+      
+      // Request account access
+      const accounts = await window.ethereum.request({ 
+        method: 'eth_requestAccounts' 
+      });
+      
+      if (accounts.length === 0) {
+        throw new Error("No accounts found. Please connect your wallet.");
+      }
+      
+      setIsConnecting(false);
+      return accounts[0];
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      setError(error.message);
+      setIsConnecting(false);
+      return null;
+    }
+  };
+
+  const switchNetwork = async (network) => {
+    try {
+      setSwitchingNetwork(network.id);
+      setError(null);
+      
+      // First connect the wallet
+      const account = await connectWallet();
+      if (!account) {
+        throw new Error("Failed to connect wallet. Please try again.");
+      }
+      
+      // Format the network parameters for wallet
+      const params = {
+        chainId: `0x${network.chainId.toString(16)}`, // Convert to hex string
+        chainName: network.name,
+        nativeCurrency: network.nativeCurrency,
+        rpcUrls: [network.rpcUrl],
+        blockExplorerUrls: [network.blockExplorerUrl]
+      };
+
+      try {
+        // Try to switch to the network if it's already added
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: params.chainId }],
+        });
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask
+        if (switchError.code === 4902) {
+          // Add the network
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [params],
+          });
+        } else {
+          throw switchError;
+        }
+      }
+
+      // Notify parent component about successful network change
+      onNetworkSelect(network);
+      setSwitchingNetwork(null);
+    } catch (error) {
+      console.error("Error switching network:", error);
+      setError(error.message);
+      setSwitchingNetwork(null);
+    }
+  };
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <h3>Connect to a Network</h3>
         <p>Select a network to continue</p>
+        
+        {error && (
+          <div className={styles.errorMessage}>
+            {error}
+          </div>
+        )}
+        
         <div className={styles.networkList}>
           {networks.map((network) => (
             <button
               key={network.id}
-              className={`${styles.networkButton} ${!network.isActive ? styles.disabled : ''}`}
-              onClick={() => network.isActive && onNetworkSelect(network)}
-              disabled={!network.isActive}
+              className={`${styles.networkButton} ${!network.isActive ? styles.disabled : ''} ${switchingNetwork === network.id ? styles.switching : ''}`}
+              onClick={() => network.isActive && switchNetwork(network)}
+              disabled={!network.isActive || switchingNetwork !== null || isConnecting}
             >
               <Image
                 src={network.logo}
@@ -78,9 +180,21 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
               />
               <span>{network.name}</span>
               {!network.isActive && <span className={styles.comingSoon}>Coming Soon</span>}
+              {switchingNetwork === network.id && <span className={styles.switchingIndicator}>Switching...</span>}
             </button>
           ))}
         </div>
+        
+        {isConnecting && (
+          <div className={styles.connectingIndicator}>
+            <div className={styles.loadingDots}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <p>Connecting wallet...</p>
+          </div>
+        )}
       </div>
     </div>
   );
