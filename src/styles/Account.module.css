@@ -28,9 +28,10 @@
   top: 70px;
   height: calc(100vh - 70px);
   overflow-y: auto;
-  /* background-color: #ffffff; */
-  /* box-shadow: 5px 0 15px rgba(0, 0, 0, 0.03); */
+  background-color: #ffffff;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.03);
   z-index: 10;
+  display: none;
 }
 
 /* Adding certificate section and settings section cards */
@@ -998,7 +999,7 @@ input:checked + .toggleSlider:before {
   }
 
   .sidebarWrapper {
-    display: none;
+    display: contents;
   }
 }
 
@@ -1039,6 +1040,6 @@ input:checked + .toggleSlider:before {
   }
 
   .sidebarWrapper {
-    display: none;
+    display: contents;
   }
 }

@@ -3,8 +3,6 @@ import Image from 'next/image';
 import axios from 'axios';
 import videoIcon from '../../public/video-circle.png';
 import recentArrowIcon from '../../public/arrow-icon.png';
-import eyeIcon from '../../public/eye-icon.png';
-import shareIcon from '../../public/share-icon.png';
 import styles from '../styles/Recent.module.css';
 import Modal from './Modal';
 
@@ -12,7 +10,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://byteapi-two.vercel.a
 
 // Create axios instance with default config
 const axiosInstance = axios.create({
-  baseURL: '/api',  // Use the proxied URL
+  baseURL: API_URL,  
   timeout: 10000,
   headers: {
     'Accept': 'application/json',
@@ -50,13 +48,11 @@ const Recent = () => {
 
   const fetchVideos = async () => {
     try {
-      const response = await fetch('/api/videos');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
+      // Use the axiosInstance with the correct endpoint
+      const response = await axiosInstance.get('api/videos');
+      
       // Transform the video data and get thumbnails
-      const processedVideos = data.videos.map(video => {
+      const processedVideos = response.data.videos.map(video => {
         const { thumbnail } = getYouTubeInfo(video.videoembedlink);
         return {
           ...video,
