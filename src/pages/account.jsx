@@ -71,6 +71,7 @@ const AccountContent = () => {
   const onboardingOptions = [
     "BUK",
     "UNN",
+    "Uniport"
   ];
 
   const fetchUserData = async (address) => {
