@@ -206,13 +206,19 @@ const QuizCard = ({ quiz, openQuizModal }) => {
   const [participants, setParticipants] = useState("Loading...");
 
   useEffect(() => {
-    // Simulate fetching participants count
+    // Fetch actual participants count from the API
     const fetchParticipants = async () => {
       try {
-        // In a real app, you would fetch this from your API
-        // For now, we'll use a random number
-        const randomParticipants = Math.floor(Math.random() * 100) + 10;
-        setParticipants(randomParticipants.toString());
+        // Encode the course title for the URL
+        const encodedTitle = encodeURIComponent(quiz.course_title);
+        const response = await fetch(`${API_BASE_URL}/course-completion?course_name=${encodedTitle}`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch participants');
+        }
+        
+        const data = await response.json();
+        setParticipants(data.total_completed.toString());
       } catch (error) {
         console.error("Error fetching participants:", error);
         setParticipants("N/A");

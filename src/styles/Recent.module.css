@@ -177,6 +177,7 @@
   align-items: center;
   justify-content: center;
   margin: 8px auto;
+  padding: 8px 5px;
   transition: all 0.3s ease;
   box-shadow: 
     4px 4px 8px rgba(251, 191, 36, 0.3),
