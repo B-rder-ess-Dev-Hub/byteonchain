@@ -6,7 +6,8 @@ import styles from '../styles/Quizzes.module.css';
 import { useToast } from '../components/ToastNotification';
 
 export const config = {
-  unstable_runtimeJS: true
+  unstable_runtimeJS: true,
+  unstable_JsPreload: false
 };
 
 export async function getStaticProps() {
