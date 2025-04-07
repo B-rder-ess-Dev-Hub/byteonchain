@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import AdminSidebar from '../components/AdminSidebar';
 import styles from '../styles/Quizzes.module.css';
 import { useToast } from '../components/ToastNotification';
+import dynamic from 'next/dynamic';
+
 
 const QuizForm = dynamic(() => import('../components/QuizForm'), { 
   ssr: false,
