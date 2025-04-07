@@ -34,6 +34,7 @@ const Quizzes = () => {
     }
   }, [router]);
 
+
   const sanitizeQuizData = (quiz) => {
     if (!quiz) return null;
 
@@ -110,6 +111,20 @@ const Quizzes = () => {
     }
   };
 
+
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      try {
+        const response = await fetch('/api/quizzes');
+        const data = await response.json();
+        setQuizzes(data);
+      } catch (error) {
+        console.error('Failed to fetch quizzes:', error);
+      }
+    };
+
+    fetchQuizzes();
+  }, []);
 
   const createQuiz = async (quizData) => {
     try {
@@ -778,7 +793,7 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
   );
 
   useEffect(() => {
-    // If quiz has questions, set them in the form
+    
     if (quiz?.questions && quiz.questions.length > 0) {
       setFormData(prev => ({
         ...prev,
@@ -787,6 +802,8 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
       }));
     }
   }, [quiz]);
+
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
