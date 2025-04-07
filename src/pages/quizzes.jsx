@@ -12,21 +12,57 @@ const QuizForm = dynamic(() => import('../components/QuizForm'), {
   loading: () => <p>Loading form...</p>
 });
 
-const QuizzesPage = dynamic(() => Promise.resolve(Quizzes), {
-  ssr: false
-});
-
-
-
 export const config = {
   unstable_runtimeJS: true,
   unstable_JsPreload: false
 };
 
-export function getStaticProps() {
-  return {
-    props: {}
-  };
+export async function getStaticProps() {
+  try {
+    const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
+    const response = await fetch('https://byteapi-two.vercel.app/api/quizzes/', {
+      headers: {
+        'Accept': 'application/json',
+        'Bytekeys': apiKey,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    let quizzesData = Array.isArray(data) ? data : data.quizzes || Object.values(data || {});
+
+    const formattedQuizzes = quizzesData.map(quiz => ({
+      _id: quiz._id || quiz.id || `quiz-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+      course_title: quiz.course_title || quiz.title || 'Untitled Quiz',
+      issuer: quiz.issuer || 'Borderless Developers Programme',
+      duration: quiz.duration || '30 minutes',
+      total_questions: quiz.total_questions || (quiz.questions?.length || 0),
+      status: quiz.status || 'active',
+      createdAt: quiz.createdAt || new Date().toISOString(),
+      questions: Array.isArray(quiz.questions) ? quiz.questions.map(q => ({
+        question: String(q.question || ''),
+        options: Array.isArray(q.options) ? q.options.map(opt => String(opt || '')) : [],
+        answer: String(q.answer || ''),
+      })) : [],
+    })).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    return {
+      props: {
+        initialQuizzes: formattedQuizzes,
+      },
+      revalidate: 60, // Optional: Revalidate every 60 seconds
+    };
+  } catch (error) {
+    console.error('Error in getStaticProps:', error);
+    return {
+      props: {
+        initialQuizzes: [],
+      },
+    };
+  }
 }
 
 function Quizzes() {
@@ -50,12 +86,14 @@ function Quizzes() {
       const token = localStorage.getItem('adminToken');
       if (!token) {
         router.push('/login');
-        return;
+      } else {
+        setIsAuthenticated(true);
+        if (!initialQuizzes.length) {
+          fetchQuizzes(); // Fetch only if initialQuizzes is empty
+        }
       }
-      setIsAuthenticated(true);
-      fetchQuizzes();
     }
-  }, [router]);
+  }, [router, initialQuizzes]);
 
 
   const fetchQuizzes = async () => {
@@ -777,4 +815,4 @@ function Quizzes() {
   );
 };
 
-export default QuizzesPage;
+export default Quizzes;
