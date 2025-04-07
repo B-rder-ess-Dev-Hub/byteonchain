@@ -5,17 +5,15 @@ import AdminSidebar from '../components/AdminSidebar';
 import styles from '../styles/Quizzes.module.css';
 import { useToast } from '../components/ToastNotification';
 
-
-
-export const getStaticProps = async () => {
-  return {
-    props: {},
-  };
-};
-
 export const config = {
   unstable_runtimeJS: true
 };
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
 
 const Quizzes = () => {
   const router = useRouter();
