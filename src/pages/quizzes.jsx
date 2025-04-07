@@ -148,7 +148,7 @@ const Quizzes = () => {
         try {
           setIsLoading(true);
 
-          const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY || '993msknfksn-1-1-102kn02002o24o02kcmsknsf02i0203202kfn&&@&@*';
+          const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY || '';
           // Use course_title for deletion instead of _id
           const response = await fetch(`https://byteapi-two.vercel.app/api/quizzes/${courseTitle}/`, {
             method: 'DELETE',
