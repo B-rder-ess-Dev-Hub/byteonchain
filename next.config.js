@@ -20,6 +20,21 @@ const nextConfig = {
       },
     ];
   },
+ 
+  exportPathMap: async function (defaultPathMap) {
+    const pathMap = { ...defaultPathMap };
+    delete pathMap['/quizzes'];
+    delete pathMap['/chat'];
+    delete pathMap['/classroom'];
+    return pathMap;
+  },
+  // Handle server-side rendering issues
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...(config.externals || []), 'react', 'react-dom'];
+    }
+    return config;
+  },
 };
 
 module.exports = nextConfig;
