@@ -818,12 +818,6 @@ function Quizzes({ initialQuizzes = [] }) {
   );
 };
 
-// export default Quizzes;
+export default Quizzes;
 
-// Make sure to wrap the component with dynamic to disable SSR
-const QuizzesPage = dynamic(() => Promise.resolve(Quizzes), {
-  ssr: false
-});
 
-// Export the client-side only version as the default export
-export default QuizzesPage;
