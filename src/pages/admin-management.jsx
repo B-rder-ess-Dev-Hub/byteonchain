@@ -6,6 +6,17 @@ import styles from '../styles/AdminManagement.module.css';
 import { useToast } from '../components/ToastNotification';
 import axios from 'axios';
 
+// Add these exports to disable static generation for this page
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const AdminManagement = () => {
   const router = useRouter();
   const toast = useToast();

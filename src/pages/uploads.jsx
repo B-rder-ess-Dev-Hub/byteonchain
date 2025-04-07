@@ -6,6 +6,17 @@ import styles from '../styles/Uploads.module.css';
 import { useToast } from '../components/ToastNotification';
 import axios from 'axios';
 
+// Add these exports to disable static generation for this page
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const Uploads = () => {
   const router = useRouter();
   const toast = useToast();
@@ -235,6 +246,38 @@ const Uploads = () => {
         }
       }
     );
+  };
+
+ 
+  
+  const formatTimeForAPI = (dateStr, timeStr) => {
+    if (!dateStr || !timeStr) return '';
+    
+    if (timeStr.includes('T') && timeStr.includes('Z')) {
+      return timeStr;
+    }
+    
+    try {
+      const datePart = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+      
+      // Create a date object in a more reliable way
+      const [hours, minutes] = timeStr.split(':').map(Number);
+      const [year, month, day] = datePart.split('-').map(Number);
+      
+      // Month is 0-indexed in JavaScript Date
+      const dateTime = new Date(year, month - 1, day, hours, minutes);
+      
+      // Check if the date is valid before returning ISO string
+      if (isNaN(dateTime.getTime())) {
+        console.error('Invalid date created:', { dateStr, timeStr, dateTime });
+        return '';
+      }
+      
+      return dateTime.toISOString();
+    } catch (error) {
+      console.error('Error formatting time for API:', error, { dateStr, timeStr });
+      return '';
+    }
   };
 
   const handleEventSubmit = async (e) => {
@@ -804,40 +847,3 @@ const Uploads = () => {
 
 export default Uploads;
 
-const formatTime = (timeString) => {
-  if (!timeString) return '';
-  
-  if (timeString.includes(':') && !timeString.includes('T')) {
-    return timeString;
-  }
-  
-  try {
-    const date = new Date(timeString);
-    if (isNaN(date.getTime())) {
-      return timeString;
-    }
-    return date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-  } catch (error) {
-    console.error('Error formatting time:', error);
-    return timeString;
-  }
-};
-
-const formatTimeForAPI = (dateStr, timeStr) => {
-  if (!dateStr || !timeStr) return '';
-  
-  if (timeStr.includes('T') && timeStr.includes('Z')) {
-    return timeStr;
-  }
-  
-  try {
-    const datePart = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
-    
-    const dateTime = new Date(`${datePart}T${timeStr}`);
-    
-    return dateTime.toISOString();
-  } catch (error) {
-    console.error('Error formatting time for API:', error);
-    return timeStr;
-  }
-};

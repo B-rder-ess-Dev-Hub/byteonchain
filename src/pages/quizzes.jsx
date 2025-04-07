@@ -5,11 +5,13 @@ import AdminSidebar from '../components/AdminSidebar';
 import styles from '../styles/Quizzes.module.css';
 import { useToast } from '../components/ToastNotification';
 
-export const getStaticProps = () => {
+
+
+export const getStaticProps = async () => {
   return {
-    props: {}
-  }
-}
+    props: {},
+  };
+};
 
 export const config = {
   unstable_runtimeJS: true
@@ -63,7 +65,6 @@ const Quizzes = () => {
 
       const data = await response.json();
 
-      // More robust data handling
       let quizzesData = [];
       if (data && Array.isArray(data)) {
         quizzesData = data;
@@ -73,7 +74,6 @@ const Quizzes = () => {
         quizzesData = Object.values(data);
       }
 
-      // Ensure each quiz has a unique ID and all required fields
       const formattedQuizzes = quizzesData.map(quiz => ({
         _id: quiz._id || quiz.id || `quiz-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
         course_title: quiz.course_title || quiz.title || 'Untitled Quiz',
@@ -91,7 +91,6 @@ const Quizzes = () => {
         })) : []
       }));
 
-      // Sort quizzes by creation date
       const sortedQuizzes = formattedQuizzes.sort((a, b) => {
         return new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now());
       });
@@ -157,7 +156,7 @@ const Quizzes = () => {
     }
   };
 
-  const deleteQuiz = async (quizId, courseTitle) => {
+  const deleteQuiz = async (courseTitle) => {
     toast.confirm(
       'Are you sure you want to delete this quiz?',
       async () => {

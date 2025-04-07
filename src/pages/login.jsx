@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styles from '../styles/AdminLogin.module.css';
 import { toast } from 'react-toastify';
 import { postData } from '../../utils/api'; 
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,17 +44,21 @@ const AdminLogin = () => {
       if (data.admin && data.admin.username) {
         localStorage.setItem('adminUsername', data.admin.username);
       } else {
-       
         localStorage.setItem('adminUsername', username);
       }
       
       router.push('/dashboard');
       
-      toast.success('Login successful!');
+      if (isMounted) {
+        toast.success('Login successful!');
+      }
     } catch (error) {
       console.error('Login error:', error);
       setErrorMessage(error.response?.data?.message || 'Login failed. Please check your credentials.');
-      toast.error('Login failed. Please check your credentials.');
+      
+      if (isMounted) {
+        toast.error('Login failed. Please check your credentials.');
+      }
     } finally {
       setIsLoading(false);
     }
