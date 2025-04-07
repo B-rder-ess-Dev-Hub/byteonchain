@@ -154,27 +154,29 @@ const Quizzes = () => {
     }
   };
 
-  const deleteQuiz = async (courseTitle) => {
+  const deleteQuiz = async (id, courseTitle) => {
+    // Use course_title for deletion if available, otherwise fall back to id
+    const identifier = courseTitle || id;
+    
     toast.confirm(
       'Are you sure you want to delete this quiz?',
       async () => {
         try {
           setIsLoading(true);
-
+  
           const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY || '';
-          // Use course_title for deletion instead of _id
-          const response = await fetch(`https://byteapi-two.vercel.app/api/quizzes/${courseTitle}/`, {
+          const response = await fetch(`https://byteapi-two.vercel.app/api/quizzes/${identifier}/`, {
             method: 'DELETE',
             headers: {
               'Accept': 'application/json',
               'Bytekeys': apiKey
             }
           });
-
+  
           if (!response.ok) {
             throw new Error(`Failed to delete quiz: ${response.status}`);
           }
-
+  
           fetchQuizzes();
           toast.success('Quiz deleted successfully');
         } catch (error) {
@@ -634,46 +636,46 @@ const Quizzes = () => {
                         </div>
 
                         <h3 className={styles.questionsTitle}>Questions</h3>
-                        {currentQuiz.questions && currentQuiz.questions.length > 0 ? (
+                        {currentQuiz.questions && Array.isArray(currentQuiz.questions) && currentQuiz.questions.length > 0 ? (
                           <div className={styles.questionsList}>
-                            {currentQuiz.questions.map((question, index) => (
-                              // Use a stable key that doesn't change on each render
-                              <div key={`question-${index}`} className={styles.questionItem}>
-                                <h4 className={styles.questionText}>
-                                  {index + 1}. {question.question}
-                                </h4>
-                                <div className={styles.answersList}>
-                                  {Array.isArray(question.options) ? question.options.map((option, optIndex) => {
-                                    // Ensure option is a string to prevent rendering objects directly
-                                    const optionText = typeof option === 'string'
-                                      ? option
-                                      : option === null || option === undefined
-                                        ? ''
-                                        : JSON.stringify(option);
+                            {currentQuiz.questions.map((question, index) => {
+                              // Ensure question is properly formatted
+                              const safeQuestion = {
+                                question: typeof question.question === 'string' ? question.question : String(question.question || ''),
+                                options: Array.isArray(question.options) ? question.options.map(opt =>
+                                  typeof opt === 'string' ? opt : String(opt || '')
+                                ) : [],
+                                answer: typeof question.answer === 'string' ? question.answer : String(question.answer || '')
+                              };
 
-                                    // Ensure answer comparison works with different types
-                                    const isCorrect = typeof question.answer === 'string' && typeof option === 'string'
-                                      ? question.answer === option
-                                      : JSON.stringify(question.answer) === JSON.stringify(option);
+                              return (
+                                <div key={`question-${index}`} className={styles.questionItem}>
+                                  <h4 className={styles.questionText}>
+                                    {index + 1}. {safeQuestion.question}
+                                  </h4>
+                                  <div className={styles.answersList}>
+                                    {safeQuestion.options.map((option, optIndex) => {
+                                      const isCorrect = safeQuestion.answer === option;
 
-                                    return (
-                                      <div
-                                        key={`option-${index}-${optIndex}`}
-                                        className={`${styles.answerItem} ${isCorrect ? styles.correctAnswer : ''}`}
-                                      >
-                                        <span className={styles.answerLetter}>
-                                          {String.fromCharCode(65 + optIndex)}
-                                        </span>
-                                        <span className={styles.answerText}>{optionText}</span>
-                                        {isCorrect && (
-                                          <span className={styles.correctBadge}>Correct</span>
-                                        )}
-                                      </div>
-                                    );
-                                  }) : <p>No options available</p>}
+                                      return (
+                                        <div
+                                          key={`option-${index}-${optIndex}`}
+                                          className={`${styles.answerItem} ${isCorrect ? styles.correctAnswer : ''}`}
+                                        >
+                                          <span className={styles.answerLetter}>
+                                            {String.fromCharCode(65 + optIndex)}
+                                          </span>
+                                          <span className={styles.answerText}>{option}</span>
+                                          {isCorrect && (
+                                            <span className={styles.correctBadge}>Correct</span>
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         ) : (
                           <p className={styles.noQuestions}>No questions added to this quiz yet.</p>
@@ -771,7 +773,13 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
     duration: quiz?.duration || '30 minutes',
     total_questions: quiz?.total_questions || 0,
     marks_per_question: quiz?.marks_per_question || 1,
-    questions: quiz?.questions || [],
+    questions: Array.isArray(quiz?.questions) ? quiz.questions.map(q => ({
+      question: typeof q.question === 'string' ? q.question : String(q.question || ''),
+      options: Array.isArray(q.options) ? q.options.map(opt =>
+        typeof opt === 'string' ? opt : String(opt || '')
+      ) : ['', '', '', ''],
+      answer: typeof q.answer === 'string' ? q.answer : String(q.answer || '')
+    })) : [],
     status: quiz?.status || 'active',
     purpose: quiz?.purpose || 'course'
   });
