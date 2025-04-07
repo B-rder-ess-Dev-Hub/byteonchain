@@ -33,6 +33,24 @@ const Quizzes = () => {
     fetchQuizzes();
   }, [router]);
 
+  const sanitizeQuizData = (quiz) => {
+    if (!quiz) return null;
+
+    return {
+      ...quiz,
+      questions: Array.isArray(quiz.questions)
+        ? quiz.questions.map(q => ({
+          ...q,
+          question: typeof q.question === 'string' ? q.question : JSON.stringify(q.question),
+          options: Array.isArray(q.options)
+            ? q.options.map(opt => typeof opt === 'string' ? opt : JSON.stringify(opt))
+            : [],
+          answer: typeof q.answer === 'string' ? q.answer : JSON.stringify(q.answer)
+        }))
+        : []
+    };
+  };
+
   const fetchQuizzes = async () => {
     try {
       setIsLoading(true);
@@ -51,6 +69,8 @@ const Quizzes = () => {
       }
 
       const data = await response.json();
+      setQuizzes(data.map(sanitizeQuizData));
+      setFilteredQuizzes(data.map(sanitizeQuizData));
       console.log('Quizzes data:', data);
 
       let quizzesData = [];
@@ -323,7 +343,7 @@ const Quizzes = () => {
   };
 
   const viewQuiz = (quiz) => {
-    setCurrentQuiz(quiz);
+    setCurrentQuiz(sanitizeQuizData(quiz));
     setIsViewModalOpen(true);
   };
 
@@ -610,20 +630,34 @@ const Quizzes = () => {
                                   {index + 1}. {question.question}
                                 </h4>
                                 <div className={styles.answersList}>
-                                  {Array.isArray(question.options) ? question.options.map((option, optIndex) => (
-                                    <div
-                                      key={`option-${index}-${optIndex}`}
-                                      className={`${styles.answerItem} ${question.answer === option ? styles.correctAnswer : ''}`}
-                                    >
-                                      <span className={styles.answerLetter}>
-                                        {String.fromCharCode(65 + optIndex)}
-                                      </span>
-                                      <span className={styles.answerText}>{typeof option === 'string' ? option : JSON.stringify(option)}</span>
-                                      {question.answer === option && (
-                                        <span className={styles.correctBadge}>Correct</span>
-                                      )}
-                                    </div>
-                                  )) : <p>No options available</p>}
+                                  {Array.isArray(question.options) ? question.options.map((option, optIndex) => {
+                                    // Ensure option is a string to prevent rendering objects directly
+                                    const optionText = typeof option === 'string'
+                                      ? option
+                                      : option === null || option === undefined
+                                        ? ''
+                                        : JSON.stringify(option);
+
+                                    // Ensure answer comparison works with different types
+                                    const isCorrect = typeof question.answer === 'string' && typeof option === 'string'
+                                      ? question.answer === option
+                                      : JSON.stringify(question.answer) === JSON.stringify(option);
+
+                                    return (
+                                      <div
+                                        key={`option-${index}-${optIndex}`}
+                                        className={`${styles.answerItem} ${isCorrect ? styles.correctAnswer : ''}`}
+                                      >
+                                        <span className={styles.answerLetter}>
+                                          {String.fromCharCode(65 + optIndex)}
+                                        </span>
+                                        <span className={styles.answerText}>{optionText}</span>
+                                        {isCorrect && (
+                                          <span className={styles.correctBadge}>Correct</span>
+                                        )}
+                                      </div>
+                                    );
+                                  }) : <p>No options available</p>}
                                 </div>
                               </div>
                             ))}
