@@ -23,14 +23,15 @@ const Quizzes = () => {
 
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
-      router.push('/login');
-      return;
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        router.push('/login');
+        return;
+      }
+      setIsAuthenticated(true);
+      fetchQuizzes();
     }
-
-    setIsAuthenticated(true);
-    fetchQuizzes();
   }, [router]);
 
   const sanitizeQuizData = (quiz) => {
