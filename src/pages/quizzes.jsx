@@ -5,6 +5,9 @@ import AdminSidebar from '../components/AdminSidebar';
 import styles from '../styles/Quizzes.module.css';
 import { useToast } from '../components/ToastNotification';
 
+export const config = {
+  unstable_runtimeJS: true
+};
 
 const Quizzes = () => {
   const router = useRouter();
@@ -35,47 +38,27 @@ const Quizzes = () => {
   }, [router]);
 
 
-  const sanitizeQuizData = (quiz) => {
-    if (!quiz) return null;
-
-    return {
-      ...quiz,
-      questions: Array.isArray(quiz.questions)
-        ? quiz.questions.map(q => ({
-          ...q,
-          question: typeof q.question === 'string' ? q.question : JSON.stringify(q.question),
-          options: Array.isArray(q.options)
-            ? q.options.map(opt => typeof opt === 'string' ? opt : JSON.stringify(opt))
-            : [],
-          answer: typeof q.answer === 'string' ? q.answer : JSON.stringify(q.answer)
-        }))
-        : []
-    };
-  };
-
   const fetchQuizzes = async () => {
     try {
       setIsLoading(true);
-
+  
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
-
+  
       const response = await fetch('https://byteapi-two.vercel.app/api/quizzes/', {
         headers: {
           'Accept': 'application/json',
           'Bytekeys': apiKey
         }
       });
-
+  
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
       }
-
+  
       const data = await response.json();
-      setQuizzes(data.map(sanitizeQuizData));
-      setFilteredQuizzes(data.map(sanitizeQuizData));
-
+      
+      // More robust data handling
       let quizzesData = [];
-
       if (data && Array.isArray(data)) {
         quizzesData = data;
       } else if (data && data.quizzes && Array.isArray(data.quizzes)) {
@@ -83,22 +66,30 @@ const Quizzes = () => {
       } else if (data && typeof data === 'object') {
         quizzesData = Object.values(data);
       }
-
+  
+      // Ensure each quiz has a unique ID and all required fields
       const formattedQuizzes = quizzesData.map(quiz => ({
-        _id: quiz._id || quiz.id || `quiz-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        _id: quiz._id || quiz.id || `quiz-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
         course_title: quiz.course_title || quiz.title || 'Untitled Quiz',
         issuer: quiz.issuer || 'Borderless Developers Programme',
         duration: quiz.duration || '30 minutes',
-        total_questions: quiz.total_questions || quiz.questions?.length || 0,
+        total_questions: quiz.total_questions || (quiz.questions?.length || 0),
         status: quiz.status || 'active',
         createdAt: quiz.createdAt || new Date().toISOString(),
-        questions: quiz.questions || []
+        questions: Array.isArray(quiz.questions) ? quiz.questions.map(q => ({
+          question: typeof q.question === 'string' ? q.question : String(q.question || ''),
+          options: Array.isArray(q.options) ? q.options.map(opt => 
+            typeof opt === 'string' ? opt : String(opt || '')
+          ) : [],
+          answer: typeof q.answer === 'string' ? q.answer : String(q.answer || '')
+        })) : []
       }));
-
+  
+      // Sort quizzes by creation date
       const sortedQuizzes = formattedQuizzes.sort((a, b) => {
         return new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now());
       });
-
+  
       setQuizzes(sortedQuizzes);
       setFilteredQuizzes(sortedQuizzes);
       setIsLoading(false);
@@ -110,21 +101,25 @@ const Quizzes = () => {
       setFilteredQuizzes([]);
     }
   };
-
-
-  useEffect(() => {
-    const fetchQuizzes = async () => {
-      try {
-        const response = await fetch('/api/quizzes');
-        const data = await response.json();
-        setQuizzes(data);
-      } catch (error) {
-        console.error('Failed to fetch quizzes:', error);
-      }
+  
+  // Also update your sanitizeQuizData function to be more robust
+  const sanitizeQuizData = (quiz) => {
+    if (!quiz) return null;
+  
+    return {
+      ...quiz,
+      questions: Array.isArray(quiz.questions)
+        ? quiz.questions.map(q => ({
+          ...q,
+          question: typeof q.question === 'string' ? q.question : String(q.question || ''),
+          options: Array.isArray(q.options)
+            ? q.options.map(opt => typeof opt === 'string' ? opt : String(opt || ''))
+            : [],
+          answer: typeof q.answer === 'string' ? q.answer : String(q.answer || '')
+        }))
+        : []
     };
-
-    fetchQuizzes();
-  }, []);
+  };
 
   const createQuiz = async (quizData) => {
     try {
@@ -462,7 +457,7 @@ const Quizzes = () => {
                     <tbody>
                       {currentQuizzes.length > 0 ? (
                         currentQuizzes.map((quiz) => (
-                          <tr key={`quiz-${quiz._id}-${quiz.course_title}`}>
+                          <tr key={`quiz-${quiz._id}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`}>
                             <td className={styles.quizTitle}>{quiz.course_title}</td>
                             <td>{quiz.issuer}</td>
                             <td>{quiz.duration}</td>
@@ -639,7 +634,7 @@ const Quizzes = () => {
                         {currentQuiz.questions && currentQuiz.questions.length > 0 ? (
                           <div className={styles.questionsList}>
                             {currentQuiz.questions.map((question, index) => (
-                              <div key={`question-${index}`} className={styles.questionItem}>
+                             <div key={`question-${index}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`} className={styles.questionItem}>
                                 <h4 className={styles.questionText}>
                                   {index + 1}. {question.question}
                                 </h4>
