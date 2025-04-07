@@ -65,13 +65,15 @@ export async function getStaticProps() {
   }
 }
 
-function Quizzes() {
+// Update the function to accept props and handle loading state properly
+function Quizzes({ initialQuizzes = [] }) {
   const router = useRouter();
   const toast = useToast();
-  const [quizzes, setQuizzes] = useState([]);
-  const [filteredQuizzes, setFilteredQuizzes] = useState([]);
+  const [quizzes, setQuizzes] = useState(initialQuizzes);
+  const [filteredQuizzes, setFilteredQuizzes] = useState(initialQuizzes);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  // Set isLoading to false if we already have initialQuizzes
+  const [isLoading, setIsLoading] = useState(initialQuizzes.length === 0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [quizzesPerPage] = useState(10);
@@ -88,8 +90,9 @@ function Quizzes() {
         router.push('/login');
       } else {
         setIsAuthenticated(true);
-        if (!initialQuizzes.length) {
-          fetchQuizzes(); // Fetch only if initialQuizzes is empty
+        // Only fetch if we don't have initial data
+        if (initialQuizzes.length === 0) {
+          fetchQuizzes();
         }
       }
     }
@@ -815,4 +818,12 @@ function Quizzes() {
   );
 };
 
-export default Quizzes;
+// export default Quizzes;
+
+// Make sure to wrap the component with dynamic to disable SSR
+const QuizzesPage = dynamic(() => Promise.resolve(Quizzes), {
+  ssr: false
+});
+
+// Export the client-side only version as the default export
+export default QuizzesPage;
