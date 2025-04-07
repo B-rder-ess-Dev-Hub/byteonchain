@@ -7,6 +7,16 @@ import WalletWrapper from '../components/WalletWrapper';
 import { FiClock, FiArrowRight, FiChevronDown, FiX } from 'react-icons/fi';
 import { fetchData } from '../../utils/api'; 
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const UpdateContent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [visibleItems, setVisibleItems] = useState(6);

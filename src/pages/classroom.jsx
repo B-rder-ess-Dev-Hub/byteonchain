@@ -11,6 +11,16 @@ import { fetchData } from '../../utils/api';
 
 import { useRouter } from 'next/router';
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const ClassroomContent = ({ walletConnected }) => {
   const [allVideoItems, setAllVideoItems] = useState([]);
   const [visibleCourses, setVisibleCourses] = useState(8);

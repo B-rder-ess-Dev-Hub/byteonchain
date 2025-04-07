@@ -6,6 +6,16 @@ import QuizModal from "../components/quizmodal";
 import WalletWrapper from '../components/WalletWrapper';
 import { fetchData } from '../../utils/api'; 
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const Icons = {
   quiz: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

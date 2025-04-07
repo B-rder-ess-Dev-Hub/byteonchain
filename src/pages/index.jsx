@@ -6,6 +6,16 @@ import styles from '../styles/Home.module.css';
 import Header from '../components/Header';
 import WalletWrapper from '../components/WalletWrapper';
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const HomeContent = () => {
   return (
     <div className={styles.pageContainer}>

@@ -4,6 +4,17 @@ import Sidebar from '../components/Sidebarcons';
 import WalletWrapper from '../components/WalletWrapper';
 import Header from '../components/Header';
 
+// Add these exports to disable static generation for this page
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const ChatContent = () => {
   return (
     <div className={styles.chatContainer}>
@@ -25,7 +36,7 @@ const ChatContent = () => {
               
               <div className={styles.chatList}>
                 {[1, 2, 3].map((item) => (
-                  <div key={item} className={`${styles.chatPreview} ${styles.shimmer}`}>
+                  <div key={`chat-preview-${item}`} className={`${styles.chatPreview} ${styles.shimmer}`}>
                     <div className={styles.avatarShimmer}></div>
                     <div className={styles.previewContent}>
                       <div className={styles.nameShimmer}></div>

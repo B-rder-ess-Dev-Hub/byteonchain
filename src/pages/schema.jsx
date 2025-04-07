@@ -7,6 +7,16 @@ import Filter from "../../utils/filter";
 import WalletWrapper from '../components/WalletWrapper';
 
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const SchemaContent = () => {
   const schemaUID = '0xadc627b3baae8680c1e7d1f080ea5e50738e7efcc93e95a35269e6841116fffe';
   return (

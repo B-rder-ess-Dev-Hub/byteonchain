@@ -3,6 +3,16 @@ import Sidebar from '../components/Sidebarcons';
 import Header from '../components/Header';
 import styles from '../styles/Discovery.module.css';
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const Discovery = () => {
   const allVideos = [
     { id: 1, title: 'Introduction to Web3', views: '1.2k', uploader: 'John Doe', uploadedAt: '2 days ago', category: 'Blockchain' },
