@@ -71,7 +71,6 @@ const Quizzes = () => {
       const data = await response.json();
       setQuizzes(data.map(sanitizeQuizData));
       setFilteredQuizzes(data.map(sanitizeQuizData));
-      console.log('Quizzes data:', data);
 
       let quizzesData = [];
 
@@ -84,7 +83,7 @@ const Quizzes = () => {
       }
 
       const formattedQuizzes = quizzesData.map(quiz => ({
-        _id: quiz._id || quiz.id || Date.now().toString(),
+        _id: quiz._id || quiz.id || `quiz-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         course_title: quiz.course_title || quiz.title || 'Untitled Quiz',
         issuer: quiz.issuer || 'Borderless Developers Programme',
         duration: quiz.duration || '30 minutes',
@@ -97,8 +96,6 @@ const Quizzes = () => {
       const sortedQuizzes = formattedQuizzes.sort((a, b) => {
         return new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now());
       });
-
-      console.log('Formatted quizzes:', sortedQuizzes);
 
       setQuizzes(sortedQuizzes);
       setFilteredQuizzes(sortedQuizzes);
@@ -182,7 +179,7 @@ const Quizzes = () => {
       const newStatus = quiz.status === 'active' ? 'expired' : 'active';
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
 
-      // Use the correct endpoint format with course_title and status query parameter
+
       const response = await fetch(`https://byteapi-two.vercel.app/api/quizzes/${quiz.course_title}/status?new_status=${newStatus}`, {
         method: 'PUT',
         headers: {
@@ -272,7 +269,7 @@ const Quizzes = () => {
       console.log('Updating quiz:', originalCourseTitle);
       console.log('Data being sent:', JSON.stringify(dataToSend, null, 2));
 
-      // Use the original course title in the URL for the update
+
       const endpoint = `https://byteapi-two.vercel.app/api/quizzes/${originalCourseTitle}`;
 
       const response = await fetch(endpoint, {
@@ -449,7 +446,7 @@ const Quizzes = () => {
                     <tbody>
                       {currentQuizzes.length > 0 ? (
                         currentQuizzes.map((quiz) => (
-                          <tr key={quiz._id || `quiz-${quiz.course_title}-${Math.random().toString(36).substr(2, 9)}`}>
+                          <tr key={`quiz-${quiz._id}-${quiz.course_title}`}>
                             <td className={styles.quizTitle}>{quiz.course_title}</td>
                             <td>{quiz.issuer}</td>
                             <td>{quiz.duration}</td>
@@ -538,7 +535,7 @@ const Quizzes = () => {
                       ) {
                         return (
                           <button
-                            key={`page-${i + 1}`}
+                            key={`page-${i + 1}`} // This key is unique based on page number
                             className={`${styles.pageNumber} ${currentPage === i + 1 ? styles.activePage : ''}`}
                             onClick={() => paginate(i + 1)}
                           >
@@ -546,10 +543,11 @@ const Quizzes = () => {
                           </button>
                         );
                       } else if (
-                        i === 1 && currentPage > 3 ||
-                        i === totalPages - 2 && currentPage < totalPages - 3
+                        (i === 1 && currentPage > 3) ||
+                        (i === totalPages - 2 && currentPage < totalPages - 3)
                       ) {
-                        return <span key={`ellipsis-${i}`} className={styles.ellipsis}>...</span>;
+                        // Make sure ellipsis keys are unique
+                        return <span key={`ellipsis-${i === 1 ? 'start' : 'end'}`} className={styles.ellipsis}>...</span>;
                       }
                       return null;
                     })}
@@ -1099,19 +1097,15 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
         ) : (
           <div className={styles.questionsList}>
             {formData.questions.length > 0 ? (
-              formData.questions.map((question, index) => (
-                <div key={index} className={styles.questionListItem}>
+              formData.questions.map((question, qIndex) => (
+                <div key={`question-${qIndex}-${question.question.substring(0, 20)}`}>
                   <div className={styles.questionContent}>
                     <h4 className={styles.questionText}>
-                      {index + 1}. {question.question}
+                      {qIndex + 1}. {question.question}
                     </h4>
                     <div className={styles.questionOptions}>
                       {question.options.map((option, optIndex) => (
-                        <div
-                          key={optIndex}
-                          className={`${styles.optionPreview} ${question.answer === option ? styles.correctOption : ''
-                            }`}
-                        >
+                        <div key={`option-${qIndex}-${optIndex}-${option.substring(0, 10)}`}>
                           <span className={styles.optionLetter}>
                             {String.fromCharCode(65 + optIndex)}
                           </span>
