@@ -618,7 +618,7 @@ const Quizzes = () => {
                                       <span className={styles.answerLetter}>
                                         {String.fromCharCode(65 + optIndex)}
                                       </span>
-                                      <span className={styles.answerText}>{option}</span>
+                                      <span className={styles.answerText}>{typeof option === 'string' ? option : JSON.stringify(option)}</span>
                                       {question.answer === option && (
                                         <span className={styles.correctBadge}>Correct</span>
                                       )}
