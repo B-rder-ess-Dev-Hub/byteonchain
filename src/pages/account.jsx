@@ -10,6 +10,16 @@ import Confetti from 'react-confetti';
 import WalletWrapper from '../components/WalletWrapper';
 import { fetchData, postData } from '../../utils/api'; 
 
+export const config = {
+  unstable_runtimeJS: true
+};
+
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
+}
+
 const AccountContent = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [walletAddress, setWalletAddress] = useState(null);
