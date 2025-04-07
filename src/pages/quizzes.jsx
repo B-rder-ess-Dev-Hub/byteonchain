@@ -605,14 +605,14 @@ const Quizzes = () => {
                         {currentQuiz.questions && currentQuiz.questions.length > 0 ? (
                           <div className={styles.questionsList}>
                             {currentQuiz.questions.map((question, index) => (
-                              <div key={index} className={styles.questionItem}>
+                              <div key={`question-${index}`} className={styles.questionItem}>
                                 <h4 className={styles.questionText}>
                                   {index + 1}. {question.question}
                                 </h4>
                                 <div className={styles.answersList}>
-                                  {question.options.map((option, optIndex) => (
+                                  {Array.isArray(question.options) ? question.options.map((option, optIndex) => (
                                     <div
-                                      key={optIndex}
+                                      key={`option-${index}-${optIndex}`}
                                       className={`${styles.answerItem} ${question.answer === option ? styles.correctAnswer : ''}`}
                                     >
                                       <span className={styles.answerLetter}>
@@ -623,7 +623,7 @@ const Quizzes = () => {
                                         <span className={styles.correctBadge}>Correct</span>
                                       )}
                                     </div>
-                                  ))}
+                                  )) : <p>No options available</p>}
                                 </div>
                               </div>
                             ))}
