@@ -22,12 +22,11 @@ const ConnectionStatusModal = ({ isConnected, address, isChecking, connectionSta
     }
   }, [connectionState]);
 
-  // Only trigger onClose after animation completes
   useEffect(() => {
     if (animationComplete && connectionState === 'connected') {
       const closeTimer = setTimeout(() => {
         onClose();
-      }, 300); // Small delay after completion
+      }, 300); 
       
       return () => clearTimeout(closeTimer);
     }

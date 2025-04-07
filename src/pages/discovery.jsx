@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebarcons';
 import Header from '../components/Header';
 import styles from '../styles/Discovery.module.css';
 
@@ -36,7 +36,7 @@ const Discovery = () => {
 
   const loadMoreVideos = () => {
     const currentLength = videos.length;
-    const moreVideos = allVideos.slice(currentLength, currentLength + 4); // Fetch 4 more videos
+    const moreVideos = allVideos.slice(currentLength, currentLength + 4);
     setVideos([...videos, ...moreVideos]);
   };
 

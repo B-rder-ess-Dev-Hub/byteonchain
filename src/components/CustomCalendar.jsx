@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/CustomCalendar.module.css';
+import { fetchData } from '../../utils/api'; 
 
 const CustomCalendar = () => {
-  const [currentWeek, setCurrentWeek] = useState(getCurrentWeek());
+  const [currentWeek, _setCurrentWeek] = useState(getCurrentWeek());
   const [todayDate, setTodayDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [events, setEvents] = useState([]);
@@ -16,16 +17,11 @@ const CustomCalendar = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('/api/events');
-      if (!response.ok) {
-        throw new Error('Failed to fetch events');
-      }
-      const data = await response.json();
+      setLoading(true);
+      const data = await fetchData('/api/events');
       
-      // Ensure data is an array
       const eventsArray = Array.isArray(data) ? data : data.events || [];
       
-      // Process the events data
       const processedEvents = eventsArray.map(event => ({
         ...event,
         date: new Date(event.date),
@@ -33,7 +29,7 @@ const CustomCalendar = () => {
         to_time: new Date(event.to_time)
       }));
 
-      console.log('Processed events:', processedEvents); // Debug log
+      console.log('Processed events:', processedEvents); 
       setEvents(processedEvents);
       setError(null);
     } catch (error) {
@@ -44,7 +40,6 @@ const CustomCalendar = () => {
     }
   };
 
-  // Get events for a specific day
   const getEventsForDay = (day) => {
     return events.filter(event => isSameDay(new Date(event.date), day));
   };
@@ -95,7 +90,6 @@ const CustomCalendar = () => {
       classes.push(styles.currentDay);
     }
 
-    // Check if day has events
     if (getEventsForDay(day).length > 0) {
       classes.push(styles.hasEvent);
     }
@@ -103,7 +97,6 @@ const CustomCalendar = () => {
     return classes.join(' ');
   };
 
-  // Format time to display
   const formatTime = (date) => {
     return new Date(date).toLocaleTimeString([], { 
       hour: '2-digit', 
@@ -111,7 +104,6 @@ const CustomCalendar = () => {
     });
   };
 
-  // Format date to "Jan 8th, 2025"
   const formatDate = (date) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     const day = date.getDate();

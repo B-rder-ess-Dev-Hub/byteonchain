@@ -7,14 +7,15 @@ import styles from '../styles/Recent.module.css';
 import Modal from './Modal';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://byteapi-two.vercel.app';
+const API_KEY = process.env.NEXT_PUBLIC_BYTE_API_KEY || '';
 
-// Create axios instance with default config
 const axiosInstance = axios.create({
   baseURL: API_URL,  
   timeout: 10000,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    'Bytekeys': API_KEY 
   }
 });
 
@@ -30,15 +31,12 @@ const Recent = () => {
     fetchVideos();
   }, []);
 
-  // Function to get YouTube video ID and thumbnail
   const getYouTubeInfo = (embedLink) => {
     if (!embedLink) return { id: null, thumbnail: '/img.png' };
     
-    // Extract video ID from embed link
     const match = embedLink.match(/embed\/([^?]+)/);
     const videoId = match ? match[1] : null;
     
-    // Generate high-quality thumbnail URL
     const thumbnail = videoId 
       ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
       : '/img.png';
@@ -48,10 +46,8 @@ const Recent = () => {
 
   const fetchVideos = async () => {
     try {
-      // Use the axiosInstance with the correct endpoint
       const response = await axiosInstance.get('api/videos');
       
-      // Transform the video data and get thumbnails
       const processedVideos = response.data.videos.map(video => {
         const { thumbnail } = getYouTubeInfo(video.videoembedlink);
         return {

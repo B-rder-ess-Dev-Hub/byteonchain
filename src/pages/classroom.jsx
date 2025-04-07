@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '../styles/Classroom.module.css';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebarcons';
 import Header from '../components/Header';
 import searchIcon from '../../public/search.png';
 import videoIcon from '../../public/video-circle.png';
-import arrowRightIcon from '../../public/arrow-right.png';
 import eyeIcon from '../../public/eye-icon.png';
 import WalletWrapper from '../components/WalletWrapper';
+import { fetchData } from '../../utils/api'; 
 
 import { useRouter } from 'next/router';
 
@@ -23,17 +23,7 @@ const ClassroomContent = ({ walletConnected }) => {
   const [quizview, setquizview] = useState(true); 
   const router = useRouter();
 
-  // Function to open quiz modal
-  const openQuizModal = () => {
-    setQuizModalOpen(true);
-  };
 
-  // Function to close quiz modal
-  const closeQuizModal = () => {
-    setQuizModalOpen(false);
-  };
-
-  // Function to check the wallet connection
   const checkWalletConnection = async () => {
     if (window.ethereum) {
       try {
@@ -57,20 +47,11 @@ const ClassroomContent = ({ walletConnected }) => {
     checkWalletConnection();
   }, []);
 
-  // Function to fetch user details from the backend using the wallet address
+  
   const fetchUserDetails = async (walletAddress) => {
     try {
-      const response = await fetch(`https://byteapi-two.vercel.app/api/user/${walletAddress}`);
-      if (!response.ok) {
-        if (response.status === 404) {
-          // Redirect to account page if no user is found
-          router.push('/account');
-          return;
-        }
-        throw new Error('Failed to fetch user details');
-      }
-      const data = await response.json();
-
+      const data = await fetchData(`/api/user/${walletAddress}`);
+      
       if (data && data.user) {
         setUserFullName(data.user.fullname);
         setUserCourseCategory(data.user.course);
@@ -78,15 +59,17 @@ const ClassroomContent = ({ walletConnected }) => {
       }
     } catch (error) {
       console.error('Error fetching user details:', error);
-      router.push('/account'); // Redirect to account page on any error
+      if (error.response && error.response.status === 404) {
+        router.push('/account');
+      } else {
+        router.push('/account'); 
+      }
     }
   };
 
-  // Function to fetch videos from the backend
   const fetchVideos = async (courseCategory) => {
     try {
-      const response = await fetch('https://byteapi-two.vercel.app/api/videos');
-      const data = await response.json();
+      const data = await fetchData('/api/videos');
 
       const filteredVideos = data.videos.filter((video) => video.category !== 'Orientation');
       const matchingVideos = filteredVideos.filter((video) => video.category === courseCategory);
@@ -98,12 +81,11 @@ const ClassroomContent = ({ walletConnected }) => {
     }
   };
 
-  // Function to handle "Load More" button click
   const handleLoadMore = () => {
     setVisibleCourses((prev) => prev + 8);
   };
 
-  // Function to connect the wallet when "Connect Wallet" button is clicked
+
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
@@ -119,13 +101,11 @@ const ClassroomContent = ({ walletConnected }) => {
     }
   };
 
-  // Function to open video modal when "Watch Video" is clicked
   const openVideoModal = (videoUrl) => {
     setVideoToWatch(videoUrl);
     setShowModal(true);
   };
 
-  // Function to close video modal
   const closeVideoModal = () => {
     setVideoToWatch(null);
     setShowModal(false);
@@ -138,11 +118,9 @@ const ClassroomContent = ({ walletConnected }) => {
         <Header />
       </div>
 
-      {/* Sidebar and Main Content */}
       <div className={styles.contentWrapper}>
         <Sidebar />
         <div className={styles.mainContent}>
-          {/* Banner - Updated to match quiz page style */}
           <div className={styles.banner}>
             <div className={styles.bannerContent}>
               <h1 className={styles.bannerTitle}>Welcome to your class</h1>
@@ -159,7 +137,6 @@ const ClassroomContent = ({ walletConnected }) => {
             </div>
           </div>
 
-          {/* Search Field - Modernized */}
           <div className={styles.searchWrapper}>
             <div className={styles.searchContainer}>
               <Image

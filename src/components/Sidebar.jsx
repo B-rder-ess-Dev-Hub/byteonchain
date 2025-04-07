@@ -8,32 +8,27 @@ const Sidebar = () => {
   const router = useRouter();
   
   useEffect(() => {
-    // Listen for toggle sidebar events
     const handleToggle = (event) => {
       if (event.detail && typeof event.detail.visible === 'boolean') {
         setIsVisible(event.detail.visible);
       } else {
-        // Toggle if no specific state is provided
         setIsVisible(prev => !prev);
       }
     };
     
     document.addEventListener('toggleSidebar', handleToggle);
     
-    // Clean up event listener
     return () => {
       document.removeEventListener('toggleSidebar', handleToggle);
     };
   }, []);
   
-  // Reset sidebar visibility when route changes
   useEffect(() => {
     setIsVisible(false);
   }, [router.pathname]);
   
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
   
-  // Toggle sidebar visibility
   const toggleSidebar = () => {
     setIsVisible(!isVisible);
   };

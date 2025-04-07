@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../styles/Chat.module.css';
-import Sidebar from '../components/Sidebar'; 
+import Sidebar from '../components/Sidebarcons'; 
 import WalletWrapper from '../components/WalletWrapper';
 import Header from '../components/Header';
 

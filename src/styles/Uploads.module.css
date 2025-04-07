@@ -1,0 +1,475 @@
+/* Layout */
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.adminContent {
+  flex: 1;
+  padding: 24px;
+  background-color: #f8fafc;
+  margin-left: 250px; /* Add margin to prevent content from being hidden behind sidebar */
+  width: calc(100% - 250px); /* Adjust width to account for sidebar */
+}
+
+.uploadsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.uploadsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.headerContent {
+  flex: 1;
+  min-width: 300px;
+}
+
+.uploadsTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+}
+
+.uploadsSubtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Tabs */
+.tabsContainer {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabButton {
+  padding: 16px 24px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.tabButton:hover {
+  color: #1e293b;
+}
+
+.tabButton.activeTab {
+  color: #fab800;
+  border-bottom-color: #fab800;
+}
+
+.tabContent {
+  padding: 24px;
+}
+
+.tabPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Form Section */
+.formSection {
+  background-color: #f8fafc;
+  border-radius: 8px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.uploadForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.formGroup input, 
+.formGroup textarea, 
+.formGroup select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.formGroup input:focus, 
+.formGroup textarea:focus, 
+.formGroup select:focus {
+  outline: none;
+  border-color: #fab800;
+  box-shadow: 0 0 0 2px rgba(250, 184, 0, 0.1);
+}
+
+.formHint {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 4px 0 0 0;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.submitButton {
+  padding: 10px 16px;
+  background-color: #fab800;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background-color: #e9a800;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Content Section */
+.contentSection {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.contentCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contentCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.videoPreview {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.videoPreview iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.newsImage {
+  height: 180px;
+  overflow: hidden;
+}
+
+.newsImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.contentCard:hover .newsImage img {
+  transform: scale(1.05);
+}
+
+.contentInfo {
+  padding: 16px;
+}
+
+.contentTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.contentMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.metaItem {
+  display: block;
+}
+
+.newsLink {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #fab800;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.newsLink:hover {
+  text-decoration: underline;
+}
+
+.deleteButton {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.deleteButton:hover {
+  background-color: #dc2626;
+}
+
+/* Events specific styles */
+.eventsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eventCard {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.eventCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.eventDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: #fab800;
+  color: white;
+  border-radius: 8px;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.eventDay {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.eventMonth {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.eventInfo {
+  flex: 1;
+}
+
+.eventTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.eventTime {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.eventCategories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.categoryTag {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #f1f5f9;
+  color: #64748b;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.eventActions {
+  margin-left: 16px;
+}
+
+.eventActions .deleteButton {
+  width: auto;
+}
+
+/* Loading and empty states */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  color: #64748b;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f1f5f9;
+  border-top-color: #fab800;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.noContent {
+  padding: 32px;
+  text-align: center;
+  color: #64748b;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px dashed #e2e8f0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .adminContent {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .tabs {
+    flex-direction: column;
+  }
+  
+  .tabButton {
+    width: 100%;
+    text-align: left;
+    border-left: 2px solid transparent;
+    border-bottom: none;
+  }
+  
+  .tabButton.activeTab {
+    border-left-color: #fab800;
+    border-bottom-color: transparent;
+  }
+  
+  .eventCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .eventDate {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+  
+  .eventActions {
+    margin-left: 0;
+    margin-top: 16px;
+    width: 100%;
+  }
+  
+  .eventActions .deleteButton {
+    width: 100%;
+  }
+}
+
+.eventLink {
+  display: inline-block;
+  margin-top: 8px;
+  color: #fab800;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.eventLink:hover {
+  color: #e9a800;
+  text-decoration: underline;
+}

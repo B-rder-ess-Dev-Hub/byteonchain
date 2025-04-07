@@ -19,10 +19,8 @@ const Events = () => {
       }
       const data = await response.json();
       
-      // Ensure data is an array
       const eventsArray = Array.isArray(data) ? data : data.events || [];
       
-      // Process the events data
       const processedEvents = eventsArray.map(event => ({
         ...event,
         date: new Date(event.date),
@@ -30,7 +28,6 @@ const Events = () => {
         to_time: new Date(event.to_time)
       }));
 
-      // Filter events to only include those within the current week
       const filteredEvents = processedEvents.filter(event => {
         const eventDate = new Date(event.date);
         return eventDate >= currentWeek.start && eventDate <= currentWeek.end;
@@ -46,7 +43,6 @@ const Events = () => {
     }
   };
 
-  // Function to get the current week
   function getCurrentWeek() {
     const today = new Date();
     const day = today.getDay();

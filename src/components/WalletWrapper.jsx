@@ -30,19 +30,16 @@ const WalletWrapper = ({ children }) => {
     }
   };
 
-  // Wait for page to fully load before checking wallet connection
   useEffect(() => {
     const handleLoad = () => {
       setPageLoaded(true);
     };
 
-    // Check if page is already loaded
     if (document.readyState === 'complete') {
       setPageLoaded(true);
     } else {
       window.addEventListener('load', handleLoad);
       
-      // Also set a backup timer in case the load event doesn't fire
       const backupTimer = setTimeout(() => {
         setPageLoaded(true);
       }, 2000);
@@ -54,39 +51,31 @@ const WalletWrapper = ({ children }) => {
     }
   }, []);
 
-  // Initial connection check - runs only after page is loaded
   useEffect(() => {
     if (pageLoaded && !initialCheckDone) {
-      // Set checking state first
       setConnectionState('checking');
       setShowStatusModal(true);
       
-      // Give wallet providers time to initialize
       setTimeout(() => {
         if (isConnected) {
-          // Already connected - show success
           setConnectionState('connected');
         } else {
-          // Not connected - transition to network modal
           setConnectionState('disconnected');
           setShowStatusModal(false);
           setShowNetworkModal(true);
         }
         setInitialCheckDone(true);
-      }, 1500); // Allow time for wallet state to stabilize
+      }, 1500); 
     }
   }, [isConnected, initialCheckDone, pageLoaded]);
   
-  // Handle connection changes after initial check
   useEffect(() => {
     if (initialCheckDone) {
       if (isConnected && connectionState !== 'connected') {
-        // User just connected
         setConnectionState('connected');
         setShowNetworkModal(false);
         setShowStatusModal(true);
       } else if (!isConnected && connectionState !== 'disconnected') {
-        // User just disconnected
         setConnectionState('disconnected');
         setShowStatusModal(false);
         setShowNetworkModal(true);

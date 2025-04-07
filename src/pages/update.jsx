@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from '../styles/Update.module.css';
 import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebarcons';
 import WalletWrapper from '../components/WalletWrapper';
 import { FiClock, FiArrowRight, FiChevronDown, FiX } from 'react-icons/fi';
+import { fetchData } from '../../utils/api'; 
 
 const UpdateContent = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,24 +15,16 @@ const UpdateContent = () => {
   const [showModal, setShowModal] = useState(false);
   
   useEffect(() => {
-    // Fetch news data from the API
     const fetchNews = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch('https://byteapi-two.vercel.app/api/news');
+        const data = await fetchData('/api/news');
         
-        if (!response.ok) {
-          throw new Error('Failed to fetch news');
-        }
-        
-        const data = await response.json();
-        
-        // Transform the API data and add random read times
         const transformedNews = data.news.map(item => ({
           title: item.title,
-          description: item.title, // Using title as description since API doesn't provide one
+          description: item.title, 
           category: 'News',
-          readTime: `${Math.floor(Math.random() * 10) + 2} min`, // Random read time between 2-11 minutes
+          readTime: `${Math.floor(Math.random() * 10) + 2} min`, 
           image: item.imgurl,
           url: item.url
         }));
@@ -54,15 +47,14 @@ const UpdateContent = () => {
   const openNewsModal = (news) => {
     setSelectedNews(news);
     setShowModal(true);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    document.body.style.overflow = 'hidden'; 
   };
 
   const closeNewsModal = () => {
     setShowModal(false);
-    document.body.style.overflow = 'auto'; // Re-enable scrolling
+    document.body.style.overflow = 'auto'; 
   };
 
-  // Handle escape key to close modal
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.keyCode === 27) closeNewsModal();
@@ -71,7 +63,7 @@ const UpdateContent = () => {
     
     return () => {
       window.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = 'auto'; // Ensure scrolling is re-enabled when component unmounts
+      document.body.style.overflow = 'auto'; 
     };
   }, []);
 

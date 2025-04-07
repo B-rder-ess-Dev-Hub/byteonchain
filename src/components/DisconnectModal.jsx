@@ -5,7 +5,6 @@ import styles from '../styles/DisconnectModal.module.css';
 const DisconnectModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
   
-  // Use createPortal to render the modal at the document body level
   return ReactDOM.createPortal(
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
@@ -27,7 +26,7 @@ const DisconnectModal = ({ isOpen, onClose, onConfirm }) => {
         </div>
       </div>
     </div>,
-    document.body // This ensures the modal is rendered directly in the body
+    document.body 
   );
 };
 

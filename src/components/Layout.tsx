@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebarcons';
 import styles from '../styles/Sidebar.module.css';
 
 interface LayoutProps {

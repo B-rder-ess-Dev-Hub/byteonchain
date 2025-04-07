@@ -1,0 +1,171 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+  padding: 20px;
+}
+
+.loginCard {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.loginCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.logoContainer {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.loginTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.loginSubtitle {
+  font-size: 16px;
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
+.loginForm {
+  text-align: left;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 8px;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background-color: #f9fafb;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.15);
+  background-color: white;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.loginButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(251, 191, 36, 0.4);
+}
+
+.loginButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+}
+
+.loginButton:disabled {
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.buttonLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.spinnerDot {
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.spinnerDot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.spinnerDot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+@media (max-width: 480px) {
+  .loginCard {
+    padding: 30px 20px;
+  }
+  
+  .loginTitle {
+    font-size: 24px;
+  }
+  
+  .loginSubtitle {
+    font-size: 14px;
+  }
+}
+
+
+/* Add this to your existing AdminLogin.module.css file */
+.errorBanner {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  border-left: 4px solid #ef4444;
+}
+
+.errorBanner svg {
+  flex-shrink: 0;
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Sidebarcons";
 import Header from "../components/Header";
 import styles from "../styles/Schema.module.css";
 import fetchFilteredAttestations from "../../utils/filter"

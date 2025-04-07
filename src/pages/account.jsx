@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebarcons';
 import Header from '../components/Header';
 import Image from 'next/image';
 import styles from '../styles/Account.module.css';
@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Confetti from 'react-confetti';
 import WalletWrapper from '../components/WalletWrapper';
+import { fetchData, postData } from '../../utils/api'; 
 
 const AccountContent = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -18,35 +19,34 @@ const AccountContent = () => {
     email: '',
     phone: '',
     sex: '',
-    countryCode: '+234', // Default country code
+    countryCode: '+234', 
   });
-  const [isLoading, setIsLoading] = useState(false);  // For handling the loading state of the submit button
+  const [isLoading, setIsLoading] = useState(false);  
   const [windowWidth, setWindowWidth] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
-  const [confettiVisible, setConfettiVisible] = useState(false); // To control confetti visibility
-  const [countries, setCountries] = useState([]); // State for country list
-  const [countryCode, setCountryCode] = useState('+234'); // Default country code
+  const [confettiVisible, setConfettiVisible] = useState(false); 
+  const [countries, setCountries] = useState([]); 
+  const [countryCode, setCountryCode] = useState('+234');
   const [showCoursesModal, setShowCoursesModal] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [courses, setCourses] = useState({});
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Client-side only code
       setWindowWidth(window.innerWidth);
       setWindowHeight(window.innerHeight);
     }
 
     checkWalletConnection();
-    fetchCountries(); // Fetch the countries and country codes
+    fetchCountries(); 
   }, []);
 
   useEffect(() => {
     if (confettiVisible) {
       const timer = setTimeout(() => {
-        setConfettiVisible(false);  // Stop confetti after 5 seconds
-      }, 5000);  // 5000ms = 5 seconds
-      return () => clearTimeout(timer);  // Cleanup timeout on unmount or state change
+        setConfettiVisible(false); 
+      }, 5000); 
+      return () => clearTimeout(timer); 
     }
   }, [confettiVisible]);
 
@@ -76,9 +76,9 @@ const AccountContent = () => {
 
   const fetchUserData = async (address) => {
     try {
-      const response = await axios.get(`https://byteapi-two.vercel.app/api/user/${address}`);
-      if (response.data.status === 'success') {
-        const { user } = response.data;
+      const response = await fetchData(`/api/user/${address}`);
+      if (response.status === 'success') {
+        const { user } = response;
         setFormData({
           fullName: user.fullname,
           email: user.email,
@@ -95,7 +95,7 @@ const AccountContent = () => {
         setFormSubmitted(true);
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 404) {
+      if (error.response?.status === 404) {
         setFormSubmitted(false);
       } else {
         console.error('Error fetching user data:', error);
@@ -105,6 +105,7 @@ const AccountContent = () => {
     setIsLoading(false);
   };
 
+ 
   const fetchCountries = async () => {
     try {
       const response = await axios.get('https://restcountries.com/v3.1/all');
@@ -113,7 +114,6 @@ const AccountContent = () => {
         code: country.idd?.root + (country.idd?.suffixes?.[0] || ''),
       }));
 
-      // Sort countries alphabetically by name
       countriesData.sort((a, b) => a.name.localeCompare(b.name));
 
       setCountries(countriesData);
@@ -131,8 +131,7 @@ const AccountContent = () => {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setWalletAddress(accounts[0]);
-        setShowModal(false); // Hide modal after connecting
-        // Check if the wallet address exists in the database
+        setShowModal(false);
         fetchUserData(accounts[0]);
       } catch (error) {
         console.error('Error connecting wallet:', error);
@@ -161,17 +160,16 @@ const AccountContent = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if wallet is connected
     if (!walletAddress) {
       setShowModal(true);
       return;
     }
 
-    setIsLoading(true);  // Start loading state
+    setIsLoading(true);  
 
     try {
-      const response = await axios.post(
-        'https://byteapi-two.vercel.app/api/signup',
+      const response = await postData(
+        '/api/signup',
         {
           fullname: formData.fullName,
           email: formData.email,
@@ -180,29 +178,25 @@ const AccountContent = () => {
           course: formData.course,
           country: formData.countryCode,
           wallet_address: walletAddress,
-        },
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,  // Allow cookies if needed
         }
       );
 
-      setIsLoading(false);  // Stop loading state
+      setIsLoading(false); 
       setFormSubmitted(true);
       toast.success('Account Created Successfully. Welcome!', {
-        position: "top-right",  // Use a simple string value for position
-        autoClose: 5000,  // Optionally, set a duration
+        position: "top-right",
+        autoClose: 5000,
       });
-      setConfettiVisible(true);  // Show confetti on successful sign-up
-      console.log('Signup successful:', response.data);
+      setConfettiVisible(true);  sign-up
+      console.log('Signup successful:', response);
     } catch (error) {
-      setIsLoading(false);  // Stop loading state
+      setIsLoading(false);  
       console.error('Error submitting form:', error);
       toast.error(
         error.response?.data?.detail || 'An error occurred during signup. Please try again.',
         {
-          position: "top-right",  // Use a simple string value for position
-          autoClose: 5000,  // Optionally, set a duration
+          position: "top-right",
+          autoClose: 5000,
         }
       );
     }
@@ -386,7 +380,7 @@ const AccountContent = () => {
                         <div className={styles.metaItem}>
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M22 12H16L14 15H10L8 12H2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M5.45 5.11L2 12V18C2 18.5304 2.21071 19.0391 2.58579 19.4142C2.96086 19.7893 3.46957 20 4 20H20C20.5304 20 21.0391 19.7893 21.4142 19.4142C21.7893 19.0391 22 18.5304 22 18V12L18.55 5.11C18.3844 4.77679 18.1292 4.49637 17.813 4.30028C17.4967 4.10419 17.1321 4.0002 16.76 4H7.24C6.86792 4.0002 6.50326 4.10419 6.18704 4.30028C5.87083 4.49637 5.61558 4.77679 5.45 5.11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M5.45 5.11L2 12V18C2 18.5304 2.21071 19.0391 2.58579 19.4142C2.96086 19.7893 3.46957 20 4 20H20C20.5304 20 21.0391 19.7893 21.4142C21.7893 19.0391 22 18.5304 22 18V12L18.55 5.11C18.3844 4.77679 18.1292 4.49637 17.813 4.30028C17.4967 4.10419 17.1321 4.0002 16.76 4H7.24C6.86792 4.0002 6.50326 4.10419 6.18704 4.30028C5.87083 4.49637 5.61558 4.77679 5.45 5.11Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                           <span>{formData.email}</span>
                         </div>
@@ -399,7 +393,7 @@ const AccountContent = () => {
                       </div>
                       <button className={styles.editProfileButton}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 = 20.5304 20 = 20.6224 20 = 20.7454 20H17.8C18.9201 6 19.4802 6 19.908 6.21799C20.2843 6.40973 20.5903 6.71569 20.782 7.09202C21 = 7.51984 21 = 8.0799 21 = 9.2V16.8C21 = 17.9201 21 = 18.4802 20.782 18.908C20.5903 19.2843 20.2843 19.5903 19.908 19.782C19.4802 20 18.9201 20 17.8 20H6.2C5.0799 20 4.51984 20 4.09202 19.782C3.71569 19.5903 3.40973 19.2843 3.21799 18.908C3 = 18.4802 3 = 17.9201 3 = 16.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142C19.7893 21.0391 20 = 20.5304 20 = 20.6224 20 = 20.7454 20H17.8C18.9201 6 19.4802 6 19.908 6.21799C20.2843 6.40973 20.5903 6.71569 20.782 7.09202C21 = 7.51984 21 = 8.0799 21 = 9.2V16.8C21 = 17.9201 21 = 18.4802 20.782 18.908C20.5903 19.2843 20.2843 19.5903 19.908 19.782C19.4802 20 18.9201 20 17.8 20H6.2C5.0799 20 4.51984 20 4.09202 19.782C3.71569 19.5903 3.40973 19.2843 3.21799 18.908C3 = 18.4802 3 = 17.9201 3 = 16.8Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 = 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 = 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 = 4.00001C22.1213 = 4.56262 21.8978 = 5.10219 21.5 = 5.50001L12 = 15L8 = 16L9 = 12L18.5 = 2.50001Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         Edit Profile

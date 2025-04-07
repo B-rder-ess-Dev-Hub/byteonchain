@@ -7,7 +7,6 @@ const Modal = ({ isOpen, onClose, videoUrl }) => {
   const getYoutubeEmbedUrl = (url) => {
     if (!url) return '';
     
-    // Handle different YouTube URL formats
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     
@@ -15,12 +14,10 @@ const Modal = ({ isOpen, onClose, videoUrl }) => {
       return `https://www.youtube.com/embed/${match[2]}?autoplay=1`;
     }
 
-    // Handle already embedded URLs
     if (url.includes('embed')) {
       return url;
     }
 
-    // Handle direct video URLs
     return url;
   };
 

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "../styles/QuizPage.module.css";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Sidebarcons";
 import Header from "../components/Header";
 import QuizModal from "../components/quizmodal";
 import WalletWrapper from '../components/WalletWrapper';
-const API_BASE_URL = "https://byteapi-two.vercel.app/api";
+import { fetchData } from '../../utils/api'; 
 
-// SVG Icons
 const Icons = {
   quiz: (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +61,7 @@ const QuizContent = () => {
   const [userFullName, setUserFullName] = useState("");
   const [walletAddress, setWalletAddress] = useState(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [quizzes, setQuizzes] = useState([]);
+  const [quizzes, setQuizzes] = useState([]); 
   const [quizModalOpen, setQuizModalOpen] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -89,8 +88,7 @@ const QuizContent = () => {
 
   const fetchUserDetails = async (walletAddress) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/${walletAddress}`);
-      const data = await response.json();
+      const data = await fetchData(`/api/user/${walletAddress}`);
       if (data && data.user) {
         setUserFullName(data.user.fullname);
       }
@@ -102,22 +100,35 @@ const QuizContent = () => {
   const fetchQuizzes = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_BASE_URL}/quizzes/`);
-      const data = await response.json();
-      setQuizzes(data);
+      const data = await fetchData('/api/quizzes/');
+      
+      
+      if (data && Array.isArray(data)) {
+        setQuizzes(data);
+      } else if (data && Array.isArray(data.quizzes)) {
+        setQuizzes(data.quizzes);
+      } else if (data && typeof data === 'object') {
+      
+        console.log("Data structure:", Object.keys(data)); 
+        const quizzesArray = data.quizzes || data.data || [];
+        setQuizzes(Array.isArray(quizzesArray) ? quizzesArray : []);
+      } else {
+        setQuizzes([]);
+        console.error("Unexpected quiz data format:", data);
+      }
     } catch (error) {
       console.error("Error fetching quizzes:", error);
+      setQuizzes([]); 
     } finally {
       setLoading(false);
     }
   };
 
-  // Sort quizzes to show active ones first, then expired ones
-  const sortedQuizzes = [...quizzes].sort((a, b) => {
+  const sortedQuizzes = Array.isArray(quizzes) ? [...quizzes].sort((a, b) => {
     if (a.status === "active" && b.status !== "active") return -1;
     if (a.status !== "active" && b.status === "active") return 1;
     return 0;
-  });
+  }) : [];
 
   const openQuizModal = (quiz) => {
     setSelectedQuiz(quiz);
@@ -148,7 +159,6 @@ const QuizContent = () => {
                 <h1 className={styles.bannerTitle}>Ready to test your knowledge?</h1>
               </div>
 
-              {/* Rest of banner content */}
               {isWalletConnected ? (
                 <div className={styles.userInfoCard}>
                   <div className={styles.userIconWrapper}>{Icons.user}</div>
@@ -173,7 +183,6 @@ const QuizContent = () => {
             </div>
           </div>
 
-          {/* Show Loading Indicator */}
           {loading ? (
             <div className={styles.loadingContainer}>
               <div className={styles.loadingSpinner}></div>
@@ -194,7 +203,6 @@ const QuizContent = () => {
         </div>
       </div>
 
-      {/* Render Quiz Modal Dynamically */}
       {quizModalOpen && selectedQuiz && (
         <QuizModal isOpen={quizModalOpen} onClose={closeQuizModal} quiz={selectedQuiz} />
       )}
@@ -206,18 +214,10 @@ const QuizCard = ({ quiz, openQuizModal }) => {
   const [participants, setParticipants] = useState("Loading...");
 
   useEffect(() => {
-    // Fetch actual participants count from the API
     const fetchParticipants = async () => {
       try {
-        // Encode the course title for the URL
         const encodedTitle = encodeURIComponent(quiz.course_title);
-        const response = await fetch(`${API_BASE_URL}/course-completion?course_name=${encodedTitle}`);
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch participants');
-        }
-        
-        const data = await response.json();
+        const data = await fetchData(`/api/course-completion?course_name=${encodedTitle}`);
         setParticipants(data.total_completed.toString());
       } catch (error) {
         console.error("Error fetching participants:", error);

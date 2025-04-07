@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import axios from 'axios'; 
 import recentArrowIcon from '../../public/arrow-icon.png';
 import moreIcon from '../../public/arrow-icon.png';
 import styles from '../styles/Tupdate.module.css';
 import NewsModal from './NewsModal';
+import apiClient from '../../utils/api';
 
 const Tupdate = () => {
   const [news, setNews] = useState([]);
@@ -22,31 +24,23 @@ const Tupdate = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch('/api/news');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
+      const response = await apiClient.get('/api/news');
+      const data = response.data;
       const newsArray = data.news || [];
       
-      // Sort news by date (newest first) if date field exists
       const sortedNews = [...newsArray].sort((a, b) => {
-        // If publishedAt exists, use it for sorting
         if (a.publishedAt && b.publishedAt) {
           return new Date(b.publishedAt) - new Date(a.publishedAt);
         }
-        // If date exists, use it for sorting
         if (a.date && b.date) {
           return new Date(b.date) - new Date(a.date);
         }
-        // Fallback to original order if no date fields
         return 0;
       });
       
-      // Process the first 4 news items after sorting
       const processedNews = sortedNews.slice(0, MAX_VISIBLE_NEWS).map(item => ({
         ...item,
-        imageUrl: item.imgurl || '/up1.png' // Use imgurl from API or fallback to default
+        imageUrl: item.imgurl || '/up1.png'
       }));
       
       setNews(processedNews);

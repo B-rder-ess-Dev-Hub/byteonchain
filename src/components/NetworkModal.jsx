@@ -70,10 +70,8 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       blockExplorerUrl: 'https://explorer.celo.org',
       isActive: true
     },
-    // Other networks remain commented out
   ];
 
-  // Connect wallet first
   const connectWallet = async () => {
     try {
       setIsConnecting(true);
@@ -83,7 +81,6 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
         throw new Error("No Ethereum wallet detected. Please install MetaMask or another web3 wallet.");
       }
       
-      // Request account access
       const accounts = await window.ethereum.request({ 
         method: 'eth_requestAccounts' 
       });
@@ -107,15 +104,13 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       setSwitchingNetwork(network.id);
       setError(null);
       
-      // First connect the wallet
       const account = await connectWallet();
       if (!account) {
         throw new Error("Failed to connect wallet. Please try again.");
       }
       
-      // Format the network parameters for wallet
       const params = {
-        chainId: `0x${network.chainId.toString(16)}`, // Convert to hex string
+        chainId: `0x${network.chainId.toString(16)}`, 
         chainName: network.name,
         nativeCurrency: network.nativeCurrency,
         rpcUrls: [network.rpcUrl],
@@ -123,15 +118,13 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
       };
 
       try {
-        // Try to switch to the network if it's already added
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: params.chainId }],
         });
       } catch (switchError) {
-        // This error code indicates that the chain has not been added to MetaMask
+       
         if (switchError.code === 4902) {
-          // Add the network
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [params],
@@ -141,7 +134,6 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
         }
       }
 
-      // Notify parent component about successful network change
       onNetworkSelect(network);
       setSwitchingNetwork(null);
     } catch (error) {
