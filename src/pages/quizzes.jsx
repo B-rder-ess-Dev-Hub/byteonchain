@@ -12,18 +12,24 @@ const QuizForm = dynamic(() => import('../components/QuizForm'), {
   loading: () => <p>Loading form...</p>
 });
 
+const QuizzesPage = dynamic(() => Promise.resolve(Quizzes), {
+  ssr: false
+});
+
+
+
 export const config = {
   unstable_runtimeJS: true,
   unstable_JsPreload: false
 };
 
-export async function getStaticProps() {
+export function getStaticProps() {
   return {
     props: {}
   };
 }
 
-const Quizzes = () => {
+function Quizzes() {
   const router = useRouter();
   const toast = useToast();
   const [quizzes, setQuizzes] = useState([]);
@@ -771,11 +777,4 @@ const Quizzes = () => {
   );
 };
 
-
-
-
-
-
-
-
-export default Quizzes;
+export default QuizzesPage;

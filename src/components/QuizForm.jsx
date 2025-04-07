@@ -1,4 +1,8 @@
-// Quiz Form Component
+import React, { useState, useEffect } from 'react';
+import styles from '../styles/Quizzes.module.css';
+
+
+
 const QuizForm = ({ quiz, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
       course_title: quiz?.course_title || '',
@@ -417,3 +421,5 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
       </form>
     );
   };
+
+export default QuizForm;
