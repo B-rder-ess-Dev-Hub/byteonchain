@@ -5,6 +5,12 @@ import AdminSidebar from '../components/AdminSidebar';
 import styles from '../styles/Quizzes.module.css';
 import { useToast } from '../components/ToastNotification';
 
+export const getStaticProps = () => {
+  return {
+    props: {}
+  }
+}
+
 export const config = {
   unstable_runtimeJS: true
 };
@@ -41,22 +47,22 @@ const Quizzes = () => {
   const fetchQuizzes = async () => {
     try {
       setIsLoading(true);
-  
+
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
-  
+
       const response = await fetch('https://byteapi-two.vercel.app/api/quizzes/', {
         headers: {
           'Accept': 'application/json',
           'Bytekeys': apiKey
         }
       });
-  
+
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
       }
-  
+
       const data = await response.json();
-      
+
       // More robust data handling
       let quizzesData = [];
       if (data && Array.isArray(data)) {
@@ -66,7 +72,7 @@ const Quizzes = () => {
       } else if (data && typeof data === 'object') {
         quizzesData = Object.values(data);
       }
-  
+
       // Ensure each quiz has a unique ID and all required fields
       const formattedQuizzes = quizzesData.map(quiz => ({
         _id: quiz._id || quiz.id || `quiz-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
@@ -78,18 +84,18 @@ const Quizzes = () => {
         createdAt: quiz.createdAt || new Date().toISOString(),
         questions: Array.isArray(quiz.questions) ? quiz.questions.map(q => ({
           question: typeof q.question === 'string' ? q.question : String(q.question || ''),
-          options: Array.isArray(q.options) ? q.options.map(opt => 
+          options: Array.isArray(q.options) ? q.options.map(opt =>
             typeof opt === 'string' ? opt : String(opt || '')
           ) : [],
           answer: typeof q.answer === 'string' ? q.answer : String(q.answer || '')
         })) : []
       }));
-  
+
       // Sort quizzes by creation date
       const sortedQuizzes = formattedQuizzes.sort((a, b) => {
         return new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now());
       });
-  
+
       setQuizzes(sortedQuizzes);
       setFilteredQuizzes(sortedQuizzes);
       setIsLoading(false);
@@ -101,11 +107,11 @@ const Quizzes = () => {
       setFilteredQuizzes([]);
     }
   };
-  
+
   // Also update your sanitizeQuizData function to be more robust
   const sanitizeQuizData = (quiz) => {
     if (!quiz) return null;
-  
+
     return {
       ...quiz,
       questions: Array.isArray(quiz.questions)
@@ -457,7 +463,7 @@ const Quizzes = () => {
                     <tbody>
                       {currentQuizzes.length > 0 ? (
                         currentQuizzes.map((quiz) => (
-                          <tr key={`quiz-${quiz._id}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`}>
+                          <tr key={quiz._id || `quiz-${quiz.course_title}`}>
                             <td className={styles.quizTitle}>{quiz.course_title}</td>
                             <td>{quiz.issuer}</td>
                             <td>{quiz.duration}</td>
@@ -634,7 +640,8 @@ const Quizzes = () => {
                         {currentQuiz.questions && currentQuiz.questions.length > 0 ? (
                           <div className={styles.questionsList}>
                             {currentQuiz.questions.map((question, index) => (
-                             <div key={`question-${index}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`} className={styles.questionItem}>
+                              // Use a stable key that doesn't change on each render
+                              <div key={`question-${index}`} className={styles.questionItem}>
                                 <h4 className={styles.questionText}>
                                   {index + 1}. {question.question}
                                 </h4>
@@ -717,7 +724,7 @@ const Quizzes = () => {
                       <QuizForm
                         quiz={currentQuiz}
                         onSave={(updatedQuiz) => {
-                          // Fix: Don't pass currentQuiz._id, just pass the updatedQuiz
+
                           updateQuiz(updatedQuiz);
                         }}
                         onCancel={() => setIsEditModalOpen(false)}
@@ -788,7 +795,7 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
   );
 
   useEffect(() => {
-    
+
     if (quiz?.questions && quiz.questions.length > 0) {
       setFormData(prev => ({
         ...prev,
@@ -798,7 +805,7 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
     }
   }, [quiz]);
 
- 
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -1111,14 +1118,14 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
           <div className={styles.questionsList}>
             {formData.questions.length > 0 ? (
               formData.questions.map((question, qIndex) => (
-                <div key={`question-${qIndex}-${question.question.substring(0, 20)}`}>
+                <div key={`question-form-${qIndex}`}>
                   <div className={styles.questionContent}>
                     <h4 className={styles.questionText}>
                       {qIndex + 1}. {question.question}
                     </h4>
                     <div className={styles.questionOptions}>
                       {question.options.map((option, optIndex) => (
-                        <div key={`option-${qIndex}-${optIndex}-${option.substring(0, 10)}`}>
+                        <div key={`option-form-${qIndex}-${optIndex}`}>
                           <span className={styles.optionLetter}>
                             {String.fromCharCode(65 + optIndex)}
                           </span>
