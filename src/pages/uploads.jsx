@@ -6,16 +6,17 @@ import styles from '../styles/Uploads.module.css';
 import { useToast } from '../components/ToastNotification';
 import axios from 'axios';
 
-// Add these exports to disable static generation for this page
-export const config = {
-  unstable_runtimeJS: true
-};
+
 
 export async function getStaticProps() {
   return {
     props: {}
   };
 }
+
+export const config = {
+  unstable_runtimeJS: true
+};
 
 const Uploads = () => {
   const router = useRouter();

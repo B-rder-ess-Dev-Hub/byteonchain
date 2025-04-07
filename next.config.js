@@ -24,6 +24,12 @@ const nextConfig = {
   exportPathMap: async function (defaultPathMap) {
     const pathMap = { ...defaultPathMap };
     delete pathMap['/quizzes'];
+    delete pathMap['/account'];
+    delete pathMap['/users'];
+    delete pathMap['/login'];
+    delete pathMap['/update'];
+    delete pathMap['/uploads'];
+    delete pathMap['/dashboard'];
     delete pathMap['/chat'];
     delete pathMap['/classroom'];
     return pathMap;

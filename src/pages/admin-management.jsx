@@ -6,7 +6,6 @@ import styles from '../styles/AdminManagement.module.css';
 import { useToast } from '../components/ToastNotification';
 import axios from 'axios';
 
-// Add these exports to disable static generation for this page
 export const config = {
   unstable_runtimeJS: true
 };

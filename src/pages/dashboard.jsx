@@ -5,9 +5,6 @@ import AdminSidebar from '../components/AdminSidebar';
 import styles from '../styles/AdminDashboard.module.css';
 import { fetchData } from '../../utils/api';
 
-export const config = {
-  unstable_runtimeJS: true
-};
 
 
 export async function getStaticProps() {
@@ -15,6 +12,11 @@ export async function getStaticProps() {
     props: {}
   };
 }
+
+export const config = {
+  unstable_runtimeJS: true
+};
+
 
 const Dashboard = () => {
   const router = useRouter();
