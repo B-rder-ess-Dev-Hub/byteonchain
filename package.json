@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "setup": "npm install --legacy-peer-deps"
+    "setup": "npm install --legacy-peer-deps",
+    "netlify-build": "npm run setup && npm run build"
   },
   "resolutions": {
     "react": "19.1.0",
