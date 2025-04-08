@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "setup": "npm install --legacy-peer-deps",
-    "netlify-build": "npm run setup && npm run build"
+    "netlify-build": "npm run setup && npm install --include=optional sharp && npm install --save-dev eslint && npm run build"
   },
   "resolutions": {
     "react": "19.1.0",
