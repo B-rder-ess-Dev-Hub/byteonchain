@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "install": "npm install --legacy-peer-deps"
+    "setup": "npm install --legacy-peer-deps"
   },
   "resolutions": {
     "react": "19.1.0",
