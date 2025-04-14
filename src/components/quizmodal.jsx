@@ -56,6 +56,37 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
     setAnswerFeedback(null);
   }, [isOpen, quiz]);
 
+  const handleAnswerClick = (option) => {
+    if (isAnswering || selectedAnswer) return;
+    
+    setIsAnswering(true);
+    setSelectedAnswer(option);
+    
+    const currentQ = questions[currentQuestion];
+    const isCorrect = option === currentQ.answer;
+    
+    // console.log("Selected answer:", option);
+    // console.log("Correct answer:", currentQ.answer); // Changed from correct_answer to answer
+    // console.log("Is correct:", isCorrect);
+    
+    if (isCorrect) {
+      const pointsToAdd = parseInt(quiz.marks_per_question) || 1;
+      console.log("Adding points:", pointsToAdd);
+      setScore(prevScore => prevScore + pointsToAdd);
+    }
+    
+    setTimeout(() => {
+      setIsAnswering(false);
+      
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(prevQuestion => prevQuestion + 1);
+        setSelectedAnswer(null);
+      } else {
+        setIsCompleted(true);
+      }
+    }, 1000);
+  };
+
   useEffect(() => {
     if (!isOpen) return;
     const interval = setInterval(() => {
@@ -126,7 +157,6 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
         [quiz.course_title]: uid
       };
   
-      
       const updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${walletAddress}`, {
         method: "PUT",
         headers: { 
@@ -197,6 +227,19 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const shareOnX = () => {
+    if (!attestationUID || !matchingNetwork) return;
+    
+    const attestationLink = `${matchingNetwork.baseURL}/attestation/view/${attestationUID}`;
+    const shareText = `I just completed the "${quiz.course_title}" quiz with a score of ${score}/${questions.length * quiz.marks_per_question}! Check out my attestation: ${attestationLink}`;
+    
+    // Encode the text for URL
+    const encodedText = encodeURIComponent(shareText);
+    
+    // Open Twitter/X share window
+    window.open(`https://twitter.com/intent/tweet?text=${encodedText}`, '_blank');
   };
 
   return (
@@ -278,17 +321,19 @@ const QuizModal = ({ isOpen, onClose, quiz }) => {
                 >
                   View Attestation
                 </a>
-                <button className={`${styles.shareButton} ${styles.xButton}`} onClick={shareOnX}>
-                  <span className={styles.xIcon}>𝕏</span> Share on X
+                <button 
+                  className={`${styles.shareButton} ${styles.xButton}`} 
+                  onClick={shareOnX}
+                >
+                  <span className={styles.xIcon}>Share on 𝕏</span> 
                 </button>
               </div>
             ) : (
               <Attest 
                 walletAddress={walletAddress} 
-                score={score} 
+                score={score}
                 course={quiz.course_title} 
                 issuer={quiz.issuer} 
-                userName={userName} 
                 onAttestationSuccess={handleAttestationSuccess} 
               />
             )}

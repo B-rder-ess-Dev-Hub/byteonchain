@@ -12,27 +12,43 @@ const Attest = ({ walletAddress, score, course, issuer, onAttestationSuccess }) 
   const chainId = useChainId()
   const matchingNetwork = networks.find(network => network.chainId === chainId);
   
-  
+  const API_KEY = process.env.NEXT_PUBLIC_BYTE_API_KEY || '';
 
-  // Fetch user's name using wallet address
   useEffect(() => {
-    const fetchName = async () => {
+    const fetchName = async (address) => {
       try {
-        if (!walletAddress) return;
-
-        const response = await fetch(`https://byteapi-two.vercel.app/api/user/${walletAddress}`);
-        if (!response.ok) throw new Error("Failed to fetch user data");
-
+        if (!address) {
+          console.log("No wallet address provided for fetching user data");
+          setUserName("Unknown User");
+          return;
+        }
+        
+        const response = await fetch(`https://byteapi-two.vercel.app/api/user/${address}`, {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Bytekeys": API_KEY || ''
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API responded with status: ${response.status}`);
+        }
+        
         const data = await response.json();
-        setUserName(data.user.fullname || "Unknown User");
+        setUserName(data.user?.fullname || "Unknown User");
       } catch (error) {
         console.error("Error fetching user name:", error);
         setUserName("Unknown User");
       }
     };
 
-    fetchName();
-  }, [walletAddress]);
+    if (walletAddress) {
+      fetchName(walletAddress);
+    } else {
+      setUserName("Unknown User");
+    }
+  }, [walletAddress, API_KEY]);
 
   async function sendTransaction() {
     if (!signer) {
@@ -72,7 +88,7 @@ const Attest = ({ walletAddress, score, course, issuer, onAttestationSuccess }) 
         data: {
           recipient: walletAddress,
           expirationTime: 0,
-          revocable: false, // Must be false if schema is not revocable
+          revocable: false, 
           data: ONboardingencodedData,
         },
       });
