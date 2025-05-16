@@ -170,8 +170,8 @@ const QuizPage = ({ quiz = quizData }) => {
 
   const updateCourseIdInDatabase = async (uid) => {
     try {
-      // Use lowercase wallet address
-      const lowercaseWalletAddress = walletAddress.toLowerCase();
+      // Use original wallet address first
+      let lowercaseWalletAddress = walletAddress.toLowerCase();
       const userData = await fetchData(`/api/user/${lowercaseWalletAddress}`);
       
       const prevCourseId = userData.user.course_id || {};
@@ -181,7 +181,7 @@ const QuizPage = ({ quiz = quizData }) => {
         [quiz.course_title]: uid
       };
   
-      const updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${lowercaseWalletAddress}`, {
+      let updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${lowercaseWalletAddress}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
@@ -194,7 +194,24 @@ const QuizPage = ({ quiz = quizData }) => {
   
       if (!updateResponse.ok) {
         const errorText = await updateResponse.text();
-        throw new Error(`Failed to update course_id: ${updateResponse.status} - ${errorText || 'Unknown error'}`);
+        if (updateResponse.status === 404) {
+          // Retry with original case if lowercase fails
+          updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${walletAddress}`, {
+            method: "PUT",
+            headers: { 
+              "Content-Type": "application/json",
+              "Bytekeys": process.env.NEXT_PUBLIC_BYTE_API_KEY || ''
+            },
+            body: JSON.stringify({ 
+              course_id: updatedCourseId
+            })
+          });
+          if (!updateResponse.ok) {
+            throw new Error(`Failed to update course_id: ${updateResponse.status} - ${errorText || 'Unknown error'}`);
+          }
+        } else {
+          throw new Error(`Failed to update course_id: ${updateResponse.status} - ${errorText || 'Unknown error'}`);
+        }
       }
       
       console.log("Course ID updated successfully!");
@@ -207,10 +224,10 @@ const QuizPage = ({ quiz = quizData }) => {
   const updateQuizAttempts = async (address) => {
     try {
       const newAttempts = quizAttempts + 1;
-      // Use lowercase wallet address
-      const lowercaseAddress = address.toLowerCase();
+      // Use lowercase address first
+      let lowercaseAddress = address.toLowerCase();
       
-      const response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${lowercaseAddress}`, {
+      let response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${lowercaseAddress}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -225,7 +242,26 @@ const QuizPage = ({ quiz = quizData }) => {
   
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Failed to update quiz attempts: ${errorData.message || 'Unknown error'}`);
+        if (response.status === 404) {
+          // Retry with original case if lowercase fails
+          response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${address}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Bytekeys": process.env.NEXT_PUBLIC_BYTE_API_KEY || ''
+            },
+            body: JSON.stringify({ 
+              quiz_attempts: newAttempts,
+              last_quiz_attempt: new Date().toISOString()
+            })
+          });
+          if (!response.ok) {
+            throw new Error(`Failed to update quiz attempts: ${errorData.message || 'Unknown error'}`);
+          }
+        } else {
+          throw new Error(`Failed to update quiz attempts: ${errorData.message || 'Unknown error'}`);
+        }
       }
   
       setQuizAttempts(newAttempts); 
