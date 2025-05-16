@@ -81,7 +81,8 @@ const AccountContent = () => {
   const onboardingOptions = [
     "BUK",
     "UNN",
-    "Uniport"
+    "Uniport",
+    "Blockchain Lautech",
   ];
 
   const fetchUserData = async (address) => {

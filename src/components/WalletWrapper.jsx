@@ -60,15 +60,24 @@ const WalletWrapper = ({ children }) => {
         if (isConnected) {
           setConnectionState('connected');
         } else {
-          setConnectionState('disconnected');
-          setShowStatusModal(false);
-          setShowNetworkModal(true);
+          // Detect Trust Wallet and Backpack Wallet
+          const isTrustWallet = window.trustwallet && window.trustwallet.isTrustWallet;
+          const isBackpackWallet = window.backpack && window.backpack.isBackpack;
+          if (isTrustWallet || isBackpackWallet) {
+            setConnectionState('disconnected');
+            setShowStatusModal(false);
+            setShowNetworkModal(true);
+          } else {
+            setConnectionState('disconnected');
+            setShowStatusModal(false);
+            setShowNetworkModal(true);
+          }
         }
         setInitialCheckDone(true);
       }, 1500); 
     }
   }, [isConnected, initialCheckDone, pageLoaded]);
-  
+
   useEffect(() => {
     if (initialCheckDone) {
       if (isConnected && connectionState !== 'connected') {
@@ -76,9 +85,18 @@ const WalletWrapper = ({ children }) => {
         setShowNetworkModal(false);
         setShowStatusModal(true);
       } else if (!isConnected && connectionState !== 'disconnected') {
-        setConnectionState('disconnected');
-        setShowStatusModal(false);
-        setShowNetworkModal(true);
+        // Detect Trust Wallet and Backpack Wallet on disconnection
+        const isTrustWallet = window.trustwallet && window.trustwallet.isTrustWallet;
+        const isBackpackWallet = window.backpack && window.backpack.isBackpack;
+        if (isTrustWallet || isBackpackWallet) {
+          setConnectionState('disconnected');
+          setShowStatusModal(false);
+          setShowNetworkModal(true);
+        } else {
+          setConnectionState('disconnected');
+          setShowStatusModal(false);
+          setShowNetworkModal(true);
+        }
       }
     }
   }, [isConnected, connectionState, initialCheckDone]);
@@ -109,6 +127,7 @@ const WalletWrapper = ({ children }) => {
           isOpen={true}
           onNetworkSelect={handleNetworkSelect}
           onClose={() => setShowNetworkModal(false)}
+          supportedWallets={['Trust Wallet', 'Backpack Wallet', 'MetaMask']} 
         />
       )}
     </>

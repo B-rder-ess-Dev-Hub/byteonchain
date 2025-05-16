@@ -6,7 +6,6 @@ import styles from '../styles/Quizzes.module.css';
 import { useToast } from '../components/ToastNotification';
 import dynamic from 'next/dynamic';
 
-
 const QuizForm = dynamic(() => import('../components/QuizForm'), { 
   ssr: false,
   loading: () => <p>Loading form...</p>
@@ -53,7 +52,7 @@ export async function getStaticProps() {
       props: {
         initialQuizzes: formattedQuizzes,
       },
-      revalidate: 60, // Optional: Revalidate every 60 seconds
+      revalidate: 60,
     };
   } catch (error) {
     console.error('Error in getStaticProps:', error);
@@ -65,23 +64,19 @@ export async function getStaticProps() {
   }
 }
 
-// Update the function to accept props and handle loading state properly
 function Quizzes({ initialQuizzes = [] }) {
   const router = useRouter();
   const toast = useToast();
   const [quizzes, setQuizzes] = useState(initialQuizzes);
   const [filteredQuizzes, setFilteredQuizzes] = useState(initialQuizzes);
   const [searchTerm, setSearchTerm] = useState('');
-  // Set isLoading to false if we already have initialQuizzes
   const [isLoading, setIsLoading] = useState(initialQuizzes.length === 0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [quizzesPerPage] = useState(10);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [currentQuiz, setCurrentQuiz] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
+  const [currentQuiz, setCurrentQuiz] = useState(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -90,7 +85,6 @@ function Quizzes({ initialQuizzes = [] }) {
         router.push('/login');
       } else {
         setIsAuthenticated(true);
-        // Only fetch if we don't have initial data
         if (initialQuizzes.length === 0) {
           fetchQuizzes();
         }
@@ -98,11 +92,9 @@ function Quizzes({ initialQuizzes = [] }) {
     }
   }, [router, initialQuizzes]);
 
-
   const fetchQuizzes = async () => {
     try {
       setIsLoading(true);
-
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
 
       const response = await fetch('https://byteapi-two.vercel.app/api/quizzes/', {
@@ -160,7 +152,6 @@ function Quizzes({ initialQuizzes = [] }) {
     }
   };
 
-  // Also update your sanitizeQuizData function to be more robust
   const sanitizeQuizData = (quiz) => {
     if (!quiz) return null;
 
@@ -182,7 +173,6 @@ function Quizzes({ initialQuizzes = [] }) {
   const createQuiz = async (quizData) => {
     try {
       setIsLoading(true);
-
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
       const response = await fetch('https://byteapi-two.vercel.app/api/quizzes/', {
         method: 'POST',
@@ -210,7 +200,6 @@ function Quizzes({ initialQuizzes = [] }) {
   };
 
   const deleteQuiz = async (id, courseTitle) => {
-    // Use course_title for deletion if available, otherwise fall back to id
     const identifier = courseTitle || id;
     
     toast.confirm(
@@ -218,7 +207,6 @@ function Quizzes({ initialQuizzes = [] }) {
       async () => {
         try {
           setIsLoading(true);
-  
           const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY || '';
           const response = await fetch(`https://byteapi-two.vercel.app/api/quizzes/${identifier}/`, {
             method: 'DELETE',
@@ -227,11 +215,11 @@ function Quizzes({ initialQuizzes = [] }) {
               'Bytekeys': apiKey
             }
           });
-  
+
           if (!response.ok) {
             throw new Error(`Failed to delete quiz: ${response.status}`);
           }
-  
+
           fetchQuizzes();
           toast.success('Quiz deleted successfully');
         } catch (error) {
@@ -246,10 +234,8 @@ function Quizzes({ initialQuizzes = [] }) {
   const toggleQuizStatus = async (quiz) => {
     try {
       setIsLoading(true);
-
       const newStatus = quiz.status === 'active' ? 'expired' : 'active';
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
-
 
       const response = await fetch(`https://byteapi-two.vercel.app/api/quizzes/${quiz.course_title}/status?new_status=${newStatus}`, {
         method: 'PUT',
@@ -272,15 +258,14 @@ function Quizzes({ initialQuizzes = [] }) {
     }
   };
 
-
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredQuizzes(quizzes);
     } else {
       const filtered = quizzes.filter(quiz =>
-      (quiz.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quiz.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quiz.course_title?.toLowerCase().includes(searchTerm.toLowerCase()))
+        (quiz.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          quiz.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          quiz.course_title?.toLowerCase().includes(searchTerm.toLowerCase()))
       );
       setFilteredQuizzes(filtered);
     }
@@ -310,18 +295,13 @@ function Quizzes({ initialQuizzes = [] }) {
     }
   };
 
-
   const updateQuiz = async (quizData) => {
     try {
       setIsLoading(true);
-
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
       const originalCourseTitle = currentQuiz.course_title;
 
-      // Ensure questions array exists
       const questions = quizData.questions || [];
-
-      // Prepare the complete data to send to the API
       const dataToSend = {
         course_title: quizData.course_title,
         issuer: quizData.issuer,
@@ -337,10 +317,6 @@ function Quizzes({ initialQuizzes = [] }) {
         purpose: quizData.purpose || 'course'
       };
 
-      console.log('Updating quiz:', originalCourseTitle);
-      console.log('Data being sent:', JSON.stringify(dataToSend, null, 2));
-
-
       const endpoint = `https://byteapi-two.vercel.app/api/quizzes/${originalCourseTitle}`;
 
       const response = await fetch(endpoint, {
@@ -353,11 +329,7 @@ function Quizzes({ initialQuizzes = [] }) {
         body: JSON.stringify(dataToSend)
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response status text:', response.statusText);
-
       const responseText = await response.text();
-      console.log('Response text:', responseText);
 
       if (!response.ok) {
         let errorMessage = `Failed to update quiz: ${response.status} ${response.statusText}`;
@@ -365,24 +337,19 @@ function Quizzes({ initialQuizzes = [] }) {
 
         try {
           const errorData = JSON.parse(responseText);
-          console.log('Parsed error data:', errorData);
-
           if (errorData.message) {
             errorMessage = errorData.message;
           }
-
           if (errorData.error) {
             errorDetails = errorData.error;
           }
         } catch (e) {
-          console.log('Failed to parse error response as JSON:', e);
           if (responseText) {
             errorDetails = responseText;
           }
         }
 
         const fullError = errorDetails ? `${errorMessage} - Details: ${errorDetails}` : errorMessage;
-        console.error('Full error information:', fullError);
         throw new Error(fullError);
       }
 
@@ -391,7 +358,6 @@ function Quizzes({ initialQuizzes = [] }) {
       toast.success('Quiz updated successfully');
     } catch (error) {
       console.error('Error updating quiz:', error);
-      console.error('Error stack:', error.stack);
       toast.error('Failed to update quiz: ' + error.message);
     } finally {
       setIsLoading(false);
@@ -411,10 +377,9 @@ function Quizzes({ initialQuizzes = [] }) {
   };
 
   const viewQuiz = (quiz) => {
-    setCurrentQuiz(sanitizeQuizData(quiz));
-    setIsViewModalOpen(true);
+    const encodedTitle = encodeURIComponent(quiz.course_title);
+    router.push(`/quiz/${encodedTitle}`);
   };
-
 
   if (!isAuthenticated) {
     return (
@@ -432,8 +397,6 @@ function Quizzes({ initialQuizzes = [] }) {
         <Head>
           <title>Quizzes | ByteOnChain</title>
         </Head>
-
-
 
         <div className={styles.quizzesContainer}>
           <div className={styles.quizzesHeader}>
@@ -600,13 +563,13 @@ function Quizzes({ initialQuizzes = [] }) {
                   <div className={styles.pageNumbers}>
                     {Array.from({ length: totalPages }, (_, i) => {
                       if (
-                        i === 0 || // First page
-                        i === totalPages - 1 || // Last page
-                        (i >= currentPage - 2 && i <= currentPage + 1) // Pages around current
+                        i === 0 ||
+                        i === totalPages - 1 ||
+                        (i >= currentPage - 2 && i <= currentPage + 1)
                       ) {
                         return (
                           <button
-                            key={`page-${i + 1}`} // This key is unique based on page number
+                            key={`page-${i + 1}`}
                             className={`${styles.pageNumber} ${currentPage === i + 1 ? styles.activePage : ''}`}
                             onClick={() => paginate(i + 1)}
                           >
@@ -617,7 +580,6 @@ function Quizzes({ initialQuizzes = [] }) {
                         (i === 1 && currentPage > 3) ||
                         (i === totalPages - 2 && currentPage < totalPages - 3)
                       ) {
-                        // Make sure ellipsis keys are unique
                         return <span key={`ellipsis-${i === 1 ? 'start' : 'end'}`} className={styles.ellipsis}>...</span>;
                       }
                       return null;
@@ -633,132 +595,6 @@ function Quizzes({ initialQuizzes = [] }) {
                       <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
-                </div>
-              )}
-
-              {isViewModalOpen && currentQuiz && (
-                <div className={styles.modalOverlay}>
-                  <div className={styles.modalContent}>
-                    <div className={styles.modalHeader}>
-                      <h3>Quiz Details</h3>
-                      <button
-                        className={styles.closeButton}
-                        onClick={() => setIsViewModalOpen(false)}
-                      >
-                        ×
-                      </button>
-                    </div>
-                    <div className={styles.modalBody}>
-                      <div className={styles.quizDetails}>
-                        <h2 className={styles.quizDetailTitle}>{currentQuiz.course_title}</h2>
-                        {currentQuiz.description && (
-                          <p className={styles.quizDetailDescription}>{currentQuiz.description}</p>
-                        )}
-
-                        <div className={styles.quizMeta}>
-                          <div className={styles.quizMetaItem}>
-                            <span className={styles.metaLabel}>Total Questions</span>
-                            <span className={styles.metaValue}>{currentQuiz.questions?.length || 0}</span>
-                          </div>
-                          <div className={styles.quizMetaItem}>
-                            <span className={styles.metaLabel}>Issuer</span>
-                            <span className={styles.metaValue}>{currentQuiz.issuer}</span>
-                          </div>
-                          <div className={styles.quizMetaItem}>
-                            <span className={styles.metaLabel}>Duration</span>
-                            <span className={styles.metaValue}>{currentQuiz.duration}</span>
-                          </div>
-                          <div className={styles.quizMetaItem}>
-                            <span className={styles.metaLabel}>Status</span>
-                            <span className={styles.metaValue}>
-                              <span className={`${styles.statusBadge} ${styles[currentQuiz.status]}`}>
-                                {currentQuiz.status}
-                              </span>
-                            </span>
-                          </div>
-                          {currentQuiz.marks_per_question && (
-                            <div className={styles.quizMetaItem}>
-                              <span className={styles.metaLabel}>Marks Per Question</span>
-                              <span className={styles.metaValue}>{currentQuiz.marks_per_question}</span>
-                            </div>
-                          )}
-                          {currentQuiz.purpose && (
-                            <div className={styles.quizMetaItem}>
-                              <span className={styles.metaLabel}>Purpose</span>
-                              <span className={styles.metaValue}>{currentQuiz.purpose}</span>
-                            </div>
-                          )}
-                        </div>
-
-                        <h3 className={styles.questionsTitle}>Questions</h3>
-                        {currentQuiz.questions && Array.isArray(currentQuiz.questions) && currentQuiz.questions.length > 0 ? (
-                          <div className={styles.questionsList}>
-                            {currentQuiz.questions.map((question, index) => {
-                              // Ensure question is properly formatted
-                              const safeQuestion = {
-                                question: typeof question.question === 'string' ? question.question : String(question.question || ''),
-                                options: Array.isArray(question.options) ? question.options.map(opt =>
-                                  typeof opt === 'string' ? opt : String(opt || '')
-                                ) : [],
-                                answer: typeof question.answer === 'string' ? question.answer : String(question.answer || '')
-                              };
-
-                              return (
-                                <div key={`question-${index}`} className={styles.questionItem}>
-                                  <h4 className={styles.questionText}>
-                                    {index + 1}. {safeQuestion.question}
-                                  </h4>
-                                  <div className={styles.answersList}>
-                                    {safeQuestion.options.map((option, optIndex) => {
-                                      const isCorrect = safeQuestion.answer === option;
-
-                                      return (
-                                        <div
-                                          key={`option-${index}-${optIndex}`}
-                                          className={`${styles.answerItem} ${isCorrect ? styles.correctAnswer : ''}`}
-                                        >
-                                          <span className={styles.answerLetter}>
-                                            {String.fromCharCode(65 + optIndex)}
-                                          </span>
-                                          <span className={styles.answerText}>{option}</span>
-                                          {isCorrect && (
-                                            <span className={styles.correctBadge}>Correct</span>
-                                          )}
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        ) : (
-                          <p className={styles.noQuestions}>No questions added to this quiz yet.</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className={styles.modalFooter}>
-                      <button
-                        className={styles.closeModalButton}
-                        onClick={() => setIsViewModalOpen(false)}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className={styles.editQuizButton}
-                        onClick={() => {
-                          setIsViewModalOpen(false);
-                          setCurrentQuiz(currentQuiz);
-                          setIsEditModalOpen(true);
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M15.2322 5.23223L18.7677 8.76777M16.7322 3.73223C17.7085 2.75592 19.2914 2.75592 20.2677 3.73223C21.244 4.70854 21.244 6.29146 20.2677 7.26777L6.5 21.0355H3V17.4644L16.7322 3.73223Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        Edit Quiz
-                      </button>
-                    </div>
-                  </div>
                 </div>
               )}
 
@@ -778,7 +614,6 @@ function Quizzes({ initialQuizzes = [] }) {
                       <QuizForm
                         quiz={currentQuiz}
                         onSave={(updatedQuiz) => {
-
                           updateQuiz(updatedQuiz);
                         }}
                         onCancel={() => setIsEditModalOpen(false)}
@@ -788,7 +623,6 @@ function Quizzes({ initialQuizzes = [] }) {
                 </div>
               )}
 
-              {/* Create Quiz Modal */}
               {isCreateModalOpen && (
                 <div className={styles.modalOverlay}>
                   <div className={styles.modalContent}>
@@ -819,5 +653,3 @@ function Quizzes({ initialQuizzes = [] }) {
 };
 
 export default Quizzes;
-
-

@@ -1,28 +1,60 @@
 import { useState, useEffect } from "react";
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { useSigner } from "./wagmi-utils";
-import styles from "../src/styles/Attest.module.css"; // Import CSS for button styling
-import { useAccount, useSwitchChain, useChainId, } from 'wagmi';
+import styles from "../src/styles/Attest.module.css";
+import { useChainId } from 'wagmi';
 import { networks } from './config/networks';
+import { ethers } from 'ethers'; // ethers v6
 
 const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSuccess }) => {
   const signer = useSigner();
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState(null);
-  const chainId = useChainId()
+  const chainId = useChainId();
   const matchingNetwork = networks.find(network => network.chainId === chainId);
-
+  const API_KEY = process.env.NEXT_PUBLIC_BYTE_API_KEY || '';
 
   useEffect(() => {
     const fetchName = async () => {
       try {
-        if (!walletAddress) return;
+        if (!walletAddress) {
+          console.log("No wallet address provided for fetching user data");
+          setUserName("Unknown User");
+          return;
+        }
 
-        const response = await fetch(`https://byteapi-two.vercel.app/api/user/${walletAddress}`);
-        if (!response.ok) throw new Error("Failed to fetch user data");
+        // Validate and checksum the wallet address
+        let formattedAddress;
+        try {
+          // Basic format check
+          if (!walletAddress.startsWith('0x') || walletAddress.length !== 42) {
+            throw new Error('Invalid Ethereum address format');
+          }
+          // Use ethers.getAddress for checksum (for on-chain use)
+          formattedAddress = ethers.getAddress(walletAddress);
+        } catch (error) {
+          console.error("Invalid wallet address:", walletAddress, error);
+          setUserName("Unknown User");
+          return;
+        }
+
+        // Convert to lowercase for API call
+        const apiAddress = walletAddress.toLowerCase();
+
+        const response = await fetch(`https://byteapi-two.vercel.app/api/user/${apiAddress}`, {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Bytekeys": API_KEY || ''
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`API responded with status: ${response.status}`);
+        }
 
         const data = await response.json();
-        setUserName(data.user.fullname || "Unknown User");
+        setUserName(data.user?.fullname || "Unknown User");
       } catch (error) {
         console.error("Error fetching user name:", error);
         setUserName("Unknown User");
@@ -30,7 +62,7 @@ const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSucc
     };
 
     fetchName();
-  }, [walletAddress]);
+  }, [walletAddress, API_KEY]);
 
   async function sendTransaction() {
     if (!signer) {
@@ -50,7 +82,6 @@ const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSucc
 
     setLoading(true);
     try {
-
       const easContractAddress = matchingNetwork.easContractAddress;
       const eas = new EAS(easContractAddress);
       await eas.connect(signer);
@@ -60,7 +91,7 @@ const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSucc
         { name: "Name", value: userName, type: "string" },
         { name: "Course", value: course, type: "string" },
         { name: "Score", value: score || 0, type: "uint256" },
-        { name: "Issuer", value: issuer, type: "string" }, // 🔥 Issuer is now dynamic!
+        { name: "Issuer", value: issuer, type: "string" },
       ]);
 
       const tx = await eas.attest({
@@ -76,10 +107,11 @@ const AttestGeneral = ({ walletAddress, score, course, issuer, onAttestationSucc
 
       const newAttestationUID = await tx.wait();
       if (newAttestationUID) {
-        onAttestationSuccess(newAttestationUID); // Notify parent component of successful attestation
+        onAttestationSuccess(newAttestationUID);
       }
     } catch (error) {
       console.error("Attestation failed:", error);
+      alert("Attestation failed. Please try again.");
     } finally {
       setLoading(false);
     }

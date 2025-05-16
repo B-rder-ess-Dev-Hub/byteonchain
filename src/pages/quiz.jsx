@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import styles from "../styles/QuizPage.module.css";
 import Sidebar from "../components/Sidebarcons";
 import Header from "../components/Header";
-import QuizModal from "../components/quizmodal";
 import WalletWrapper from '../components/WalletWrapper';
 import { fetchData } from '../../utils/api'; 
+import { useRouter } from 'next/router';
 
 export const config = {
   unstable_runtimeJS: true
@@ -72,8 +72,6 @@ const QuizContent = () => {
   const [walletAddress, setWalletAddress] = useState(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [quizzes, setQuizzes] = useState([]); 
-  const [quizModalOpen, setQuizModalOpen] = useState(false);
-  const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -140,16 +138,6 @@ const QuizContent = () => {
     return 0;
   }) : [];
 
-  const openQuizModal = (quiz) => {
-    setSelectedQuiz(quiz);
-    setQuizModalOpen(true);
-  };
-
-  const closeQuizModal = () => {
-    setQuizModalOpen(false);
-    setSelectedQuiz(null);
-  };
-
   return (
     <div className={styles.quizPage}>
       <div className={styles.headerWrapper}>
@@ -206,22 +194,19 @@ const QuizContent = () => {
           ) : (
             <div className={styles.quizCardsContainer}>
               {sortedQuizzes.map((quiz) => (
-                <QuizCard key={quiz._id} quiz={quiz} openQuizModal={openQuizModal} />
+                <QuizCard key={quiz._id} quiz={quiz} />
               ))}
             </div>
           )}
         </div>
       </div>
-
-      {quizModalOpen && selectedQuiz && (
-        <QuizModal isOpen={quizModalOpen} onClose={closeQuizModal} quiz={selectedQuiz} />
-      )}
     </div>
   );
 };
 
-const QuizCard = ({ quiz, openQuizModal }) => {
+const QuizCard = ({ quiz }) => {
   const [participants, setParticipants] = useState("Loading...");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchParticipants = async () => {
@@ -238,8 +223,17 @@ const QuizCard = ({ quiz, openQuizModal }) => {
     fetchParticipants();
   }, [quiz.course_title]);
 
+  const navigateToQuiz = (e) => {
+    e.stopPropagation();
+    if (!quiz.course_title) {
+      console.error('Quiz course_title is undefined:', quiz);
+      return;
+    }
+    router.push(`/quiz/${encodeURIComponent(quiz.course_title)}`);
+  };
+
   return (
-    <div className={styles.quizCard} onClick={() => openQuizModal(quiz)}>
+    <div className={styles.quizCard}>
       <div className={styles.quizCardHeader}>
         <div className={styles.quizIconWrapper}>
           {Icons.quiz}
@@ -292,10 +286,7 @@ const QuizCard = ({ quiz, openQuizModal }) => {
       <button
         className={`${styles.actionButton} ${quiz.status === "active" ? styles.active : styles.inactive}`}
         disabled={quiz.status !== "active"}
-        onClick={(e) => {
-          e.stopPropagation();
-          openQuizModal(quiz);
-        }}
+        onClick={navigateToQuiz}
       >
         {quiz.status === "active" ? "Start Quiz" : "Expired"}
       </button>
