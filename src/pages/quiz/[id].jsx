@@ -82,6 +82,7 @@ const QuizPage = ({ quiz = quizData }) => {
   const [quizStarted, setQuizStarted] = useState(false);
   const [attestationUID, setAttestationUID] = useState(null);
   const [formattedWalletAddress, setFormattedWalletAddress] = useState(null);
+  const [storedWalletAddress, setStoredWalletAddress] = useState(null); // Store exact wallet address from user data
   const [isAttestationSuccess, setIsAttestationSuccess] = useState(false);
   const [quizAttempts, setQuizAttempts] = useState(0);
   const [canStartQuiz, setCanStartQuiz] = useState(false);
@@ -91,10 +92,11 @@ const QuizPage = ({ quiz = quizData }) => {
   useEffect(() => {
     console.log("Wallet connection status:", { isConnected, walletAddress });
     console.log("Formatted wallet address:", formattedWalletAddress);
+    console.log("Stored wallet address:", storedWalletAddress);
     console.log("Quiz purpose:", quiz.purpose);
     console.log("Quiz attempts:", quizAttempts);
     console.log("Can start quiz:", canStartQuiz);
-  }, [isConnected, walletAddress, formattedWalletAddress, quiz.purpose, quizAttempts, canStartQuiz]);
+  }, [isConnected, walletAddress, formattedWalletAddress, storedWalletAddress, quiz.purpose, quizAttempts, canStartQuiz]);
 
   // Validate and set wallet address when it changes
   useEffect(() => {
@@ -118,23 +120,31 @@ const QuizPage = ({ quiz = quizData }) => {
     }
   }, [walletAddress, isConnected]);
 
-  // Fetch initial quiz attempts when wallet address is available
+  // Fetch initial quiz attempts and user data when wallet address is available
   useEffect(() => {
-    const fetchQuizAttempts = async () => {
+    const fetchUserDataAndAttempts = async () => {
       if (isConnected && formattedWalletAddress) {
         try {
           const userData = await fetchData(`/api/user/${formattedWalletAddress}`);
+          const storedAddress = userData.user.wallet_address; // Use the exact case from user data
+          if (storedAddress && ethers.getAddress(storedAddress) === ethers.getAddress(walletAddress)) {
+            setStoredWalletAddress(storedAddress);
+          } else {
+            setStoredWalletAddress(walletAddress); // Fallback to walletAddress if mismatch or missing
+            console.warn("Stored wallet address mismatch or missing, using walletAddress:", walletAddress);
+          }
           const attempts = userData.user?.quiz_attempts || 0;
           setQuizAttempts(attempts);
           setCanStartQuiz(attempts < 5);
         } catch (error) {
-          console.error("Error fetching quiz attempts:", error);
+          console.error("Error fetching user data or quiz attempts:", error);
           if (error.message.includes('404')) {
             // User not found, treat as new user with 0 attempts
+            setStoredWalletAddress(walletAddress); // Use walletAddress for new user
             setQuizAttempts(0);
             setCanStartQuiz(true);
           } else {
-            setErrorMessage(`Failed to load quiz attempts: ${error.message}`);
+            setErrorMessage(`Failed to load user data or quiz attempts: ${error.message}`);
             setCanStartQuiz(false);
           }
         }
@@ -143,7 +153,7 @@ const QuizPage = ({ quiz = quizData }) => {
       }
     };
 
-    fetchQuizAttempts();
+    fetchUserDataAndAttempts();
   }, [isConnected, formattedWalletAddress]);
 
   // Timer for quiz duration
@@ -170,18 +180,17 @@ const QuizPage = ({ quiz = quizData }) => {
 
   const updateCourseIdInDatabase = async (uid) => {
     try {
-      // Use original wallet address first
-      let lowercaseWalletAddress = walletAddress.toLowerCase();
-      const userData = await fetchData(`/api/user/${lowercaseWalletAddress}`);
+      const useWalletAddress = storedWalletAddress || walletAddress; // Use stored address or fallback to walletAddress
+      const userData = await fetchData(`/api/user/${useWalletAddress}`);
       
       const prevCourseId = userData.user.course_id || {};
-  
+
       const updatedCourseId = {
         ...prevCourseId,
         [quiz.course_title]: uid
       };
-  
-      let updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${lowercaseWalletAddress}`, {
+
+      const updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${useWalletAddress}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
@@ -191,27 +200,10 @@ const QuizPage = ({ quiz = quizData }) => {
           course_id: updatedCourseId
         })
       });
-  
+
       if (!updateResponse.ok) {
         const errorText = await updateResponse.text();
-        if (updateResponse.status === 404) {
-          // Retry with original case if lowercase fails
-          updateResponse = await fetch(`https://byteapi-two.vercel.app/api/api/user/${walletAddress}`, {
-            method: "PUT",
-            headers: { 
-              "Content-Type": "application/json",
-              "Bytekeys": process.env.NEXT_PUBLIC_BYTE_API_KEY || ''
-            },
-            body: JSON.stringify({ 
-              course_id: updatedCourseId
-            })
-          });
-          if (!updateResponse.ok) {
-            throw new Error(`Failed to update course_id: ${updateResponse.status} - ${errorText || 'Unknown error'}`);
-          }
-        } else {
-          throw new Error(`Failed to update course_id: ${updateResponse.status} - ${errorText || 'Unknown error'}`);
-        }
+        throw new Error(`Failed to update course_id: ${updateResponse.status} - ${errorText || 'Unknown error'}`);
       }
       
       console.log("Course ID updated successfully!");
@@ -223,11 +215,10 @@ const QuizPage = ({ quiz = quizData }) => {
   
   const updateQuizAttempts = async (address) => {
     try {
+      const useWalletAddress = storedWalletAddress || address; // Use stored address or fallback to original address
       const newAttempts = quizAttempts + 1;
-      // Use lowercase address first
-      let lowercaseAddress = address.toLowerCase();
       
-      let response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${lowercaseAddress}`, {
+      const response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${useWalletAddress}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -239,31 +230,12 @@ const QuizPage = ({ quiz = quizData }) => {
           last_quiz_attempt: new Date().toISOString()
         })
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
-        if (response.status === 404) {
-          // Retry with original case if lowercase fails
-          response = await fetch(`https://byteapi-two.vercel.app/api/api/user/${address}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Bytekeys": process.env.NEXT_PUBLIC_BYTE_API_KEY || ''
-            },
-            body: JSON.stringify({ 
-              quiz_attempts: newAttempts,
-              last_quiz_attempt: new Date().toISOString()
-            })
-          });
-          if (!response.ok) {
-            throw new Error(`Failed to update quiz attempts: ${errorData.message || 'Unknown error'}`);
-          }
-        } else {
-          throw new Error(`Failed to update quiz attempts: ${errorData.message || 'Unknown error'}`);
-        }
+        throw new Error(`Failed to update quiz attempts: ${errorData.message || 'Unknown error'}`);
       }
-  
+
       setQuizAttempts(newAttempts); 
       setCanStartQuiz(newAttempts < 5);
       console.log("Quiz attempts updated successfully!");
