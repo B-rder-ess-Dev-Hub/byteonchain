@@ -1,49 +1,86 @@
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { connectorsForWallets } from "@rainbow-me/rainbowkit";
+'use client';
+
+import { createConfig, http } from 'wagmi';
+import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
-  rainbowWallet,
   metaMaskWallet,
   coinbaseWallet,
+  trustWallet,
+  rabbyWallet,
+  imTokenWallet,
+  oktoWallet,
+  bitgetWallet,
+  bybitWallet,
+  phantomWallet,
   walletConnectWallet,
-  trustWallet, // Import Trust Wallet connector
-} from "@rainbow-me/rainbowkit/wallets";
+  injectedWallet,
+  rainbowWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 import {
+  mainnet,
+  polygon,
+  optimism,
   arbitrum,
   base,
-  mainnet,
-  optimism,
   celo,
-  polygon,
   sepolia,
-} from "wagmi/chains";
+} from 'wagmi/chains';
 
+// Define the project ID for WalletConnect
+const projectId = '0a37ba86d44f44b153e1624cdf82a31b';
+
+// Define the supported chains
+const chains = [
+  mainnet,
+  polygon,
+  optimism,
+  arbitrum,
+  base,
+  celo,
+  ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+] as const;
+
+// Create wallet connectors
 const connectors = connectorsForWallets(
   [
     {
-      groupName: "Suggested",
+      groupName: 'Suggested',
       wallets: [
         rainbowWallet,
         metaMaskWallet,
         coinbaseWallet,
+        trustWallet,
+        rabbyWallet,
+        imTokenWallet,
+        oktoWallet,
+        bitgetWallet,
+        bybitWallet,
+        phantomWallet,
+      ],
+    },
+    {
+      groupName: 'Other',
+      wallets: [
         walletConnectWallet,
-        trustWallet, // Add Trust Wallet here
+        injectedWallet,
       ],
     },
   ],
-  { appName: "RainbowKit App", projectId: "YOUR_PROJECT_ID" }
+  { appName: 'Byteonchain', projectId }
 );
 
-export const config = getDefaultConfig({
-  appName: "RainbowKit App",
-  projectId: "YOUR_PROJECT_ID",
-  chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    celo,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [sepolia] : []),
-  ],
+// Create Wagmi config
+export const config = createConfig({
+  chains,
+  connectors,
+  transports: {
+    [mainnet.id]: http(),
+    [polygon.id]: http(),
+    [optimism.id]: http(),
+    [arbitrum.id]: http(),
+    [base.id]: http(),
+    [celo.id]: http(),
+    [sepolia.id]: http(),
+  },
   ssr: true,
 });
