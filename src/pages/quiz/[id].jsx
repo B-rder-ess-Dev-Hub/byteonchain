@@ -346,10 +346,10 @@ const QuizPage = ({ quiz = quizData }) => {
   const postToX = () => {
     const totalMarks = (quiz.marks_per_question || 1) * quiz.questions.length;
     let postText;
-    if (quiz.issuer === 'Blockchain LAUTECH ' & quiz.course_title === 'Backpack Campus Tour') {
+    if (quiz.issuer === 'Blockchain LAUTECH ' && quiz.course_title === 'Backpack Campus Tour') {
       postText = `I just completed the @Backpack_AFR "Backpack Campus Tour" Quiz by @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
-    } else if (quiz.issuer === 'Blockchain LAUTECH ' & quiz.course_title === 'Bitcoin Pizza Day') {
-      postText = `I just completed the "Bitcoin Pizza Day" Quiz by @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
+    } else if (quiz.issuer === 'Blockchain LAUTECH ' && quiz.course_title === 'Bitcoin Pizza Day ') {
+      postText = `I just completed the "Bitcoin Pizza Day" Quiz by  @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
     }else {
       postText = `I just completed the ${quiz.course_title} Quiz with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
     }
