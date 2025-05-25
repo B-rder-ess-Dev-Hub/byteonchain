@@ -83,7 +83,8 @@ const AccountContent = () => {
     "UNN",
     "Uniport",
     "Blockchain Lautech",
-    "Let's Build DAO"
+    "Let's Build DAO",
+    "Regen & ReFi",
   ];
 
   const fetchUserData = async (address) => {

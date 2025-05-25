@@ -7,8 +7,9 @@ import WalletWrapper from '../../components/WalletWrapper';
 import AttestGeneral from '../../../utils/attestUser';
 import Attest from '../../../utils/attestUserOnboarding';
 import styles from '../../styles/Quiz.module.css';
-import { useAccount } from 'wagmi';
-import { ethers } from 'ethers'; 
+import { useAccount, useChainId } from 'wagmi';
+import { ethers } from 'ethers';
+import { networks } from '../../../utils/config/networks'; 
 
 export async function getStaticPaths() {
   const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
@@ -73,6 +74,8 @@ const fetchData = async (url) => {
 const QuizPage = ({ quiz = quizData }) => {
   const router = useRouter();
   const { address: walletAddress, isConnected } = useAccount();
+  const chainId = useChainId();
+  const currentNetwork = networks.find(network => network.chainId === chainId);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -345,13 +348,14 @@ const QuizPage = ({ quiz = quizData }) => {
 
   const postToX = () => {
     const totalMarks = (quiz.marks_per_question || 1) * quiz.questions.length;
+    const attestationBaseURL = currentNetwork?.baseURL;
     let postText;
     if (quiz.issuer === 'Blockchain LAUTECH ' && quiz.course_title === 'Backpack Campus Tour') {
-      postText = `I just completed the @Backpack_AFR "Backpack Campus Tour" Quiz by @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
+      postText = `I just completed the @Backpack_AFR "Backpack Campus Tour" Quiz by @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: ${attestationBaseURL}/attestation/view/${attestationUID}`;
     } else if (quiz.issuer === 'Blockchain LAUTECH ' && quiz.course_title === 'Bitcoin Pizza Day ') {
-      postText = `I just completed the "Bitcoin Pizza Day" Quiz by  @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
+      postText = `I just completed the "Bitcoin Pizza Day" Quiz by  @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: ${attestationBaseURL}/attestation/view/${attestationUID}`;
     }else {
-      postText = `I just completed the ${quiz.course_title} Quiz with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: https://arbitrum.easscan.org/attestation/view/${attestationUID}`;
+      postText = `I just completed the ${quiz.course_title} Quiz with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: ${attestationBaseURL}/attestation/view/${attestationUID}`;
     }
 
     // Encode the text for URL
