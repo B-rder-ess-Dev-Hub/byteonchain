@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/Quizzes.module.css';
 
-
+// Draft storage key
+const QUIZ_DRAFT_KEY = 'quiz_form_draft';
 
 const QuizForm = ({ quiz, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
       course_title: quiz?.course_title || '',
       issuer: quiz?.issuer || 'Borderless Developers Programme',
       duration: quiz?.duration || '30 minutes',
+      tweet_format: quiz?.custom_tweet || '',
       total_questions: quiz?.total_questions || 0,
       marks_per_question: quiz?.marks_per_question || 1,
       questions: Array.isArray(quiz?.questions) ? quiz.questions.map(q => ({
@@ -35,10 +37,32 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
     const [issuerType, setIssuerType] = useState(
       quiz?.issuer === 'Borderless Developers Programme' ? 'default' : 'custom'
     );
+    const [hasDraft, setHasDraft] = useState(false);
   
+    // Load initial data - either from quiz prop or from draft in localStorage
     useEffect(() => {
-  
-      if (quiz?.questions && quiz.questions.length > 0) {
+      // Only try to load draft if we're creating a new quiz (not editing)
+      if (!quiz?._id && !quiz?.course_title) {
+        try {
+          const savedDraft = localStorage.getItem(QUIZ_DRAFT_KEY);
+          if (savedDraft) {
+            const parsedDraft = JSON.parse(savedDraft);
+            setFormData(parsedDraft);
+            setHasDraft(true);
+            
+            // Set issuer type based on draft
+            if (parsedDraft.issuer === 'Borderless Developers Programme') {
+              setIssuerType('default');
+              setCustomIssuer('');
+            } else {
+              setIssuerType('custom');
+              setCustomIssuer(parsedDraft.issuer);
+            }
+          }
+        } catch (error) {
+          console.error('Error loading draft:', error);
+        }
+      } else if (quiz?.questions && quiz.questions.length > 0) {
         setFormData(prev => ({
           ...prev,
           questions: quiz.questions,
@@ -47,7 +71,28 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
       }
     }, [quiz]);
   
+    // Save draft to localStorage whenever form data changes
+    useEffect(() => {
+      // Only save draft if we have some data and we're not in edit mode
+      if (!quiz?._id && (formData.course_title || formData.questions.length > 0)) {
+        try {
+          localStorage.setItem(QUIZ_DRAFT_KEY, JSON.stringify(formData));
+          setHasDraft(true);
+        } catch (error) {
+          console.error('Error saving draft:', error);
+        }
+      }
+    }, [formData, quiz]);
   
+    // Function to clear draft
+    const clearDraft = () => {
+      try {
+        localStorage.removeItem(QUIZ_DRAFT_KEY);
+        setHasDraft(false);
+      } catch (error) {
+        console.error('Error clearing draft:', error);
+      }
+    };
   
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -171,11 +216,45 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      onSave(formData);
+      // Pass the clearDraft function along with the form data
+      onSave(formData, clearDraft);
     };
   
     return (
       <form onSubmit={handleSubmit} className={styles.quizForm}>
+        {hasDraft && !quiz?._id && (
+          <div className={styles.draftNotice}>
+            <div className={styles.draftMessage}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>Draft quiz loaded from your last session</span>
+            </div>
+            <button 
+              type="button" 
+              className={styles.clearDraftButton}
+              onClick={() => {
+                clearDraft();
+                // Reset form to initial state
+                setFormData({
+                  course_title: '',
+                  issuer: 'Borderless Developers Programme',
+                  duration: '30 minutes',
+                  tweet_format: '',
+                  total_questions: 0,
+                  marks_per_question: 1,
+                  questions: [],
+                  status: 'active',
+                  purpose: 'course'
+                });
+                setIssuerType('default');
+                setCustomIssuer('');
+              }}
+            >
+              Clear Draft
+            </button>
+          </div>
+        )}
         <div className={styles.formGroup}>
           <label>Course Title</label>
           <input
@@ -238,7 +317,22 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
             placeholder="e.g., 30 minutes"
           />
         </div>
-  
+        
+        <div className={styles.formGroup}>
+          <label>Custom Tweet Format</label>
+          <textarea
+            name="tweet_format"
+            value={formData.tweet_format}
+            onChange={handleChange}
+            placeholder=" I just score a total of 20/20 in the ByteOnChain quiz by @byteonchain. Check out my attestation"
+            className={styles.tweetFormatInput}
+            rows="3"
+          />
+          <small className={styles.fieldHint}>
+            If you do not enter a quiz format, the default format will be used.
+          </small>
+        </div>
+
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label>Marks Per Question</label>
@@ -383,14 +477,14 @@ const QuizForm = ({ quiz, onSave, onCancel }) => {
                       <button
                         type="button"
                         className={styles.editQuestionButton}
-                        onClick={() => editQuestion(index)}
+                        onClick={() => editQuestion(qIndex)}
                       >
                         Edit
                       </button>
                       <button
                         type="button"
                         className={styles.removeQuestionButton}
-                        onClick={() => removeQuestion(index)}
+                        onClick={() => removeQuestion(qIndex)}
                       >
                         Remove
                       </button>

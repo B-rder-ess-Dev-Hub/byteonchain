@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAccount, useSwitchChain, useChainId } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import NetworkModal from './NetworkModal';
-import ConnectionStatusModal from './ConnectionStatusModal';
 
 const WalletWrapper = ({ children }) => {
   const { isConnected, address } = useAccount();
@@ -10,9 +9,7 @@ const WalletWrapper = ({ children }) => {
   const { switchChain } = useSwitchChain();
   const currentChainId = useChainId();
   const [showNetworkModal, setShowNetworkModal] = useState(false);
-  const [showStatusModal, setShowStatusModal] = useState(false);
   const [selectedChainId, setSelectedChainId] = useState(null);
-  const [connectionState, setConnectionState] = useState('initial');
   const [initialCheckDone, setInitialCheckDone] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
 
@@ -53,76 +50,37 @@ const WalletWrapper = ({ children }) => {
 
   useEffect(() => {
     if (pageLoaded && !initialCheckDone) {
-      setConnectionState('checking');
-      setShowStatusModal(true);
-      
       setTimeout(() => {
-        if (isConnected) {
-          setConnectionState('connected');
-        } else {
+        if (!isConnected) {
           // Detect Trust Wallet and Backpack Wallet
           const isTrustWallet = window.trustwallet && window.trustwallet.isTrustWallet;
           const isBackpackWallet = window.backpack && window.backpack.isBackpack;
-          if (isTrustWallet || isBackpackWallet) {
-            setConnectionState('disconnected');
-            setShowStatusModal(false);
-            setShowNetworkModal(true);
-          } else {
-            setConnectionState('disconnected');
-            setShowStatusModal(false);
-            setShowNetworkModal(true);
-          }
+          setShowNetworkModal(true);
         }
         setInitialCheckDone(true);
-      }, 1500); 
+      }, 500); 
     }
   }, [isConnected, initialCheckDone, pageLoaded]);
 
   useEffect(() => {
     if (initialCheckDone) {
-      if (isConnected && connectionState !== 'connected') {
-        setConnectionState('connected');
+      if (isConnected) {
         setShowNetworkModal(false);
-        setShowStatusModal(true);
-      } else if (!isConnected && connectionState !== 'disconnected') {
+      } else {
         // Detect Trust Wallet and Backpack Wallet on disconnection
         const isTrustWallet = window.trustwallet && window.trustwallet.isTrustWallet;
         const isBackpackWallet = window.backpack && window.backpack.isBackpack;
-        if (isTrustWallet || isBackpackWallet) {
-          setConnectionState('disconnected');
-          setShowStatusModal(false);
-          setShowNetworkModal(true);
-        } else {
-          setConnectionState('disconnected');
-          setShowStatusModal(false);
-          setShowNetworkModal(true);
-        }
+        setShowNetworkModal(true);
       }
     }
-  }, [isConnected, connectionState, initialCheckDone]);
+  }, [isConnected, initialCheckDone]);
 
   return (
     <>
       {children}
       
-      {/* Connection Status Modal - shows checking or success state */}
-      {showStatusModal && (
-        <ConnectionStatusModal 
-          isConnected={isConnected}
-          address={address}
-          isChecking={connectionState === 'checking'}
-          connectionState={connectionState}
-          onClose={() => {
-            setShowStatusModal(false);
-            if (!isConnected) {
-              setShowNetworkModal(true);
-            }
-          }}
-        />
-      )}
-      
       {/* Network Modal - only show if not connected */}
-      {showNetworkModal && !isConnected && !showStatusModal && (
+      {showNetworkModal && !isConnected && (
         <NetworkModal
           isOpen={true}
           onNetworkSelect={handleNetworkSelect}

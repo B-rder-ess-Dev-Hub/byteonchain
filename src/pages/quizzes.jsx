@@ -170,10 +170,17 @@ function Quizzes({ initialQuizzes = [] }) {
     };
   };
 
-  const createQuiz = async (quizData) => {
+  const createQuiz = async (quizData, clearDraft) => {
     try {
       setIsLoading(true);
       const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY;
+      
+      // Add custom_tweet field from tweet_format
+      const dataToSend = {
+        ...quizData,
+        custom_tweet: quizData.tweet_format || null
+      };
+      
       const response = await fetch('https://byteapi-two.vercel.app/api/quizzes/', {
         method: 'POST',
         headers: {
@@ -181,12 +188,17 @@ function Quizzes({ initialQuizzes = [] }) {
           'Accept': 'application/json',
           'Bytekeys': apiKey
         },
-        body: JSON.stringify(quizData)
+        body: JSON.stringify(dataToSend)
       });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || `Failed to create quiz: ${response.status}`);
+      }
+
+      // Clear the draft from localStorage after successful submission
+      if (typeof clearDraft === 'function') {
+        clearDraft();
       }
 
       fetchQuizzes();
@@ -314,7 +326,8 @@ function Quizzes({ initialQuizzes = [] }) {
           answer: q.answer
         })),
         status: quizData.status || 'active',
-        purpose: quizData.purpose || 'course'
+        purpose: quizData.purpose || 'course',
+        custom_tweet: quizData.tweet_format || null
       };
 
       const endpoint = `https://byteapi-two.vercel.app/api/quizzes/${originalCourseTitle}`;

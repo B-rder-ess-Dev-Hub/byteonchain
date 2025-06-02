@@ -350,11 +350,20 @@ const QuizPage = ({ quiz = quizData }) => {
     const totalMarks = (quiz.marks_per_question || 1) * quiz.questions.length;
     const attestationBaseURL = currentNetwork?.baseURL;
     let postText;
-    if (quiz.issuer === 'Blockchain LAUTECH ' && quiz.course_title === 'Backpack Campus Tour') {
-      postText = `I just completed the @Backpack_AFR "Backpack Campus Tour" Quiz by @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: ${attestationBaseURL}/attestation/view/${attestationUID}`;
-    } else if (quiz.issuer === 'Blockchain LAUTECH ' && quiz.course_title === 'Bitcoin Pizza Day ') {
-      postText = `I just completed the "Bitcoin Pizza Day" Quiz by  @BlockchainLaut1 with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: ${attestationBaseURL}/attestation/view/${attestationUID}`;
-    }else {
+    
+    // Use custom tweet format if available, otherwise use default format
+    if (quiz.custom_tweet) {
+      // Replace placeholders in the custom tweet format
+      postText = quiz.custom_tweet
+        .replace('{score}', score)
+        .replace('{total}', totalMarks)
+        .replace('{percentage}', Math.round((score / totalMarks) * 100))
+        .replace('{name}', user?.name || 'User')
+        .replace('{course_title}', quiz.course_title)
+        .replace('{attestation_url}', `${attestationBaseURL}/attestation/view/${attestationUID}`);
+    } 
+    // Default format
+    else {
       postText = `I just completed the ${quiz.course_title} Quiz with a score of ${score}/${totalMarks} on byteonchain.xyz by @borderlessdev\nCheck out my attestation🤓: ${attestationBaseURL}/attestation/view/${attestationUID}`;
     }
 

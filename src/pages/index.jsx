@@ -5,6 +5,8 @@ import Tupdate from '../components/Tupdate';
 import styles from '../styles/Home.module.css';
 import Header from '../components/Header';
 import WalletWrapper from '../components/WalletWrapper';
+import CipherSessionModal from '../components/CipherSessionModal';
+import { useState } from 'react';
 
 export const config = {
   unstable_runtimeJS: true
@@ -17,6 +19,11 @@ export async function getStaticProps() {
 }
 
 const HomeContent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className={styles.pageContainer}>
       <Header />
@@ -28,6 +35,20 @@ const HomeContent = () => {
           <div className={styles.content}>
             <div className={styles.middleSection}>
               <Recent />
+              
+              {/* July Cipher Session Signup Banner */}
+              <div className={styles.cipherSessionBanner}>
+                <div className={styles.shimmer}></div>
+                <h2>July Cipher Session</h2>
+                
+                <button 
+                  className={styles.cipherSessionButton}
+                  onClick={openModal}
+                >
+                  Register Now
+                </button>
+              </div>
+              
               <Tupdate />
             </div>
             <div className={styles.calendarSection}>
@@ -36,6 +57,9 @@ const HomeContent = () => {
           </div>
         </div>
       </div>
+      
+      {/* Cipher Session Modal */}
+      <CipherSessionModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };

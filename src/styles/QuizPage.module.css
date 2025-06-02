@@ -326,6 +326,7 @@
 
 /* Neomorphic Quiz Card */
 .quizCard {
+  position: relative;
   background: #ffffff;
   border-radius: 16px;
   padding: 1.5rem;
@@ -334,19 +335,67 @@
     -8px -8px 16px rgba(255, 255, 255, 0.8);
   transition: all 0.3s ease;
   cursor: pointer;
+  overflow: hidden;
 }
 
-.quizCard:hover {
+.quizCard:hover, .hovered {
   transform: translateY(-5px);
   box-shadow: 
     10px 10px 20px rgba(174, 174, 192, 0.5),
     -10px -10px 20px rgba(255, 255, 255, 0.9);
 }
 
+.quizCard:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.quizCard:hover:before, .hovered:before {
+  opacity: 1;
+}
+
+.quizStatusBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+
+.activeBadge, .expiredBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 
+    2px 2px 4px rgba(174, 174, 192, 0.3),
+    -2px -2px 4px rgba(255, 255, 255, 0.7);
+}
+
+.activeBadge {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  color: white;
+}
+
+.expiredBadge {
+  background: #f3f4f6;
+  color: #9CA3AF;
+}
+
 .quizCardHeader {
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .quizIconWrapper {
@@ -356,9 +405,12 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #f3f4f6;
+  background: linear-gradient(135deg, #f3f4f6, #ffffff);
   margin-right: 1rem;
   color: #FBBF24;
+  box-shadow: 
+    2px 2px 5px rgba(174, 174, 192, 0.3),
+    -2px -2px 5px rgba(255, 255, 255, 0.7);
 }
 
 .quizTitle {
@@ -374,6 +426,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .detailItem {
@@ -388,9 +442,12 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #f3f4f6;
+  background: linear-gradient(135deg, #f3f4f6, #ffffff);
   margin-right: 0.75rem;
   color: #4B5563;
+  box-shadow: 
+    2px 2px 4px rgba(174, 174, 192, 0.2),
+    -2px -2px 4px rgba(255, 255, 255, 0.6);
 }
 
 .detailContent {
@@ -410,6 +467,11 @@
   color: #1F2937;
 }
 
+.cardFooter {
+  position: relative;
+  z-index: 2;
+}
+
 .actionButton {
   width: 100%;
   padding: 0.75rem;
@@ -418,6 +480,9 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .active {
@@ -444,6 +509,132 @@
     inset -2px -2px 5px rgba(255, 255, 255, 0.7);
 }
 
+.arrowIcon {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.active:hover .arrowIcon {
+  transform: translateX(3px);
+}
+
+/* Quiz Controls */
+.quizControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Tabs */
+.tabsContainer {
+  display: flex;
+  background: #f0f2f5;
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 
+    inset 2px 2px 5px rgba(174, 174, 192, 0.2),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+}
+
+.tabButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activeTab {
+  background: #ffffff;
+  color: #1F2937;
+  box-shadow: 
+    4px 4px 8px rgba(174, 174, 192, 0.4),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Neumorphic Search Bar */
+.searchBarContainer {
+  flex: 1;
+  max-width: 500px;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background: #f0f2f5;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  box-shadow: 
+    inset 2px 2px 5px rgba(174, 174, 192, 0.2),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+.searchBar:focus-within {
+  box-shadow: 
+    inset 4px 4px 8px rgba(174, 174, 192, 0.3),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+}
+
+.searchIcon {
+  color: #9CA3AF;
+  margin-right: 0.75rem;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #4B5563;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: #9CA3AF;
+}
+
+.clearButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: #e5e7eb;
+  color: #6B7280;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.clearButton:hover {
+  background: #d1d5db;
+  color: #4B5563;
+}
+
+/* No Results State */
+.noQuizzesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 
+    8px 8px 16px rgba(174, 174, 192, 0.4),
+    -8px -8px 16px rgba(255, 255, 255, 0.8);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .mainContent {
@@ -457,5 +648,15 @@
   
   .banner {
     padding: 1.5rem;
+  }
+  
+  .quizControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .searchBarContainer {
+    max-width: 100%;
+    margin-top: 1rem;
   }
 }

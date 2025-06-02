@@ -73,6 +73,8 @@ const QuizContent = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [quizzes, setQuizzes] = useState([]); 
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('active');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetchWalletAddress();
@@ -132,10 +134,16 @@ const QuizContent = () => {
     }
   };
 
-  const sortedQuizzes = Array.isArray(quizzes) ? [...quizzes].sort((a, b) => {
-    if (a.status === "active" && b.status !== "active") return -1;
-    if (a.status !== "active" && b.status === "active") return 1;
-    return 0;
+  const filteredQuizzes = Array.isArray(quizzes) ? quizzes.filter(quiz => {
+    // Filter by active tab
+    const statusMatch = activeTab === 'active' ? quiz.status === 'active' : quiz.status !== 'active';
+    
+    // Filter by search query
+    const searchMatch = searchQuery === '' || 
+      (quiz.course_title && quiz.course_title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (quiz.issuer && quiz.issuer.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    return statusMatch && searchMatch;
   }) : [];
 
   return (
@@ -175,25 +183,65 @@ const QuizContent = () => {
               )}
 
               <div className={styles.bannerFooter}>
-                <div className={styles.targetIconWrapper}>{Icons.target}</div>
-                <h2 className={styles.bannerSubtitle}>Select a quiz to begin!</h2>
-              </div>
-            </div>
+            <div className={styles.targetIconWrapper}>{Icons.target}</div>
+            <h2 className={styles.bannerSubtitle}>Select a quiz to begin!</h2>
           </div>
+        </div>
+      </div>
 
-          {loading ? (
+      <div className={styles.quizControls}>
+        <div className={styles.tabsContainer}>
+          <button 
+            className={`${styles.tabButton} ${activeTab === 'active' ? styles.activeTab : ''}`}
+            onClick={() => setActiveTab('active')}
+          >
+            Active
+          </button>
+          <button 
+            className={`${styles.tabButton} ${activeTab === 'expired' ? styles.activeTab : ''}`}
+            onClick={() => setActiveTab('expired')}
+          >
+            Expired
+          </button>
+        </div>
+
+        <div className={styles.searchBarContainer}>
+          <div className={styles.searchBar}>
+            <svg className={styles.searchIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <input 
+              type="text" 
+              placeholder="Search quizzes..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+            />
+            {searchQuery && (
+              <button 
+                className={styles.clearButton}
+                onClick={() => setSearchQuery('')}
+              >
+                ×
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {loading ? (
             <div className={styles.loadingContainer}>
               <div className={styles.loadingSpinner}></div>
               <p className={styles.loadingText}>Loading quizzes...</p>
             </div>
-          ) : quizzes.length === 0 ? (
+          ) : filteredQuizzes.length === 0 ? (
             <div className={styles.noQuizzesContainer}>
               <div className={styles.noQuizzesIcon}>{Icons.question}</div>
               <p className={styles.noQuizzesText}>No quizzes available at the moment.</p>
             </div>
           ) : (
             <div className={styles.quizCardsContainer}>
-              {sortedQuizzes.map((quiz) => (
+              {filteredQuizzes.map((quiz) => (
                 <QuizCard key={quiz._id} quiz={quiz} />
               ))}
             </div>
@@ -206,6 +254,7 @@ const QuizContent = () => {
 
 const QuizCard = ({ quiz }) => {
   const [participants, setParticipants] = useState("Loading...");
+  const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -233,7 +282,17 @@ const QuizCard = ({ quiz }) => {
   };
 
   return (
-    <div className={styles.quizCard}>
+    <div 
+      className={`${styles.quizCard} ${isHovered ? styles.hovered : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* <div className={styles.quizStatusBadge}>
+        <span className={quiz.status === "active" ? styles.activeBadge : styles.expiredBadge}>
+          {quiz.status === "active" ? "Active" : "Expired"}
+        </span>
+      </div> */}
+
       <div className={styles.quizCardHeader}>
         <div className={styles.quizIconWrapper}>
           {Icons.quiz}
@@ -283,13 +342,24 @@ const QuizCard = ({ quiz }) => {
         </div>
       </div>
 
-      <button
-        className={`${styles.actionButton} ${quiz.status === "active" ? styles.active : styles.inactive}`}
-        disabled={quiz.status !== "active"}
-        onClick={navigateToQuiz}
-      >
-        {quiz.status === "active" ? "Start Quiz" : "Expired"}
-      </button>
+      <div className={styles.cardFooter}>
+        <button
+          className={`${styles.actionButton} ${quiz.status === "active" ? styles.active : styles.inactive}`}
+          disabled={quiz.status !== "active"}
+          onClick={navigateToQuiz}
+        >
+          {quiz.status === "active" ? (
+            <>
+              <span>Start Quiz</span>
+              <svg className={styles.arrowIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </>
+          ) : (
+            "Expired"
+          )}
+        </button>
+      </div>
     </div>
   );
 };
