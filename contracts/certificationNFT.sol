@@ -1,39 +1,69 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.30;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract CertificationNFT is ERC721, Ownable {
+contract CertificationNFT is Initializable, ERC721Upgradeable, Ownable2StepUpgradeable {
+    using Strings for uint256;
+
     uint256 private _nextTokenId;
     string private _baseTokenURI;
-    mapping(uint256 => string) private _certificateDetails;
+    mapping(uint256 tokenId => string certificateData) private _certificateDetails;
 
-    constructor(
+    // 🔊 Events for tracking
+    event CertificateMinted(address indexed to, uint256 indexed tokenId, string certificateData);
+    event BaseURIUpdated(string newBaseURI);
+
+    /// @notice Initializes the contract with name, symbol, base URI and owner
+    /// @param name Name of the ERC721 token
+    /// @param symbol Symbol of the ERC721 token
+    /// @param baseURI Base URI for token metadata
+    /// @param owner Address to be assigned as the contract owner
+    function initialize(
         string memory name,
         string memory symbol,
-        string memory baseURI
-    ) ERC721(name, symbol) Ownable(msg.sender) {
+        string memory baseURI,
+        address owner
+    ) public initializer {
+        require(owner != address(0), "Owner cannot be zero address");
+        __ERC721_init(name, symbol);
+        __Ownable_init(owner);
         _baseTokenURI = baseURI;
     }
 
-    function safeMint(address to, string memory certificateData) public onlyOwner {
+    /// @notice Mints a new certificate NFT to the specified address
+    /// @param certificateData Certificate metadata
+    function safeMint(string memory certificateData) public {
         uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
-        _certificateDetails[tokenId] = certificateData;
+        _certificateDetails[tokenId] = certificateData; // ✅ Set state before external call
+        _safeMint(msg.sender, tokenId);
+        emit CertificateMinted(msg.sender, tokenId, certificateData);
     }
 
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        _requireOwned(tokenId);
-        return string(abi.encodePacked(_baseTokenURI, Strings.toString(tokenId)));
+    /// @notice Returns the token metadata URI
+    /// @param _tokenId The token ID
+    function tokenURI(uint256 _tokenId) public view override returns (string memory) {
+        _requireOwned(_tokenId);
+        string memory tokenId = getCertificateDetails(_tokenId);
+        return string.concat(_baseTokenURI, tokenId);
     }
 
+    /// @notice Returns the certificate data associated with a token ID
+    /// @param tokenId The token ID
     function getCertificateDetails(uint256 tokenId) public view returns (string memory) {
         _requireOwned(tokenId);
         return _certificateDetails[tokenId];
     }
 
+    /// @notice Updates the base URI (only if different)
+    /// @param newBaseURI The new base URI to use
     function updateBaseURI(string memory newBaseURI) public onlyOwner {
-        _baseTokenURI = newBaseURI;
+        if (keccak256(bytes(_baseTokenURI)) != keccak256(bytes(newBaseURI))) {
+            _baseTokenURI = newBaseURI;
+            emit BaseURIUpdated(newBaseURI);
+        }
     }
 }

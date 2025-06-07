@@ -1,38 +1,61 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.30;
 
+import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
+import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 import "./certificationNFT.sol";
 
+/// @title Certification Factory
+/// @notice Deploys upgradeable CertificationNFT contracts via Transparent Proxies
 contract CertificationFactory {
     address[] public deployedCertifications;
-    
+    address public immutable nftImplementation;
+    ProxyAdmin public immutable proxyAdmin;
+
+    /// @notice Emitted when a new Certification NFT contract is deployed
     event CertificationCreated(
-        address indexed certificationAddress,
+        address indexed certificationProxy,
         string name,
         string symbol
     );
 
+    /// @notice Deploys the NFT logic contract and a ProxyAdmin to manage upgrades
+    constructor() {
+        CertificationNFT impl = new CertificationNFT();
+        nftImplementation = address(impl);
+        proxyAdmin = new ProxyAdmin(msg.sender);
+    }
+
+    /// @notice Deploys a new upgradeable CertificationNFT proxy
+    /// @param name Token name
+    /// @param symbol Token symbol
+    /// @param baseURI Base URI for metadata
     function createCertification(
         string memory name,
         string memory symbol,
         string memory baseURI
-    ) public returns (address) {
-        CertificationNFT newCertification = new CertificationNFT(
+    ) external returns (address) {
+        bytes memory initData = abi.encodeWithSignature(
+            "initialize(string,string,string,address)",
             name,
             symbol,
-            baseURI
+            baseURI,
+            msg.sender
         );
-        
-        deployedCertifications.push(address(newCertification));
-        emit CertificationCreated(address(newCertification), name, symbol);
-        
-        // Transfer ownership to the creator
-        newCertification.transferOwnership(msg.sender);
-        
-        return address(newCertification);
+
+        TransparentUpgradeableProxy proxy = new TransparentUpgradeableProxy(
+            nftImplementation,
+            address(proxyAdmin),
+            initData
+        );
+
+        deployedCertifications.push(address(proxy));
+        emit CertificationCreated(address(proxy), name, symbol);
+        return address(proxy);
     }
 
-    function getDeployedCertifications() public view returns (address[] memory) {
+    /// @notice Returns all deployed certification proxy addresses
+    function getDeployedCertifications() external view returns (address[] memory) {
         return deployedCertifications;
     }
 }

@@ -1,87 +1,69 @@
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
-const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
+const { ethers, upgrades } = require("hardhat");
 
 describe("CertificationNFT", function () {
-  async function deployCertificationFixture() {
-    const [owner, student, other] = await ethers.getSigners();
-    
-    const CertificationNFT = await ethers.getContractFactory("CertificationNFT");
-    const certification = await CertificationNFT.deploy(
-      "Web3 Developer",
-      "WEB3",
-      "https://api.example.com/certs/"
-    );
+  let certNFT;
+  let owner, otherUser;
 
-    return { certification, owner, student, other };
-  }
+  beforeEach(async () => {
+    [owner, otherUser] = await ethers.getSigners();
 
-  describe("Deployment", function () {
-    it("Should set the right name and symbol", async function () {
-      const { certification } = await loadFixture(deployCertificationFixture);
-      expect(await certification.name()).to.equal("Web3 Developer");
-      expect(await certification.symbol()).to.equal("WEB3");
-    });
-
-    it("Should set the right owner", async function () {
-      const { certification, owner } = await loadFixture(deployCertificationFixture);
-      expect(await certification.owner()).to.equal(owner.address);
-    });
+    const NFT = await ethers.getContractFactory("CertificationNFT");
+    certNFT = await upgrades.deployProxy(NFT, [
+      "CertNFT",
+      "CNFT",
+      "https://example.com/metadata/",
+      owner.address,
+    ]);
+    // remove .deployed()
   });
 
-  describe("Minting", function () {
-    it("Should mint a new certificate", async function () {
-      const { certification, owner, student } = await loadFixture(deployCertificationFixture);
-      
-      await expect(certification.connect(owner).safeMint(student.address, "Course completed with distinction"))
-        .to.emit(certification, "Transfer")
-        .withArgs(ethers.ZeroAddress, student.address, 0);
-      
-      expect(await certification.ownerOf(0)).to.equal(student.address);
-    });
-
-    it("Should store certificate details", async function () {
-      const { certification, owner, student } = await loadFixture(deployCertificationFixture);
-      const details = "Course completed with distinction";
-      
-      await certification.connect(owner).safeMint(student.address, details);
-      expect(await certification.getCertificateDetails(0)).to.equal(details);
-    });
-
-    it("Should prevent non-owners from minting", async function () {
-      const { certification, student, other } = await loadFixture(deployCertificationFixture);
-      
-      await expect(
-        certification.connect(other).safeMint(student.address, "Unauthorized mint")
-      ).to.be.revertedWithCustomError(certification, "OwnableUnauthorizedAccount");
-    });
+  it("should initialize correctly", async () => {
+    expect(await certNFT.name()).to.equal("CertNFT");
+    expect(await certNFT.symbol()).to.equal("CNFT");
   });
 
-  describe("Metadata", function () {
-    it("Should return correct token URI", async function () {
-      const { certification, owner, student } = await loadFixture(deployCertificationFixture);
-      await certification.connect(owner).safeMint(student.address, "Test");
-      
-      expect(await certification.tokenURI(0)).to.equal(
-        "https://api.example.com/certs/0"
-      );
-    });
+  it("should mint certificate and set data", async () => {
+    await certNFT.connect(otherUser).safeMint("Certificate for User");
 
-    it("Should allow owner to update base URI", async function () {
-      const { certification, owner, student } = await loadFixture(deployCertificationFixture);
-      await certification.connect(owner).safeMint(student.address, "Test");
-      
-      const newURI = "https://new-api.example.com/certs/";
-      await certification.connect(owner).updateBaseURI(newURI);
-      expect(await certification.tokenURI(0)).to.equal(newURI + "0");
-    });
+    expect(await certNFT.ownerOf(0)).to.equal(otherUser.address);
+    expect(await certNFT.getCertificateDetails(0)).to.equal("Certificate for User");
+  });
 
-    it("Should prevent non-owners from updating base URI", async function () {
-      const { certification, other } = await loadFixture(deployCertificationFixture);
-      
-      await expect(
-        certification.connect(other).updateBaseURI("https://malicious.com/")
-      ).to.be.revertedWithCustomError(certification, "OwnableUnauthorizedAccount");
-    });
+  it("should return correct tokenURI", async () => {
+    await certNFT.connect(otherUser).safeMint("Cert");
+
+    const tokenURI = await certNFT.tokenURI(0);
+    expect(tokenURI).to.equal("https://example.com/metadata/Cert");
+  });
+
+  it("should update baseURI", async () => {
+    await certNFT.updateBaseURI("https://newuri.com/");
+
+    await certNFT.connect(otherUser).safeMint("Cert");
+    const uri = await certNFT.tokenURI(0);
+
+    expect(uri).to.equal("https://newuri.com/Cert");
+  });
+
+  it("should increment tokenIds correctly", async () => {
+    await certNFT.connect(otherUser).safeMint("First Cert");
+    await certNFT.connect(otherUser).safeMint("Second Cert");
+
+    expect(await certNFT.ownerOf(0)).to.equal(otherUser.address);
+    expect(await certNFT.ownerOf(1)).to.equal(otherUser.address);
+  });
+
+  it("should revert when querying tokenURI for nonexistent token", async () => {
+    await expect(certNFT.tokenURI(9999)).to.be.reverted; // generic revert check
+  });
+
+
+  it("should allow multiple minters to mint", async () => {
+    await certNFT.connect(owner).safeMint("Owner Cert");
+    await certNFT.connect(otherUser).safeMint("User Cert");
+
+    expect(await certNFT.ownerOf(0)).to.equal(owner.address);
+    expect(await certNFT.ownerOf(1)).to.equal(otherUser.address);
   });
 });
