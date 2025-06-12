@@ -15,8 +15,8 @@ contract CertificationFactory {
     /// @notice Emitted when a new Certification NFT contract is deployed
     event CertificationCreated(
         address indexed certificationProxy,
-        string name,
-        string symbol
+        string indexed name,
+        string indexed symbol
     );
 
     /// @notice Deploys the NFT logic contract and a ProxyAdmin to manage upgrades

@@ -31,6 +31,15 @@ module.exports = {
       },
     },
 
+    //Sepolia
+    sepolia: {
+      url: "https://sepolia.drpc.org",
+      chainId: 11155111,
+      accounts: [process.env.PRIVATE_KEY],
+      gas: "auto",
+      gasPrice: "auto",
+    },
+
     // Celo Networks
     celo: {
       url: "https://forno.celo.org",
@@ -39,7 +48,7 @@ module.exports = {
       gas: "auto",
       gasPrice: "auto",
     },
-    alfajores: {
+    celo_testnet: {
       url: "https://alfajores-forno.celo-testnet.org",
       chainId: 44787,
       accounts: [process.env.PRIVATE_KEY],
@@ -80,6 +89,12 @@ module.exports = {
     baseSepolia: {
       url: "https://sepolia.base.org",
       chainId: 84532,
+      accounts: [process.env.PRIVATE_KEY],
+    },
+
+    holesky: {
+      url: "https://1rpc.io/holesky",
+      chainId: 17000,
       accounts: [process.env.PRIVATE_KEY],
     },
   },

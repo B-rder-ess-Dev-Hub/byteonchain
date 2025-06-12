@@ -12,10 +12,16 @@ contract CertificationNFT is Initializable, ERC721Upgradeable, Ownable2StepUpgra
     uint256 private _nextTokenId;
     string private _baseTokenURI;
     mapping(uint256 tokenId => string certificateData) private _certificateDetails;
+    mapping(address owner => bool hasMinted) private _owners;
 
     // 🔊 Events for tracking
     event CertificateMinted(address indexed to, uint256 indexed tokenId, string certificateData);
     event BaseURIUpdated(string newBaseURI);
+
+    modifier notMinted() {
+        require(_owners[msg.sender] == false, "User can only mint Once");
+        _;
+    }
 
     /// @notice Initializes the contract with name, symbol, base URI and owner
     /// @param name Name of the ERC721 token
@@ -36,9 +42,10 @@ contract CertificationNFT is Initializable, ERC721Upgradeable, Ownable2StepUpgra
 
     /// @notice Mints a new certificate NFT to the specified address
     /// @param certificateData Certificate metadata
-    function safeMint(string memory certificateData) public {
+    function safeMint(string memory certificateData) public notMinted{
         uint256 tokenId = _nextTokenId++;
         _certificateDetails[tokenId] = certificateData; // ✅ Set state before external call
+        _owners[msg.sender] = true;
         _safeMint(msg.sender, tokenId);
         emit CertificateMinted(msg.sender, tokenId, certificateData);
     }

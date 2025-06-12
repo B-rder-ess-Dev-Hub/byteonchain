@@ -5,6 +5,7 @@ import arbitrumLogo from '../../public/arbitrum.png';
 import optimismLogo from '../../public/optimisim.png';
 import celoLogo from '../../public/celo.png';
 import baseLogo from '../../public/base.svg';
+import ethLogo from '../../public/ethereum.png';
 
 const NetworkModal = ({ isOpen, onNetworkSelect }) => {
   const [switchingNetwork, setSwitchingNetwork] = useState(null);
@@ -68,6 +69,20 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
         decimals: 18
       },
       blockExplorerUrl: 'https://explorer.celo.org',
+      isActive: true
+    },
+    { 
+      id: 'sepolia',
+      name: 'Sepolia',
+      chainId: 11155111,
+      logo: ethLogo,
+      rpcUrl: 'https://sepolia.drpc.org',
+      nativeCurrency: {
+        name: 'Sepolia',
+        symbol: 'ETH',
+        decimals: 18
+      },
+      blockExplorerUrl: '',
       isActive: true
     },
   ];

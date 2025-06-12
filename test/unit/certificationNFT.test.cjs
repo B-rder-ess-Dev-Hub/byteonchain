@@ -47,10 +47,10 @@ describe("CertificationNFT", function () {
   });
 
   it("should increment tokenIds correctly", async () => {
-    await certNFT.connect(otherUser).safeMint("First Cert");
+    await certNFT.connect(owner).safeMint("First Cert");
     await certNFT.connect(otherUser).safeMint("Second Cert");
 
-    expect(await certNFT.ownerOf(0)).to.equal(otherUser.address);
+    expect(await certNFT.ownerOf(0)).to.equal(owner.address);
     expect(await certNFT.ownerOf(1)).to.equal(otherUser.address);
   });
 

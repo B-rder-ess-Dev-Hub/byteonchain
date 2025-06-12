@@ -24,6 +24,7 @@ import {
   base,
   celo,
   sepolia,
+  holesky,
 } from 'wagmi/chains';
 
 // Define the project ID for WalletConnect
@@ -37,6 +38,7 @@ const chains = [
   arbitrum,
   base,
   celo,
+  holesky,
   ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
 ] as const;
 
@@ -81,6 +83,7 @@ export const config = createConfig({
     [base.id]: http(),
     [celo.id]: http(),
     [sepolia.id]: http(),
+    [holesky.id]: http()
   },
   ssr: true,
 });

@@ -1253,9 +1253,9 @@
       "contracts/certificationNFT.sol:CertificationNFT": {
         "src": "contracts/certificationNFT.sol:9",
         "version": {
-          "withMetadata": "d5f3a09132f01ae278e1763babcfd3f9f1c7fe8e7d31b382d912f53cf087e8d8",
-          "withoutMetadata": "a7f9377290ed195a4d4e862aa22b53075d50b5bea8d21d6d351f0b277770ab6b",
-          "linkedWithoutMetadata": "a7f9377290ed195a4d4e862aa22b53075d50b5bea8d21d6d351f0b277770ab6b"
+          "withMetadata": "7ec69d931fd1f0781f0e608577a15c0ba3e8fa3de537512e1e2576f6b75c2df5",
+          "withoutMetadata": "6a7d39a5bc1845ed1a9dcd25e5cce4af0523d2988d36c0848983c50e2dabdc16",
+          "linkedWithoutMetadata": "6a7d39a5bc1845ed1a9dcd25e5cce4af0523d2988d36c0848983c50e2dabdc16"
         },
         "inherit": [
           "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol:Ownable2StepUpgradeable",
@@ -1306,6 +1306,14 @@
               "type": "t_mapping(t_uint256,t_string_storage)",
               "contract": "CertificationNFT",
               "src": "contracts/certificationNFT.sol:14"
+            },
+            {
+              "label": "_owners",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CertificationNFT",
+              "src": "contracts/certificationNFT.sol:15"
             }
           ],
           "types": {
@@ -1532,9 +1540,9 @@
       "contracts/contractFactory.sol:CertificationFactory": {
         "src": "contracts/contractFactory.sol:10",
         "version": {
-          "withMetadata": "da3bfd4bcd385f93948d3cecf0637fc85938c1e6a4f5a9da78bcb8599da8eae5",
-          "withoutMetadata": "4736edda82946c46be0fc7f31638212e3bb636872014d6fbde3e55933f44c1cc",
-          "linkedWithoutMetadata": "4736edda82946c46be0fc7f31638212e3bb636872014d6fbde3e55933f44c1cc"
+          "withMetadata": "5b7337544a15935e612d98c643e444f71cae00e0692e50240f608180401efb28",
+          "withoutMetadata": "c29a7f2c2dac0eb98ad9bf42454955903df50767ba20ca962be0850e665613dc",
+          "linkedWithoutMetadata": "c29a7f2c2dac0eb98ad9bf42454955903df50767ba20ca962be0850e665613dc"
         },
         "inherit": [],
         "libraries": [],

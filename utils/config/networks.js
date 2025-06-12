@@ -35,5 +35,14 @@ export const networks = [
         OnboardingSchemaUID: "0xadc627b3baae8680c1e7d1f080ea5e50738e7efcc93e95a35269e6841116fffe",
         courseSchemaUID: "0x146d8e99fb116e3bf7d24b5596e50893d3a5fe12d072a3469b1198c79df9103d",
         baseURL : "https://optimism.easscan.org",
+    },
+    {
+        id: 'holesky',
+        name: 'Holesky',
+        chainId: 170000,
+        easContractAddress: "",
+        OnboardingSchemaUID: "",
+        courseSchemaUID: "",
+        baseURL : "",
     }
   ];
