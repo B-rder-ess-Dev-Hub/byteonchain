@@ -325,11 +325,10 @@ const AccountContent = () => {
                       onChange={handleFormChange} 
                       required
                     >
-                      <option value="">Select Course/Purpose</option>
+                      <option value="">Select Interest</option>
                       <option value="ui-ux-design">UI/UX Design</option>
                       <option value="web-design-development">Web Design and Development</option>
                       <option value="cyber-security">Cyber Security</option>
-                      <option value="data-analysis">Data Analysis</option>
                       <option value="solidity">Solidity</option>
                       <option value="arbitrum-stylus">Arbitrum Stylus</option>
                       <option disabled>──────────</option>

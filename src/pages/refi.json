@@ -1,0 +1,115 @@
+{
+    "course_title": "ReFi/Regen Bootcamp",
+    "issuer": "Borderless Developers Programme",
+    "duration": "20 minutes",
+    "total_questions": 21,
+    "status": "active",
+    "questions": [
+      {
+        "question": "Who are the sponsors for the ReFi/Regen Bootcamp?",
+        "options": ["B<>rder/ess, CELO, Regen Cordinations, Bitsave Protocol", "Octant, Gitcoin, B<>rder/ess, Bitsave", "GG23, Public Nouns, Bitsave, CELO", "Treegens, GG23, CELO, B<>rder/ess"],
+        "answer": "B<>rder/ess, CELO, Regen Cordinations, Bitsave Protocol"
+      },
+      {
+        "question": "In Day 1, during the \"Blockchain Tech & Web3 Industry class\", what was referred to as the Onchain Tech Mindset?",
+        "options": ["Commerce=Crypto=Communities", "Blockchain=Money, Crypto=Airdrops, Web3=Communities", "Blockchain=Tech, Crypto=Commerce, Web3=Industry", "Web3=People, Blockchain=Airdrops, Crypto=Commerce"],
+        "answer": "Blockchain=Tech, Crypto=Commerce, Web3=Industry"
+      },
+      {
+        "question": "What are the 3 fundamental things required for onchain commerce?",
+        "options": ["Crypto Tokens, Centralized Exchanges, Decentralized Exchanges", "Airdrops, Trading, Degen", "OTC, P2P, Onramp/Offramp", "Wallets, Smart Contracts & dApps, Tokens"],
+        "answer": "Wallets, Smart Contracts & dApps, Tokens"
+      },
+      {
+        "question": "What are the 3 C's of Money and Finance in web3?",
+        "options": ["CEX's, Circle Stable coins, Celo", "Community Airdrops, Collab Trades, Command Trades", "Community, Collaboration, Commerce", "Celo Public Goods, Centralized Exchanges, Celo Stable coins"],
+        "answer": "Community, Collaboration, Commerce"
+      },
+      {
+        "question": "According to Favour Ekeleme (Pluto Dev) what type of web3 Jobs are available?",
+        "options": ["Community roles & Industry Roles", "Creator Roles & Technical Roles", "Technical Roles & Non-Technical Roles", "Social Roles & Developer Roles"],
+        "answer": "Technical Roles & Non-Technical Roles"
+      },
+      {
+        "question": "What roles are advisable for a newbie wanting to get a web3 job because it helps you learn in-demand skills and give you access?",
+        "options": ["Ambassador roles", "Product Management roles", "Developer roles", "Technical Roles"],
+        "answer": "Ambassador roles"
+      },
+      {
+        "question": "Which statement was NOT made during the Job Opportunities in Regen/Refi X-Space",
+        "options": ["You have to learn the skill", "You have to pursue the skill", "You have to learn how to offer the skill", "You have to learn how to value the skill"],
+        "answer": "You have to pursue the skill"
+      },
+      {
+        "question": "Which project was used as a case study for ecological regeneration?",
+        "options": ["QACC", "ByteOnchain", "Kokonut Network", "DAO Lens"],
+        "answer": "Kokonut Network"
+      },
+      {
+        "question": "Which of the following statements best describes Regeneration Finance in web3?",
+        "options": ["Regeneration is about scaling centralised platforms for efficiency and speed.", "Regeneration is focused on getting rich quickly through speculative crypto trading.", "The process of restoring, or improving ecosystems, communities, and economies using collaborative and sustainable approaches with Onchain tools to track or reward impact.", "Regeneration means using AI to automate traditional financial systems."],
+        "answer": "The process of restoring, or improving ecosystems, communities, and economies using collaborative and sustainable approaches with Onchain tools to track or reward impact."
+      },
+      {
+        "question": "Which of these statements was NOT mentioned by Wasabi during his session?",
+        "options": ["ReFI Uses blockchain & smart contracts for transparent impact funding, measurement, and reporting.", "ReFi Rewards real-world regeneration (carbon capture & reduction, biodiversity)", "ReFi Aligns financial returns with ecological outcomes & Enables community governance & fair value capture", "ReFi is a public good that seeks to create impact for web3 ecosystems and real life ecosystems."],
+        "answer": "ReFi is a public good that seeks to create impact for web3 ecosystems and real life ecosystems."
+      },
+      {
+        "question": "During the Who is a Regen X-space, what did KarlaGod describe a Regen as?",
+        "options": ["One who works a Regen job", "One who is a Regen Community Mod", "One who provides value in and contributes to the ReFi ecosystem", "One who is a Public Good"],
+        "answer": "One who provides value in and contributes to the ReFi ecosystem"
+      },
+      {
+        "question": "Complete this statement “Every Regen must have an _________”",
+        "options": ["Honest portfolio Skillset", "Impact Plan", "Ecological Mindset", "Ecosystem strategy"],
+        "answer": "Impact Plan"
+      },
+      {
+        "question": "Pick the odd one out",
+        "options": ["Economic/Social impact", "Climate/Energy Impact", "Ecological/Environmental Impact", "Personal/Individual Impact"],
+        "answer": "Personal/Individual Impact"
+      },
+      {
+        "question": "How did Christwin connect leadership to the development of Metering Protocol?",
+        "options": ["He focused solely on marketing hype", "He emphasized vision, consistent action, and building in public with community involvement", "He hired a large centralized team from the start", "He relied on anonymous developers to ship products"],
+        "answer": "He emphasized vision, consistent action, and building in public with community involvement"
+      },
+      {
+        "question": "What lesson did Christwin emphasize for those looking to build in ReFi or social regeneration?",
+        "options": ["Focus on airdrops and token prices", "Start with real-world problems, build in public, and lead with purpose", "Copy popular projects from other ecosystems", "Avoid collaboration with communities"],
+        "answer": "Start with real-world problems, build in public, and lead with purpose"
+      },
+      {
+        "question": "What impact category does Christwin’s Metering Protocol solution belong in?",
+        "options": ["Economic/Social impact", "Climate/Energy Impact", "Ecological/Environmental Impact", "Personal/Individual Impact"],
+        "answer": "Climate/Energy Impact"
+      },
+      {
+        "question": "During the class with Monty From CeLo network, what ReFi project can you create a local node on and begin to contribute?",
+        "options": ["ReFi Medellin", "ReFi Podcast", "ReFi DAO", "ReFi B<>rder/ess"],
+        "answer": "ReFi DAO"
+      },
+      {
+        "question": "What PDF was recommended to begin studying to learn more about ReFi ecosystem?",
+        "options": ["GreenPill PDF", "BluePill Network PDF", "Celo Network PDF", "B<>rder/ess PDF"],
+        "answer": "GreenPill PDF"
+      },
+      {
+        "question": "What tool was presented during the session with Monty that gives you ReFi Onchain Credentials.",
+        "options": ["Regencordination", "Prosperity Pass", "B<>rder/ess Badge", "Green Pass"],
+        "answer": "Prosperity Pass"
+      },
+      {
+        "question": "What platform shows you ReFI tokens launched in the ecosystem and allows you trade/swap them.",
+        "options": ["byteonchain.xyz", "celo.org", "refidao.com", "regenerative.fi"],
+        "answer": "regenerative.fi"
+      },
+      {
+        "question": "What is tokenization in ReFi?",
+        "options": ["Encrypting private chats", "Representing real-world or impact assets on-chain", "Creating social media usernames", "Mining new Bitcoin"],
+        "answer": "Representing real-world or impact assets on-chain"
+      }
+    ]
+  }
+  

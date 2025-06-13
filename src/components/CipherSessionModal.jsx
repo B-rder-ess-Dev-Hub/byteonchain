@@ -180,7 +180,6 @@ const CipherSessionModal = ({ isOpen, onClose }) => {
                 <option value="">Select a course</option>
                 <option value="Web Design and Development">Web Design and Development</option>
                 <option value="UI/UX Design">UI/UX Design</option>
-                <option value="Cyber Security">Cyber Security</option>
                 <option value="Solidity">Solidity</option>
               </select>
               {errors.course && <span className={styles.errorText}>{errors.course}</span>}
