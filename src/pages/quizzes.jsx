@@ -454,9 +454,7 @@ function Quizzes({ initialQuizzes = [] }) {
 
               <div className={styles.importContainer}>
                 <label htmlFor="jsonImport" className={styles.importButton}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 16L4 17C4 18.6569 5.34315 20 7 20L17 20C18.6569 20 20 18.6569 20 17L20 16M16 8L12 4M12 4L8 8M12 4L12 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <svg width="18" height="18" fill="#000" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-1M16 8l-4-4-4 4M12 4v12"/></svg>
                   Import JSON
                 </label>
                 <input
@@ -544,6 +542,18 @@ function Quizzes({ initialQuizzes = [] }) {
                                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                   </svg>
+                                </button>
+                                <button
+                                  className={styles.copyUrlButton}
+                                  onClick={() => {
+                                    const url = `${window.location.origin}/quiz/${encodeURIComponent(quiz.course_title)}`;
+                                    navigator.clipboard.writeText(url);
+                                    toast.success('Quiz URL copied to clipboard!');
+                                  }}
+                                  title="Copy Quiz URL"
+                                >
+                                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                                  Copy URL
                                 </button>
                               </div>
                             </td>

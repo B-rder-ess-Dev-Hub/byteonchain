@@ -473,3 +473,55 @@
   color: #e9a800;
   text-decoration: underline;
 }
+
+.copyUrlButton {
+  background: #f8fafc;
+  color: #fab800;
+  border: 1px solid #fab800;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(250, 184, 0, 0.08);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+}
+.copyUrlButton:hover {
+  background: #fff8e1;
+  color: #e9a800;
+  box-shadow: 0 4px 16px rgba(250, 184, 0, 0.15);
+}
+
+.importButton svg {
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+.editButton {
+  background: #fab800;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(250, 184, 0, 0.08);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 0;
+  margin-top: 10px;
+  width: 100%;
+  justify-content: center;
+}
+.editButton:hover {
+  background: #e9a800;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px rgba(250, 184, 0, 0.15);
+}

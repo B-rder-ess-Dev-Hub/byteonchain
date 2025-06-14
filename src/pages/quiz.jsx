@@ -159,16 +159,22 @@ const QuizContent = () => {
 
         <div className={styles.mainContent}>
           <div className={styles.banner}>
+            <div className={styles.bannerDecor}></div>
             <div className={styles.bannerContent}>
               <div className={styles.bannerHeader}>
                 <div className={styles.bannerIcon}>{Icons.rocket}</div>
-                <h1 className={styles.bannerTitle}>Ready to test your knowledge?</h1>
+                <div>
+                  <div className={styles.bannerCatchyText}>🚀 Unlock Knowledge. Earn Credentials. Join the Future of Web3 Learning!</div>
+                  <h1 className={styles.bannerTitle}>Ready to test your knowledge?</h1>
+                </div>
               </div>
-
               {isWalletConnected ? (
                 <div className={styles.userInfoCard}>
                   <div className={styles.userIconWrapper}>{Icons.user}</div>
-                  <p className={styles.userName}>{userFullName || "Fetching name..."}</p>
+                  <div className={styles.userInfoDetails}>
+                    <span className={styles.userName}>{userFullName || "Fetching name..."}</span>
+                    <span className={styles.userWallet}>{walletAddress}</span>
+                  </div>
                 </div>
               ) : (
                 <div className={styles.connectWalletCard}>
@@ -181,55 +187,54 @@ const QuizContent = () => {
                   </button>
                 </div>
               )}
-
               <div className={styles.bannerFooter}>
-            <div className={styles.targetIconWrapper}>{Icons.target}</div>
-            <h2 className={styles.bannerSubtitle}>Select a quiz to begin!</h2>
+                <div className={styles.targetIconWrapper}>{Icons.target}</div>
+                <h2 className={styles.bannerSubtitle}>Select a quiz to begin!</h2>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div className={styles.quizControls}>
-        <div className={styles.tabsContainer}>
-          <button 
-            className={`${styles.tabButton} ${activeTab === 'active' ? styles.activeTab : ''}`}
-            onClick={() => setActiveTab('active')}
-          >
-            Active
-          </button>
-          <button 
-            className={`${styles.tabButton} ${activeTab === 'expired' ? styles.activeTab : ''}`}
-            onClick={() => setActiveTab('expired')}
-          >
-            Expired
-          </button>
-        </div>
-
-        <div className={styles.searchBarContainer}>
-          <div className={styles.searchBar}>
-            <svg className={styles.searchIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <input 
-              type="text" 
-              placeholder="Search quizzes..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={styles.searchInput}
-            />
-            {searchQuery && (
+          <div className={styles.quizControls}>
+            <div className={styles.tabsContainer}>
               <button 
-                className={styles.clearButton}
-                onClick={() => setSearchQuery('')}
+                className={`${styles.tabButton} ${activeTab === 'active' ? styles.activeTab : ''}`}
+                onClick={() => setActiveTab('active')}
               >
-                ×
+                Active
               </button>
-            )}
-          </div>
-        </div>
-      </div>
+              <button 
+                className={`${styles.tabButton} ${activeTab === 'expired' ? styles.activeTab : ''}`}
+                onClick={() => setActiveTab('expired')}
+              >
+                Expired
+              </button>
+            </div>
 
-      {loading ? (
+            <div className={styles.searchBarContainer}>
+              <div className={styles.searchBar}>
+                <svg className={styles.searchIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <input 
+                  type="text" 
+                  placeholder="Search quizzes..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={styles.searchInput}
+                />
+                {searchQuery && (
+                  <button 
+                    className={styles.clearButton}
+                    onClick={() => setSearchQuery('')}
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {loading ? (
             <div className={styles.loadingContainer}>
               <div className={styles.loadingSpinner}></div>
               <p className={styles.loadingText}>Loading quizzes...</p>

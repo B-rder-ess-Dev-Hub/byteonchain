@@ -49,11 +49,15 @@ const Uploads = () => {
     to_time: '',
     date: '',
     eventcategory: [''],
-    event_link: '', 
+    event_link: '',
     description: '',
-    location: '', 
-    title: '' 
+    location: '',
+    title: '',
+    details: '',
+    about: ''
   });
+
+  const [editingNewsId, setEditingNewsId] = useState(null);
 
   const API_BASE_URL = 'https://byteapi-two.vercel.app/api';
   const API_KEY = process.env.NEXT_PUBLIC_BYTE_API_KEY;
@@ -197,28 +201,34 @@ const Uploads = () => {
     );
   };
 
+  const handleNewsEdit = (news) => {
+    setNewsFormData({ ...news });
+    setEditingNewsId(news._id);
+    setActiveTab('news');
+  };
+
   const handleNewsSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
     try {
       const token = localStorage.getItem('adminToken');
-      await api.post('/news', newsFormData, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      toast.success('News added successfully');
-      setNewsFormData({
-        title: '',
-        url: '',
-        imgurl: ''
-      });
+      if (editingNewsId) {
+        await api.put(`/news/${editingNewsId}`, newsFormData, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        toast.success('News updated successfully');
+        setEditingNewsId(null);
+      } else {
+        await api.post('/news', newsFormData, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        toast.success('News added successfully');
+      }
+      setNewsFormData({ title: '', url: '', imgurl: '' });
       fetchNews();
     } catch (error) {
-      console.error('Error adding news:', error);
-      toast.error('Failed to add news: ' + (error.response?.data?.message || error.message));
+      console.error('Error saving news:', error);
+      toast.error('Failed to save news: ' + (error.response?.data?.message || error.message));
     } finally {
       setIsLoading(false);
     }
@@ -297,7 +307,9 @@ const Uploads = () => {
         event_link: eventFormData.event_link,
         date: formatTimeForAPI(eventFormData.date, '00:00'),
         from_time: formatTimeForAPI(eventFormData.date, eventFormData.from_time),
-        to_time: formatTimeForAPI(eventFormData.date, eventFormData.to_time)
+        to_time: formatTimeForAPI(eventFormData.date, eventFormData.to_time),
+        details: eventFormData.details,
+        about: eventFormData.about
       };
       
       console.log('Sending event data:', formattedData);
@@ -321,7 +333,9 @@ const Uploads = () => {
         eventcategory: [''],
         event_link: '',
         description: '',
-        location: ''
+        location: '',
+        details: '',
+        about: ''
       });
       fetchEvents();
     } catch (error) {
@@ -391,15 +405,17 @@ const Uploads = () => {
 
   const handleEventChange = (e) => {
     const { name, value } = e.target;
-    
     if (name === 'eventcategory') {
       const categories = value.split(',').map(cat => cat.trim());
       setEventFormData(prev => ({ ...prev, [name]: categories }));
-    } else if (name === 'from_time' || name === 'to_time') {
-      setEventFormData(prev => ({ ...prev, [name]: value }));
     } else {
       setEventFormData(prev => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleEventEdit = (event) => {
+    setEventFormData({ ...event });
+    setActiveTab('events');
   };
 
   const formatDate = (dateString) => {
@@ -669,6 +685,10 @@ const Uploads = () => {
                                 >
                                   Delete News
                                 </button>
+                                <button className={styles.editButton} onClick={() => handleNewsEdit(item)} title="Edit News">
+                                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg>
+                                  Edit
+                                </button>
                               </div>
                             </div>
                           ))
@@ -767,6 +787,28 @@ const Uploads = () => {
                         <p className={styles.formHint}>Separate categories with commas</p>
                       </div>
                       
+                      <div className={styles.formGroup}>
+                        <label htmlFor="details">Event Details</label>
+                        <textarea
+                          id="details"
+                          name="details"
+                          value={eventFormData.details}
+                          onChange={handleEventChange}
+                          placeholder="Enter event details"
+                        />
+                      </div>
+                      
+                      <div className={styles.formGroup}>
+                        <label htmlFor="about">About Event</label>
+                        <textarea
+                          id="about"
+                          name="about"
+                          value={eventFormData.about}
+                          onChange={handleEventChange}
+                          placeholder="About this event"
+                        />
+                      </div>
+                      
                       <div className={styles.formActions}>
                         <button type="submit" className={styles.submitButton} disabled={isLoading}>
                           {isLoading ? 'Adding...' : 'Add Event'}
@@ -817,6 +859,10 @@ const Uploads = () => {
                                     </span>
                                   ))}
                                 </div>
+                                <div className={styles.eventDetailsSection}>
+                                  <strong>Details:</strong> {event.details || 'N/A'}<br />
+                                  <strong>About:</strong> {event.about || 'N/A'}
+                                </div>
                               </div>
                               <div className={styles.eventActions}>
                                 <button 
@@ -824,6 +870,10 @@ const Uploads = () => {
                                   onClick={() => deleteEvent(event._id)}
                                 >
                                   Delete
+                                </button>
+                                <button className={styles.editButton} onClick={() => handleEventEdit(event)} title="Edit Event">
+                                  <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg>
+                                  Edit
                                 </button>
                               </div>
                             </div>

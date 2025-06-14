@@ -489,7 +489,7 @@ const Users = () => {
                                 </p>
                               </div>
                               <a
-                                href={`https://arbitrum.easscan.org/attestation/view/${uidString}`}
+                                href={`${networks.find(n => n.chainId === uidChainId)?.baseURL || 'https://arbitrum.easscan.org'}/attestation/view/${uidString}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className={styles.viewAttestationButton}

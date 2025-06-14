@@ -10,6 +10,7 @@ const nextConfig = {
       'cdn.byteonchain.news',
       'static.byteonchain.news',
       'postimg.cc',
+      'i.postimg.cc',
     ],
   },
   async rewrites() {

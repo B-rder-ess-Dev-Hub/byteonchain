@@ -582,7 +582,7 @@ const QuizPage = ({ quiz = quizData }) => {
                     </div>
                     <div className={styles.successButtons}>
                       <a
-                        href={`https://arbitrum.easscan.org/attestation/view/${attestationUID}`}
+                        href={`${currentNetwork?.baseURL}/attestation/view/${attestationUID}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.viewButton}
