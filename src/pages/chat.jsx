@@ -18,7 +18,9 @@ export async function getStaticProps() {
 const ChatContent = () => {
   return (
     <div className={styles.chatContainer}>
-      <Header />
+      <div className={styles.chatWrapper}>
+        <Header />
+      </div>
       <div className={styles.contentWrapper}>
         <div className={styles.sidebarWrapper}>
           <Sidebar />

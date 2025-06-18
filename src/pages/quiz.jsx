@@ -148,7 +148,7 @@ const QuizContent = () => {
 
   return (
     <div className={styles.quizPage}>
-      <div className={styles.headerWrapper}>
+      <div className={styles.quizWrapper}>
         <Header />
       </div>
 

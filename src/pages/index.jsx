@@ -26,7 +26,9 @@ const HomeContent = () => {
 
   return (
     <div className={styles.pageContainer}>
-      <Header />
+      <div className={styles.indexWrapper}>
+        <Header />
+      </div>
       <div className={styles.container}>
         <div className={styles.layout}>
           <div className={styles.sidebarContainer}>

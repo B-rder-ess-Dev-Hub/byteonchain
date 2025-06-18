@@ -102,7 +102,7 @@ const Header = () => {
       <NetworkModal
         isOpen={showNetworkModal}
         onClose={() => setShowNetworkModal(false)}
-        onNetworkSelect={handleNetworkSelect}
+        onNetworkSelect={handleNetworkSelect}   
       />
     </>
   );

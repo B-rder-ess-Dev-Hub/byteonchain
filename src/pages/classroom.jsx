@@ -124,7 +124,7 @@ const ClassroomContent = ({ walletConnected }) => {
   return (
     <div className={styles.classroomContainer}>
       {/* Header Component */}
-      <div className={styles.headerWrapper}>
+      <div className={styles.classroomWrapper}>
         <Header />
       </div>
 

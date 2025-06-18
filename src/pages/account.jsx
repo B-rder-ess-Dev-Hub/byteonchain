@@ -224,8 +224,9 @@ const AccountContent = () => {
         />
       )}
 
-      {/* Header Component */}
-      <Header />
+      <div className={styles.accountWrapper}>
+        <Header />
+      </div>
 
       {/* Sidebar and Main Content */}
       <div className={styles.contentWrapper}>

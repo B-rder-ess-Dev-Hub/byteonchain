@@ -52,7 +52,9 @@ const Discovery = () => {
 
   return (
     <div className={styles.discoveryContainer}>
-      <Header />
+      <div className={styles.discoveryWrapper}>
+        <Header />
+      </div>
       <div className={styles.contentWrapper}>
         <div className={styles.sidebarWrapper}>
           <Sidebar />

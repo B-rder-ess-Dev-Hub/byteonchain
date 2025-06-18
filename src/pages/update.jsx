@@ -80,7 +80,10 @@ const UpdateContent = () => {
   return (
     <div className={styles.updateContainer}>
       {/* Header */}
-      <Header />
+      <div className={styles.updateWrapper}>
+        <Header />
+      </div>
+      {/* <Header /> */}
 
       <div className={styles.contentWrapper}>
         {/* Sidebar */}
