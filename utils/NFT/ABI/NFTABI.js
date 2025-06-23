@@ -1,4 +1,4 @@
-export const factoryABI = [{
+export const factoryABI = [ {
       "inputs": [],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -116,7 +116,8 @@ export const factoryABI = [{
       "type": "function"
     }];
 
-export const nftABI = [{
+export const nftABI = [
+      {
       "inputs": [
         {
           "internalType": "address",
@@ -479,13 +480,7 @@ export const nftABI = [{
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256"
-        }
-      ],
+      "inputs": [],
       "name": "getCertificateDetails",
       "outputs": [
         {
@@ -729,10 +724,23 @@ export const nftABI = [{
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_tokenId",
+          "name": "tokenId",
           "type": "uint256"
         }
       ],
@@ -795,4 +803,5 @@ export const nftABI = [{
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    }];
+    }
+];

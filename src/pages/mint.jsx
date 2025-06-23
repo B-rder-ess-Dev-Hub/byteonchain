@@ -1,93 +1,94 @@
 "use client";
+import { ethers } from "ethers";
 import { useState } from "react";
+import { useAccount, useWalletClient } from "wagmi";
+import { mintCertificate } from "../../utils/NFT/mintCertificate";
 
-export default function Mint() {
-  const [file, setFile] = useState(null);
-  const [url, setUrl] = useState("");
-  const [uploading, setUploading] = useState(false);
+export default function MintCertification() {
+  const { isConnected } = useAccount();
+  const { data: walletClient } = useWalletClient();
 
-  const uploadFile = async () => {
-    if (!file) {
-      alert("No file selected");
+  const [proxyAddress, setProxyAddress] = useState("");
+  const [certificateData, setCertificateData] = useState("");
+  const [minting, setMinting] = useState(false);
+  const [txHash, setTxHash] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleMint = async () => {
+    if (!isConnected || !walletClient) {
+      alert("Connect your wallet first.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-
-    setUploading(true);
+    if (!proxyAddress || !certificateData) {
+      alert("Fill all fields");
+      return;
+    }
 
     try {
-      const response = await fetch("/api/uploads/image", {
-        method: "POST",
-        body: formData,
-      });
+      const ethersProvider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await ethersProvider.getSigner();
 
-      const result = await response.json();
+      setMinting(true);
+      const { txHash, imageUrl } = await mintCertificate(proxyAddress, certificateData, signer);
 
-      if (response.ok) {
-        setUrl(result.url);
-      } else {
-        console.error(result.error);
-        alert("Upload failed: " + result.error);
-      }
+      setTxHash(txHash);
+      setImageUrl(imageUrl);
     } catch (err) {
-      console.error("Upload error:", err);
-      alert("Error uploading file");
+      alert(err.message || err);
     } finally {
-      setUploading(false);
+      setMinting(false);
     }
   };
 
-  const uploadMetadata = async () => {
-    const res = await fetch("/api/uploads/metadata", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: "My NFT",
-        description: "This is my awesome NFT",
-        image: "https://gateway.pinata.cloud/ipfs/QmNacayW96inZmH2V7CQC782Si5F57nrZNjaFAtbjcBerm",
-      }),
-    });
-  
-    const data = await res.json();
-    console.log("Metadata IPFS URL:", data);
-  };
-  
- 
-
   return (
-    <main className="w-full min-h-screen flex flex-col items-center justify-center p-4">
+    <main className="w-full min-h-screen flex flex-col items-center justify-center p-4 space-y-4">
+      <h1 className="text-xl font-bold">Mint Your Certification</h1>
+
       <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          const selectedFile = e.target.files?.[0];
-          if (selectedFile instanceof Blob) {
-            setFile(selectedFile);
-          } else {
-            alert("Invalid file");
-          }
-        }}
+        type="text"
+        placeholder="Certification Contract Address"
+        className="border px-2 py-1 w-64"
+        value={proxyAddress}
+        onChange={(e) => setProxyAddress(e.target.value)}
       />
-      <button onClick={uploadFile} disabled={uploading}>
-        {uploading ? "Uploading..." : "Upload"}
+      <input
+        type="text"
+        placeholder="Certificate Data (e.g., CID or ID)"
+        className="border px-2 py-1 w-64"
+        value={certificateData}
+        onChange={(e) => setCertificateData(e.target.value)}
+      />
+      <button
+        className="bg-green-600 text-white px-4 py-2 rounded disabled:opacity-50"
+        onClick={handleMint}
+        disabled={minting}
+      >
+        {minting ? "Minting..." : "Mint Certificate"}
       </button>
-      <button onClick={uploadMetadata} disabled={uploading}>
-        {uploading ? "Uploading..." : "Upload"}
-      </button>
-      {url && (
-        <div className="mt-4">
-          <p>Uploaded file:</p>
-          <img src={url} alt="Uploaded" style={{ maxWidth: "300px" }} />
-          <p>
-            URL:{" "}
-            <a href={url} target="_blank" rel="noreferrer">
-              {url}
-            </a>
-          </p>
+
+      {txHash && (
+        <div className="mt-4 text-center">
+          <p>✅ Minted Successfully!</p>
+          <a
+            href={`https://sepolia.etherscan.io/tx/${txHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline break-all"
+          >
+            {txHash}
+          </a>
+        </div>
+      )}
+
+      {imageUrl && (
+        <div className="mt-6">
+          <p className="text-lg font-semibold">📄 Your Certificate Image:</p>
+          <img
+            src={imageUrl}
+            alt="Certificate"
+            className="mt-2 border rounded-lg shadow-md max-w-xs"
+          />
         </div>
       )}
     </main>

@@ -27,13 +27,13 @@ describe("CertificationNFT", function () {
     await certNFT.connect(otherUser).safeMint("Certificate for User");
 
     expect(await certNFT.ownerOf(0)).to.equal(otherUser.address);
-    expect(await certNFT.getCertificateDetails(0)).to.equal("Certificate for User");
+    expect(await certNFT.getCertificateDetails()).to.equal("Certificate for User");
   });
 
   it("should return correct tokenURI", async () => {
     await certNFT.connect(otherUser).safeMint("Cert");
 
-    const tokenURI = await certNFT.tokenURI(0);
+    const tokenURI = await certNFT.tokenURI();
     expect(tokenURI).to.equal("https://example.com/metadata/Cert");
   });
 
@@ -41,7 +41,7 @@ describe("CertificationNFT", function () {
     await certNFT.updateBaseURI("https://newuri.com/");
 
     await certNFT.connect(otherUser).safeMint("Cert");
-    const uri = await certNFT.tokenURI(0);
+    const uri = await certNFT.tokenURI();
 
     expect(uri).to.equal("https://newuri.com/Cert");
   });
@@ -55,7 +55,7 @@ describe("CertificationNFT", function () {
   });
 
   it("should revert when querying tokenURI for nonexistent token", async () => {
-    await expect(certNFT.tokenURI(9999)).to.be.reverted; // generic revert check
+    await expect(certNFT.tokenURI()).to.be.reverted; // generic revert check
   });
 
 

@@ -76,6 +76,8 @@ const Sidebar = () => {
     { path: "/quiz", label: "Quiz", icon: "quiz" },
     { path: "/schema", label: "Schema", icon: "schema" },
     { path: "/account", label: "Account", icon: "account" },
+    { path: "/create", label: "Create", icon: "account" },
+    { path: "/mint", label: "Mint", icon: "account" },
   ];
 
   const toggleSidebar = () => {

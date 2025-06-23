@@ -13,6 +13,7 @@ contract CertificationNFT is Initializable, ERC721Upgradeable, Ownable2StepUpgra
     string private _baseTokenURI;
     mapping(uint256 tokenId => string certificateData) private _certificateDetails;
     mapping(address owner => bool hasMinted) private _owners;
+    mapping(address owner => uint256 tokenID) private _tokenIDs;
 
     // 🔊 Events for tracking
     event CertificateMinted(address indexed to, uint256 indexed tokenId, string certificateData);
@@ -46,23 +47,22 @@ contract CertificationNFT is Initializable, ERC721Upgradeable, Ownable2StepUpgra
         uint256 tokenId = _nextTokenId++;
         _certificateDetails[tokenId] = certificateData; // ✅ Set state before external call
         _owners[msg.sender] = true;
+        _tokenIDs[msg.sender] = tokenId;
         _safeMint(msg.sender, tokenId);
         emit CertificateMinted(msg.sender, tokenId, certificateData);
     }
 
     /// @notice Returns the token metadata URI
-    /// @param _tokenId The token ID
-    function tokenURI(uint256 _tokenId) public view override returns (string memory) {
-        _requireOwned(_tokenId);
-        string memory tokenId = getCertificateDetails(_tokenId);
+    function tokenURI() public view returns (string memory) {
+        string memory tokenId = getCertificateDetails();
         return string.concat(_baseTokenURI, tokenId);
     }
 
     /// @notice Returns the certificate data associated with a token ID
-    /// @param tokenId The token ID
-    function getCertificateDetails(uint256 tokenId) public view returns (string memory) {
-        _requireOwned(tokenId);
-        return _certificateDetails[tokenId];
+    function getCertificateDetails() public view returns (string memory) {
+        uint256 id = _tokenIDs[msg.sender];
+        _requireOwned(id);
+        return _certificateDetails[id];
     }
 
     /// @notice Updates the base URI (only if different)

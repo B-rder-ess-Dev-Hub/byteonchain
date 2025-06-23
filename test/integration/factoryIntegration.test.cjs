@@ -64,7 +64,7 @@ describe("CertificationFactory", function () {
     expect(await userNFT.name()).to.equal("UserCert");
 
     await userNFT.connect(user).safeMint("User Cert");
-    expect(await userNFT.getCertificateDetails(0)).to.equal("User Cert");
+    expect(await userNFT.getCertificateDetails()).to.equal("User Cert");
   });
 
   it("should track deployed contracts", async () => {

@@ -1253,9 +1253,9 @@
       "contracts/certificationNFT.sol:CertificationNFT": {
         "src": "contracts/certificationNFT.sol:9",
         "version": {
-          "withMetadata": "7ec69d931fd1f0781f0e608577a15c0ba3e8fa3de537512e1e2576f6b75c2df5",
-          "withoutMetadata": "6a7d39a5bc1845ed1a9dcd25e5cce4af0523d2988d36c0848983c50e2dabdc16",
-          "linkedWithoutMetadata": "6a7d39a5bc1845ed1a9dcd25e5cce4af0523d2988d36c0848983c50e2dabdc16"
+          "withMetadata": "385855f303437b206e5cb8105f0adc930a5b1c13d6df7d0ac18642d9aeb94000",
+          "withoutMetadata": "98cd577a7f10df5a7c4b8ef7aef4159de33f947061518a2b7a8d7d3a8af6d1b2",
+          "linkedWithoutMetadata": "98cd577a7f10df5a7c4b8ef7aef4159de33f947061518a2b7a8d7d3a8af6d1b2"
         },
         "inherit": [
           "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol:Ownable2StepUpgradeable",
@@ -1275,8 +1275,8 @@
         "methods": [
           "initialize(string,string,string,address)",
           "safeMint(string)",
-          "tokenURI(uint256)",
-          "getCertificateDetails(uint256)",
+          "tokenURI()",
+          "getCertificateDetails()",
           "updateBaseURI(string)"
         ],
         "linkReferences": [],
@@ -1314,6 +1314,14 @@
               "type": "t_mapping(t_address,t_bool)",
               "contract": "CertificationNFT",
               "src": "contracts/certificationNFT.sol:15"
+            },
+            {
+              "label": "_tokenIDs",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "CertificationNFT",
+              "src": "contracts/certificationNFT.sol:16"
             }
           ],
           "types": {
@@ -1540,9 +1548,9 @@
       "contracts/contractFactory.sol:CertificationFactory": {
         "src": "contracts/contractFactory.sol:10",
         "version": {
-          "withMetadata": "5b7337544a15935e612d98c643e444f71cae00e0692e50240f608180401efb28",
-          "withoutMetadata": "c29a7f2c2dac0eb98ad9bf42454955903df50767ba20ca962be0850e665613dc",
-          "linkedWithoutMetadata": "c29a7f2c2dac0eb98ad9bf42454955903df50767ba20ca962be0850e665613dc"
+          "withMetadata": "656d7464e64d7095dec1059969339cb4a057430ec95887834cc7f4fbd2d0876d",
+          "withoutMetadata": "50138767c78354aa717fc8b6280cfd2af5abb7955d82ea562b103fac0f1eed85",
+          "linkedWithoutMetadata": "50138767c78354aa717fc8b6280cfd2af5abb7955d82ea562b103fac0f1eed85"
         },
         "inherit": [],
         "libraries": [],
