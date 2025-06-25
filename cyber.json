@@ -1,0 +1,511 @@
+{
+  "course_title": "Ethical Hacking & Systems Defense",
+  "issuer": "Borderless Developers Programme",
+  "duration": "30 minutes",
+  "total_questions": 50,
+  "marks_per_question": 2,
+  "purpose": "course",
+  "status": "active",
+  "questions": [
+    {
+      "question": "A penetration tester is hired to test a company's web application. They discover a vulnerability and, out of curiosity, use it to access a database containing customer data from a different, unaffiliated company hosted on the same shared server. Which principle have they most clearly violated?",
+      "options": [
+        "Scope of Engagement",
+        "Rules of Engagement",
+        "Non-Disclosure Agreement",
+        "Ethical Obligation"
+      ],
+      "answer": "Scope of Engagement"
+    },
+    {
+      "question": "When setting up a virtual lab environment for malware analysis, which type of virtual network adapter configuration provides the most isolation from the host machine and the external network, while still allowing communication between guest VMs?",
+      "options": [
+        "Host-only networking",
+        "NAT networking",
+        "Bridged networking",
+        "Internal networking"
+      ],
+      "answer": "Internal networking"
+    },
+    {
+      "question": "During a security assessment, you are asked to operate with 'zero knowledge' of the target system, simulating an external attacker. What type of penetration test is this?",
+      "options": [
+        "Black Box",
+        "White Box",
+        "Grey Box",
+        "Crystal Box"
+      ],
+      "answer": "Black Box"
+    },
+    {
+      "question": "A security professional is using Kali Linux to perform a network scan. They want to ensure that all tools they use are from the official repositories and have not been tampered with. What is the most fundamental command-line practice to ensure this before installing or updating tools?",
+      "options": [
+        "Running `sudo apt update && sudo apt full-upgrade` to sync with official repositories.",
+        "Disabling the firewall to allow connections.",
+        "Downloading tools from GitHub directly.",
+        "Using `pip install` for all Python-based tools."
+      ],
+      "answer": "Running `sudo apt update && sudo apt full-upgrade` to sync with official repositories."
+    },
+    {
+      "question": "According to many legal frameworks like the CFAA in the United States, what is the key element that distinguishes illegal hacking from authorized security testing?",
+      "options": [
+        "Lack of authorization",
+        "The tools used",
+        "The time of day the activity occurs",
+        "The financial damage caused"
+      ],
+      "answer": "Lack of authorization"
+    },
+    {
+      "question": "You are explaining the difference between a Type 1 and Type 2 hypervisor to a client. Which statement is the most accurate and concise description?",
+      "options": [
+        "A Type 1 hypervisor runs directly on the host's hardware (bare-metal), while a Type 2 hypervisor runs as an application on top of an existing operating system.",
+        "A Type 1 hypervisor is only for servers, while a Type 2 is for desktops.",
+        "A Type 1 hypervisor is less secure than a Type 2.",
+        "A Type 1 hypervisor is also known as a hosted hypervisor."
+      ],
+      "answer": "A Type 1 hypervisor runs directly on the host's hardware (bare-metal), while a Type 2 hypervisor runs as an application on top of an existing operating system."
+    },
+    {
+      "question": "In the context of a penetration test, what is the primary purpose of the 'Rules of Engagement' document?",
+      "options": [
+        "To define the specific technical parameters, constraints, and permissions for the test (e.g., allowed IP ranges, testing hours, prohibited techniques).",
+        "To legally protect the client from any damages caused by the test.",
+        "To outline the final report structure and deliverables.",
+        "To list the names of the penetration testing team members."
+      ],
+      "answer": "To define the specific technical parameters, constraints, and permissions for the test (e.g., allowed IP ranges, testing hours, prohibited techniques)."
+    },
+    {
+      "question": "The 'Cyber Kill Chain' model describes the stages of a cyberattack. Which of the following is NOT one of the seven stages in the original Lockheed Martin model?",
+      "options": [
+        "Pivoting",
+        "Reconnaissance",
+        "Weaponization",
+        "Command & Control"
+      ],
+      "answer": "Pivoting"
+    },
+    {
+      "question": "You run an Nmap scan (`nmap -sS -p 80,443 target.com`) and the result for port 80 is 'filtered'. What does this most likely indicate?",
+      "options": [
+        "A firewall or packet-filtering device is blocking the port, preventing Nmap from determining if it's open or closed.",
+        "The port is open, but no service is responding.",
+        "The port is definitively closed.",
+        "The host is offline."
+      ],
+      "answer": "A firewall or packet-filtering device is blocking the port, preventing Nmap from determining if it's open or closed."
+    },
+    {
+      "question": "An application communicates by sending small, frequent updates of sensor data where speed is more critical than guaranteed delivery of every single packet. Which transport layer protocol is best suited for this?",
+      "options": [
+        "UDP",
+        "TCP",
+        "ICMP",
+        "ARP"
+      ],
+      "answer": "UDP"
+    },
+    {
+      "question": "You are given the IP address 192.168.16.27 with a subnet mask of 255.255.254.0. What is the correct network address for this host?",
+      "options": [
+        "192.168.16.0",
+        "192.168.0.0",
+        "192.168.17.0",
+        "192.168.16.16"
+      ],
+      "answer": "192.168.16.0"
+    },
+    {
+      "question": "When using Nmap, what is the fundamental difference in behavior between a SYN scan (`-sS`) and a TCP Connect scan (`-sT`)?",
+      "options": [
+        "A SYN scan does not complete the three-way handshake, making it stealthier, while a TCP Connect scan completes the full handshake.",
+        "A SYN scan is for UDP ports, while a TCP Connect scan is for TCP ports.",
+        "A SYN scan is slower but more accurate.",
+        "A TCP Connect scan can only be run with root privileges."
+      ],
+      "answer": "A SYN scan does not complete the three-way handshake, making it stealthier, while a TCP Connect scan completes the full handshake."
+    },
+    {
+      "question": "At which layer of the OSI model does a standard Layer 3 network switch or router primarily operate to make forwarding decisions?",
+      "options": [
+        "Layer 3 (Network Layer)",
+        "Layer 2 (Data Link Layer)",
+        "Layer 4 (Transport Layer)",
+        "Layer 7 (Application Layer)"
+      ],
+      "answer": "Layer 3 (Network Layer)"
+    },
+    {
+      "question": "You want to use Nmap to identify the operating system, service versions, and run default vulnerability scripts on a target. Which single Nmap flag is the most efficient way to enable all of these features?",
+      "options": [
+        "-A",
+        "-T4",
+        "--script-all",
+        "-p-"
+      ],
+      "answer": "-A"
+    },
+    {
+      "question": "What is the purpose of the DNS protocol?",
+      "options": [
+        "To translate human-readable domain names into machine-readable IP addresses.",
+        "To assign IP addresses to hosts on a network.",
+        "To securely transfer files between systems.",
+        "To synchronize time across devices."
+      ],
+      "answer": "To translate human-readable domain names into machine-readable IP addresses."
+    },
+    {
+      "question": "During a TCP session, what is the role of sequence numbers?",
+      "options": [
+        "To reassemble packets in the correct order at the destination and to acknowledge received data.",
+        "To indicate the port number for the source and destination.",
+        "To encrypt the data being transmitted.",
+        "To specify the IP address of the destination host."
+      ],
+      "answer": "To reassemble packets in the correct order at the destination and to acknowledge received data."
+    },
+    {
+      "question": "You see a file with the permissions `-rwsr-xr-x`. What is the significance of the 's' in the user permissions?",
+      "options": [
+        "It's the SUID bit, meaning the file executes with the permissions of the file owner, not the user who runs it.",
+        "It's the SGID bit, meaning the file executes with the permissions of the group owner.",
+        "It's the sticky bit, preventing users from deleting files they don't own.",
+        "The file is a symbolic link."
+      ],
+      "answer": "It's the SUID bit, meaning the file executes with the permissions of the file owner, not the user who runs it."
+    },
+    {
+      "question": "Which of the following Bash commands would you use to find all lines containing the case-insensitive string \"error\" in all files within the `/var/log` directory and its subdirectories?",
+      "options": [
+        "`grep -ri \"error\" /var/log`",
+        "`find /var/log -name \"*error*\"`",
+        "`cat /var/log/* | grep -i \"error\"`",
+        "`search -i \"error\" /var/log`"
+      ],
+      "answer": "`grep -ri \"error\" /var/log`"
+    },
+    {
+      "question": "You want to run a network scanning script (`scan.sh`) that will take a long time to complete. You need it to keep running even after you log out of the SSH session. What is the best way to achieve this?",
+      "options": [
+        "`nohup ./scan.sh &`",
+        "`./scan.sh &`",
+        "`bg ./scan.sh`",
+        "`run ./scan.sh --detached`"
+      ],
+      "answer": "`nohup ./scan.sh &`"
+    },
+    {
+      "question": "What is the purpose of the `&&` operator in a Linux command chain like `sudo apt update && sudo apt upgrade`?",
+      "options": [
+        "It acts as a logical AND, ensuring the second command only runs if the first command succeeds (exits with code 0).",
+        "It runs both commands simultaneously in the background.",
+        "It pipes the output of the first command into the second.",
+        "It runs the second command regardless of the first one's outcome."
+      ],
+      "answer": "It acts as a logical AND, ensuring the second command only runs if the first command succeeds (exits with code 0)."
+    },
+    {
+      "question": "You have a log file named `access.log`. You want to count the number of times the IP address \"10.1.1.5\" appears. Which command is most efficient?",
+      "options": [
+        "`grep -c \"10.1.1.5\" access.log`",
+        "`cat access.log | grep \"10.1.1.5\" | wc -l`",
+        "`grep \"10.1.1.5\" access.log | count`",
+        "`find \"10.1.1.5\" in access.log`"
+      ],
+      "answer": "`grep -c \"10.1.1.5\" access.log`"
+    },
+    {
+      "question": "In Bash scripting, what is the difference between `$?` and `$$`?",
+      "options": [
+        "`$?` holds the exit status of the last executed command, while `$$` holds the Process ID (PID) of the current shell.",
+        "`$?` holds the PID of the script, while `$$` holds the exit status.",
+        "Both are used for command-line arguments.",
+        "`$?` is for user input, `$$` is for system variables."
+      ],
+      "answer": "`$?` holds the exit status of the last executed command, while `$$` holds the Process ID (PID) of the current shell."
+    },
+    {
+      "question": "You are analyzing a system and need to see which processes are listening on which network ports. Which command would you use?",
+      "options": [
+        "`netstat -tulnp` or `ss -tulnp`",
+        "`ps -aux | grep LISTEN`",
+        "`lsof -p`",
+        "`ifconfig -a`"
+      ],
+      "answer": "`netstat -tulnp` or `ss -tulnp`"
+    },
+    {
+      "question": "What is the primary function of the `chmod` command in Linux?",
+      "options": [
+        "To change the access permissions of files and directories.",
+        "To change the ownership of files and directories.",
+        "To create new files and directories.",
+        "To monitor system processes."
+      ],
+      "answer": "To change the access permissions of files and directories."
+    },
+    {
+      "question": "You have a large log file (`app.log`) and want to display only the last 20 lines in real-time as new lines are added. Which command should you use?",
+      "options": [
+        "`tail -f -n 20 app.log`",
+        "`head -f -n 20 app.log`",
+        "`cat -f app.log`",
+        "`watch -n 1 'tail -n 20 app.log'`"
+      ],
+      "answer": "`tail -f -n 20 app.log`"
+    },
+    {
+      "question": "An ethical hacker is tasked with gathering information about a company without sending any traffic directly to the company's servers. Which of the following is a classic example of this passive reconnaissance?",
+      "options": [
+        "Analyzing employee profiles on LinkedIn and public WHOIS records.",
+        "Running an Nmap port scan on their web server.",
+        "Performing a banner grab on an open port.",
+        "Attempting a zone transfer from their public DNS server."
+      ],
+      "answer": "Analyzing employee profiles on LinkedIn and public WHOIS records."
+    },
+    {
+      "question": "Which Google Dork would be most effective for finding publicly exposed spreadsheets containing the term 'password'?",
+      "options": [
+        "`filetype:xls \"password\" | filetype:xlsx \"password\"`",
+        "`inurl:password filetype:xls`",
+        "`search:spreadsheets \"password\"`",
+        "`intitle:\"index of\" \"password.xlsx\"`"
+      ],
+      "answer": "`filetype:xls \"password\" | filetype:xlsx \"password\"`"
+    },
+    {
+      "question": "You are using Shodan to find vulnerable IoT devices. What kind of query would you use to find webcams that are still using their default password?",
+      "options": [
+        "Searching for specific HTTP response headers or body content known to be unique to a webcam's login page with default credentials.",
+        "`product:\"webcam\" country:\"US\"`",
+        "`port:8080 \"admin:admin\"`",
+        "`vuln:default-password webcam`"
+      ],
+      "answer": "Searching for specific HTTP response headers or body content known to be unique to a webcam's login page with default credentials."
+    },
+    {
+      "question": "The Harvester is a tool used for gathering email addresses, subdomains, and hostnames. Where does it primarily source this information from?",
+      "options": [
+        "Public sources like search engines (Google, Bing), PGP key servers, and Shodan.",
+        "By brute-forcing subdomains on the target's DNS server.",
+        "By actively scanning the target's network range.",
+        "From an internal, proprietary database of leaks."
+      ],
+      "answer": "Public sources like search engines (Google, Bing), PGP key servers, and Shodan."
+    },
+    {
+      "question": "What is the primary goal of DNS enumeration?",
+      "options": [
+        "To discover a target organization's hosts and network map by querying for DNS records like A, MX, and NS.",
+        "To overload the DNS server, causing a denial of service.",
+        "To change the DNS records to redirect traffic.",
+        "To find the physical location of the DNS server."
+      ],
+      "answer": "To discover a target organization's hosts and network map by querying for DNS records like A, MX, and NS."
+    },
+    {
+      "question": "In social engineering, the principle of 'Urgency' is often used. Which of the following is the best example of a phishing email leveraging this principle?",
+      "options": [
+        "An email claiming 'Your account has been compromised. Click here within the next 15 minutes to secure it or it will be permanently deleted.'",
+        "An email from a supposed authority figure asking for a report.",
+        "An email offering a free vacation for filling out a survey.",
+        "An email confirming a recent, legitimate-looking purchase."
+      ],
+      "answer": "An email claiming 'Your account has been compromised. Click here within the next 15 minutes to secure it or it will be permanently deleted.'"
+    },
+    {
+      "question": "What is the difference between 'Information Gathering' and 'Reconnaissance'?",
+      "options": [
+        "The terms are often used interchangeably in cybersecurity.",
+        "Information Gathering is passive, while Reconnaissance is active.",
+        "Reconnaissance is the first step, followed by Information Gathering.",
+        "Information Gathering is for physical targets, Reconnaissance for digital ones."
+      ],
+      "answer": "The terms are often used interchangeably in cybersecurity."
+    },
+    {
+      "question": "What is the primary advantage of performing an Nmap Idle Scan (`-sI`)?",
+      "options": [
+        "It allows for a truly blind scan of a target, where the target will see the IP of a zombie host, not the attacker's IP.",
+        "It is the fastest scan type available in Nmap.",
+        "It can bypass all types of firewalls and IDS.",
+        "It provides more detailed version information than other scan types."
+      ],
+      "answer": "It allows for a truly blind scan of a target, where the target will see the IP of a zombie host, not the attacker's IP."
+    },
+    {
+      "question": "You're enumerating a Windows machine and the Enum4linux tool returns information about users, shares, and policies. Which protocol is it primarily leveraging for this?",
+      "options": [
+        "SMB (Server Message Block)",
+        "LDAP (Lightweight Directory Access Protocol)",
+        "SNMP (Simple Network Management Protocol)",
+        "RDP (Remote Desktop Protocol)"
+      ],
+      "answer": "SMB (Server Message Block)"
+    },
+    {
+      "question": "An Nmap scan using `-sV` on port 21 returns the banner 'vsftpd 2.3.4'. What is the most critical next step for a penetration tester?",
+      "options": [
+        "Search for known public exploits or vulnerabilities for that specific version of vsftpd.",
+        "Immediately attempt to log in with anonymous credentials.",
+        "Launch a denial-of-service attack against the FTP server.",
+        "Document the finding and move to a different port."
+      ],
+      "answer": "Search for known public exploits or vulnerabilities for that specific version of vsftpd."
+    },
+    {
+      "question": "During SNMP enumeration of a network device, you successfully guess the 'private' community string. What is the most significant security risk associated with this?",
+      "options": [
+        "The ability to modify the device's configuration, potentially causing an outage or creating a backdoor.",
+        "The ability to read basic information like the system uptime and interface descriptions.",
+        "The ability to trigger a large number of SNMP trap messages, causing a log flood.",
+        "The ability to see who is currently logged into the device's management interface."
+      ],
+      "answer": "The ability to modify the device's configuration, potentially causing an outage or creating a backdoor."
+    },
+    {
+      "question": "Which of the following Nmap scan types is generally the most effective at bypassing stateless firewalls that only check the SYN flag to filter inbound connections?",
+      "options": [
+        "FIN Scan (-sF)",
+        "SYN Scan (-sS)",
+        "Connect Scan (-sT)",
+        "UDP Scan (-sU)"
+      ],
+      "answer": "FIN Scan (-sF)"
+    },
+    {
+      "question": "After running a full port scan, you find port 389 open on a server. What service would you attempt to enumerate on this port?",
+      "options": [
+        "LDAP",
+        "SMB",
+        "SNMP",
+        "SMTP"
+      ],
+      "answer": "LDAP"
+    },
+    {
+      "question": "What is meant by a 'null session' when enumerating SMB?",
+      "options": [
+        "An unauthenticated connection to the IPC$ share on a Windows host, which can potentially be used to query system information.",
+        "A connection that has timed out due to a firewall.",
+        "An SMB connection that uses UDP instead of TCP.",
+        "A failed login attempt that locks out the 'null' user account."
+      ],
+      "answer": "An unauthenticated connection to the IPC$ share on a Windows host, which can potentially be used to query system information."
+    },
+    {
+      "question": "What is the primary difference between Vulnerability Assessment and Penetration Testing?",
+      "options": [
+        "Vulnerability Assessment identifies and reports potential vulnerabilities, while Penetration Testing attempts to actively exploit them.",
+        "Vulnerability Assessment is always automated, while Penetration Testing is always manual.",
+        "Vulnerability Assessment focuses on web applications, while Penetration Testing focuses on networks.",
+        "There is no significant difference; the terms are interchangeable."
+      ],
+      "answer": "Vulnerability Assessment identifies and reports potential vulnerabilities, while Penetration Testing attempts to actively exploit them."
+    },
+    {
+      "question": "A vulnerability scanner like Nessus reports a 'critical' SSL/TLS vulnerability on an internal development server that is not accessible from the internet and contains no sensitive data. What is the most appropriate action?",
+      "options": [
+        "Re-evaluate the risk based on the context of the asset and potentially lower its priority compared to internet-facing systems.",
+        "Immediately take the server offline until it can be patched.",
+        "Ignore the finding completely because it is an internal server.",
+        "Report the finding as a false positive without further investigation."
+      ],
+      "answer": "Re-evaluate the risk based on the context of the asset and potentially lower its priority compared to internet-facing systems."
+    },
+    {
+      "question": "What does CVE stand for in the context of vulnerabilities?",
+      "options": [
+        "Common Vulnerabilities and Exposures",
+        "Critical Vulnerability Entry",
+        "Common Vulnerability Enumeration",
+        "Cyber Vulnerability Event"
+      ],
+      "answer": "Common Vulnerabilities and Exposures"
+    },
+    {
+      "question": "A Nessus scan flags a web server for not having the HSTS (HTTP Strict Transport Security) header. What type of attack is this configuration designed to mitigate?",
+      "options": [
+        "SSL stripping attacks (e.g., via man-in-the-middle).",
+        "Cross-Site Scripting (XSS).",
+        "SQL Injection.",
+        "Denial of Service (DoS)."
+      ],
+      "answer": "SSL stripping attacks (e.g., via man-in-the-middle)."
+    },
+    {
+      "question": "When analyzing vulnerability scan results, what is a 'false positive'?",
+      "options": [
+        "The scanner incorrectly reports a vulnerability that does not actually exist.",
+        "The scanner fails to detect a real vulnerability that is present.",
+        "A vulnerability that exists but is not exploitable.",
+        "A low-severity vulnerability that poses no real risk."
+      ],
+      "answer": "The scanner incorrectly reports a vulnerability that does not actually exist."
+    },
+    {
+      "question": "In the CVSS (Common Vulnerability Scoring System) v3.x, which metric assesses the conditions beyond the attacker's control that must exist for a vulnerability to be exploited?",
+      "options": [
+        "Attack Complexity (AC)",
+        "Attack Vector (AV)",
+        "Privileges Required (PR)",
+        "User Interaction (UI)"
+      ],
+      "answer": "Attack Complexity (AC)"
+    },
+    {
+      "question": "Why is it important to use authenticated (credentialed) scans during a vulnerability assessment when possible?",
+      "options": [
+        "They provide a much more accurate view of the system's vulnerabilities by looking at the software and patch levels directly from the inside.",
+        "They are faster and less resource-intensive than unauthenticated scans.",
+        "They are the only way to detect network-level vulnerabilities.",
+        "They can safely exploit vulnerabilities to confirm their existence."
+      ],
+      "answer": "They provide a much more accurate view of the system's vulnerabilities by looking at the software and patch levels directly from the inside."
+    },
+    {
+      "question": "OpenVAS is a popular open-source vulnerability scanner. It is a fork of which previously open-source project?",
+      "options": [
+        "Nessus",
+        "Nmap",
+        "Metasploit",
+        "Wireshark"
+      ],
+      "answer": "Nessus"
+    },
+    {
+      "question": "Which of the following is a common method used to escalate privileges on a compromised Linux system?",
+      "options": [
+        "Kernel exploit",
+        "ARP poisoning",
+        "SQL injection",
+        "Cross-site scripting (XSS)"
+      ],
+      "answer": "Kernel exploit"
+    },
+    {
+      "question": "What is the primary purpose of a honeypot in cybersecurity?",
+      "options": [
+        "To attract and analyze malicious activity",
+        "To speed up network traffic",
+        "To encrypt sensitive data",
+        "To block all incoming connections"
+      ],
+      "answer": "To attract and analyze malicious activity"
+    },
+    {
+      "question": "Which protocol is commonly used for secure remote administration of network devices?",
+      "options": [
+        "SSH",
+        "FTP",
+        "Telnet",
+        "SMTP"
+      ],
+      "answer": "SSH"
+    }
+  ]
+} 

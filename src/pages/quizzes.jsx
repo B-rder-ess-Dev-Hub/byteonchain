@@ -64,6 +64,132 @@ export async function getStaticProps() {
   }
 }
 
+function ParticipantsModal({ isOpen, onClose, quizTitle }) {
+  const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!isOpen || !quizTitle) return;
+    setLoading(true);
+    setError(null);
+    setUsers([]);
+    const fetchParticipants = async () => {
+      try {
+        const apiKey = process.env.NEXT_PUBLIC_BYTE_API_KEY || '993msknfksn-1-1-102kn02002o24o02kcmsknsf02i0203202kfn&&@&@*';
+        const encodedTitle = encodeURIComponent(quizTitle);
+        const res = await fetch(`https://byteapi-two.vercel.app/api/quizzes/${encodedTitle}/users`, {
+          headers: {
+            'Accept': 'application/json',
+            'Bytekeys': apiKey,
+          },
+        });
+        const data = await res.json();
+        if (!res.ok || data.detail) throw new Error(data.detail || 'Failed to fetch users');
+        setUsers(data.users || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchParticipants();
+  }, [isOpen, quizTitle]);
+
+  if (!isOpen) return null;
+
+  // Get all unique keys from users for dynamic columns
+  const allKeys = Array.from(new Set(users.flatMap(u => Object.keys(u || {}))));
+  // Move fullname, email, attestation_link to front if present
+  const orderedKeys = [
+    ...['fullname', 'email', 'attestation_link'].filter(k => allKeys.includes(k)),
+    ...allKeys.filter(k => !['fullname', 'email', 'attestation_link'].includes(k)),
+  ];
+
+  // Icon helpers
+  const fieldIcons = {
+    fullname: (
+      <svg width="20" height="20" fill="none" stroke="#fab800" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 8-4 8-4s8 0 8 4"/></svg>
+    ),
+    email: (
+      <svg width="20" height="20" fill="none" stroke="#0ea5e9" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+    ),
+    attestation_link: (
+      <svg width="20" height="20" fill="none" stroke="#fab800" strokeWidth="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.07 0l1.41-1.41a5 5 0 000-7.07 5 5 0 00-7.07 0l-1.41 1.41"/><path d="M14 11a5 5 0 01-7.07 0l-1.41-1.41a5 5 0 010-7.07 5 5 0 017.07 0l1.41 1.41"/></svg>
+    ),
+  };
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent} style={{maxWidth: 600, minWidth: 320}}>
+        <div className={styles.modalHeader}>
+          <h3>
+            <svg width="32" height="32" fill="none" stroke="#fab800" strokeWidth="2" viewBox="0 0 24 24" style={{verticalAlign:'middle',marginRight:8}}><path d="M17 20H22V18C22 16.3431 20.6569 15 19 15C18.0444 15 17.1931 15.4468 16.6438 16.1429M17 20H7M17 20V18C17 17.3438 16.8736 16.717 16.6438 16.1429M7 20H2V18C2 16.3431 3.34315 15 5 15C5.95561 15 6.80686 15.4468 7.35625 16.1429M7 20V18C7 17.3438 7.12642 16.717 7.35625 16.1429M7.35625 16.1429C8.0935 14.301 9.89482 13 12 13C14.1052 13 15.9065 14.301 16.6438 16.1429M15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7C9 5.34315 10.3431 4 12 4C13.6569 4 15 5.34315 15 7Z"/></svg>
+            Participants
+          </h3>
+          <button className={styles.closeButton} onClick={onClose}>×</button>
+        </div>
+        <div className={styles.modalBody}>
+          {loading ? (
+            <div style={{textAlign:'center',padding:'32px 0'}}>
+              <svg width="48" height="48" viewBox="0 0 50 50" style={{marginBottom:12}}><circle cx="25" cy="25" r="20" fill="#fab80022" stroke="#fab800" strokeWidth="4"/><circle cx="25" cy="25" r="10" fill="#0ea5e922" stroke="#0ea5e9" strokeWidth="2"/></svg>
+              <div style={{fontWeight:600, color:'#fab800'}}>Loading participants...</div>
+            </div>
+          ) : error ? (
+            <div style={{color:'#e53e3e',textAlign:'center',fontWeight:600}}>{error}</div>
+          ) : users.length === 0 ? (
+            <div style={{textAlign:'center',color:'#64748b',fontWeight:500}}>No participants found.</div>
+          ) : (
+            <div style={{overflowX:'auto'}}>
+              <table className={styles.participantsTable}>
+                <thead>
+                  <tr>
+                    {orderedKeys.map(key => (
+                      <th key={key} style={{whiteSpace:'nowrap'}}>
+                        <span style={{display:'flex',alignItems:'center',gap:6}}>
+                          {fieldIcons[key] || null}
+                          {key.replace(/_/g,' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        </span>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((u, i) => (
+                    <tr key={i}>
+                      {orderedKeys.map(key => (
+                        <td key={key} style={{verticalAlign:'middle'}}>
+                          {key === 'attestation_link' && u[key] ? (
+                            <a href={`https://arbitrum.easscan.org/attestation/view/${u[key]}`} target="_blank" rel="noopener noreferrer" className={styles.attestationLink}>
+                              <svg width="18" height="18" fill="none" stroke="#0ea5e9" strokeWidth="2" viewBox="0 0 24 24" style={{verticalAlign:'middle',marginRight:4}}><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                              View
+                            </a>
+                          ) : key === 'email' && u[key] ? (
+                            <a href={`mailto:${u[key]}`} style={{color:'#0ea5e9',fontWeight:600,textDecoration:'underline'}}> {u[key]} </a>
+                          ) : key === 'fullname' && u[key] ? (
+                            <span style={{display:'flex',alignItems:'center',gap:8}}>
+                              <span style={{display:'inline-block',width:32,height:32,borderRadius:'50%',background:'#fab80022',boxShadow:'0 2px 8px #fab80033',overflow:'hidden',textAlign:'center',lineHeight:'32px',fontWeight:700,color:'#fab800',fontSize:'1.1rem'}}>
+                                {u[key][0]}
+                              </span>
+                              {u[key]}
+                            </span>
+                          ) : (
+                            u[key] || <span style={{color:'#64748b'}}>—</span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Quizzes({ initialQuizzes = [] }) {
   const router = useRouter();
   const toast = useToast();
@@ -77,6 +203,7 @@ function Quizzes({ initialQuizzes = [] }) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentQuiz, setCurrentQuiz] = useState(null);
+  const [participantsModal, setParticipantsModal] = useState({ open: false, quizTitle: null });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -555,6 +682,15 @@ function Quizzes({ initialQuizzes = [] }) {
                                   <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                                   Copy URL
                                 </button>
+                                <button
+                                  className={styles.viewButton}
+                                  onClick={() => setParticipantsModal({ open: true, quizTitle: quiz.course_title })}
+                                  title="View Participants"
+                                >
+                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17 20H22V18C22 16.3431 20.6569 15 19 15C18.0444 15 17.1931 15.4468 16.6438 16.1429M17 20H7M17 20V18C17 17.3438 16.8736 16.717 16.6438 16.1429M7 20H2V18C2 16.3431 3.34315 15 5 15C5.95561 15 6.80686 15.4468 7.35625 16.1429M7 20V18C7 17.3438 7.12642 16.717 7.35625 16.1429M7.35625 16.1429C8.0935 14.301 9.89482 13 12 13C14.1052 13 15.9065 14.301 16.6438 16.1429M15 7C15 8.65685 13.6569 10 12 10C10.3431 10 9 8.65685 9 7C9 5.34315 10.3431 4 12 4C13.6569 4 15 5.34315 15 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                  </svg>
+                                </button>
                               </div>
                             </td>
                           </tr>
@@ -667,6 +803,12 @@ function Quizzes({ initialQuizzes = [] }) {
                   </div>
                 </div>
               )}
+
+              <ParticipantsModal
+                isOpen={participantsModal.open}
+                onClose={() => setParticipantsModal({ open: false, quizTitle: null })}
+                quizTitle={participantsModal.quizTitle}
+              />
             </>
           )}
         </div>

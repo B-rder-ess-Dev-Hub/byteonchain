@@ -105,13 +105,9 @@ const QuizPage = ({ quiz = quizData }) => {
   useEffect(() => {
     if (isConnected && walletAddress) {
       try {
-        // Validate address format (basic check for length and prefix)
-        if (!walletAddress.startsWith('0x') || walletAddress.length !== 42) {
-          throw new Error('Invalid Ethereum address format');
-        }
-        // Use ethers.getAddress to checksum the address, then convert to lowercase
-        const checksummedAddress = ethers.getAddress(walletAddress);
-        const formatted = checksummedAddress.toLowerCase();
+        // Normalize address to checksum format
+        const checksumAddress = ethers.getAddress(walletAddress);
+        const formatted = checksumAddress.toLowerCase();
         setFormattedWalletAddress(formatted);
         console.log("Formatted wallet address set (lowercase):", formatted);
       } catch (error) {
@@ -126,15 +122,17 @@ const QuizPage = ({ quiz = quizData }) => {
   // Fetch initial quiz attempts and user data when wallet address is available
   useEffect(() => {
     const fetchUserDataAndAttempts = async () => {
-      if (isConnected && formattedWalletAddress) {
+      if (isConnected && walletAddress) {
         try {
-          const userData = await fetchData(`/api/user/${formattedWalletAddress}`);
+          // Normalize address to checksum format
+          const checksumAddress = ethers.getAddress(walletAddress);
+          const userData = await fetchData(`/api/user/${checksumAddress}`);
           const storedAddress = userData.user.wallet_address; // Use the exact case from user data
-          if (storedAddress && ethers.getAddress(storedAddress) === ethers.getAddress(walletAddress)) {
+          if (storedAddress && ethers.getAddress(storedAddress) === checksumAddress) {
             setStoredWalletAddress(storedAddress);
           } else {
-            setStoredWalletAddress(walletAddress); // Fallback to walletAddress if mismatch or missing
-            console.warn("Stored wallet address mismatch or missing, using walletAddress:", walletAddress);
+            setStoredWalletAddress(checksumAddress); // Fallback to checksumAddress if mismatch or missing
+            console.warn("Stored wallet address mismatch or missing, using checksumAddress:", checksumAddress);
           }
           const attempts = userData.user?.quiz_attempts || 0;
           setQuizAttempts(attempts);
@@ -143,7 +141,7 @@ const QuizPage = ({ quiz = quizData }) => {
           console.error("Error fetching user data or quiz attempts:", error);
           if (error.message.includes('404')) {
             // User not found, treat as new user with 0 attempts
-            setStoredWalletAddress(walletAddress); // Use walletAddress for new user
+            setStoredWalletAddress(ethers.getAddress(walletAddress)); // Use checksum address for new user
             setQuizAttempts(0);
             setCanStartQuiz(true);
           } else {
@@ -157,7 +155,7 @@ const QuizPage = ({ quiz = quizData }) => {
     };
 
     fetchUserDataAndAttempts();
-  }, [isConnected, formattedWalletAddress]);
+  }, [isConnected, walletAddress]);
 
   // Timer for quiz duration
   useEffect(() => {

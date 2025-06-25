@@ -40,7 +40,29 @@ const AccountContent = () => {
   const [showCoursesModal, setShowCoursesModal] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [courses, setCourses] = useState({});
-  const [networks, setNetworks] = useState([]);
+
+  const NETWORKS = [
+    {
+      name: 'Arbitrum',
+      chainId: 42161,
+      baseURL: 'https://arbitrum.easscan.org',
+    },
+    {
+      name: 'Base',
+      chainId: 8453,
+      baseURL: 'https://base.easscan.org',
+    },
+    {
+      name: 'Celo',
+      chainId: 42220,
+      baseURL: 'https://celo.easscan.org',
+    },
+    {
+      name: 'Optimism',
+      chainId: 10,
+      baseURL: 'https://optimism.easscan.org',
+    },
+  ];
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -50,7 +72,6 @@ const AccountContent = () => {
 
     checkWalletConnection();
     fetchCountries(); 
-    fetchNetworks(); 
   }, []);
 
   useEffect(() => {
@@ -122,7 +143,7 @@ const AccountContent = () => {
 
   const fetchCountries = async () => {
     try {
-      const response = await axios.get('https://restcountries.com/v3.1/all');
+      const response = await axios.get('https://restcountries.com/v3.1/all?fields=name,idd');
       const countriesData = response.data.map((country) => ({
         name: country.name.common,
         code: country.idd?.root + (country.idd?.suffixes?.[0] || ''),
@@ -134,21 +155,6 @@ const AccountContent = () => {
     } catch (error) {
       console.error('Error fetching countries:', error);
       toast.error('Failed to fetch countries. Please try again later.', {
-        position: "top-right",
-        autoClose: 5000,
-      });
-    }
-  };
-
-  const fetchNetworks = async () => {
-    try {
-      const response = await fetchData('/api/networks');
-      if (response.status === 'success') {
-        setNetworks(response.data);
-      }
-    } catch (error) {
-      console.error('Error fetching networks:', error);
-      toast.error('Failed to fetch networks. Please try again later.', {
         position: "top-right",
         autoClose: 5000,
       });
@@ -464,7 +470,7 @@ const AccountContent = () => {
                     <li key={attestationUID} className={styles.courseItem}>
                       <span className={styles.courseName}>{courseName}</span>
                       <a
-                        href={`${networks.find(n => n.chainId === attestationChainId)?.baseURL || 'https://arbitrum.easscan.org'}/attestation/view/${attestationUID}`}
+                        href={`${NETWORKS.find(n => n.chainId === attestationChainId)?.baseURL || 'https://arbitrum.easscan.org'}/attestation/view/${attestationUID}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.attestationButton}
