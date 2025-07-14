@@ -5,7 +5,6 @@ import Tupdate from '../components/Tupdate';
 import styles from '../styles/Home.module.css';
 import Header from '../components/Header';
 import WalletWrapper from '../components/WalletWrapper';
-import CipherSessionModal from '../components/CipherSessionModal';
 import { useState } from 'react';
 
 export const config = {
@@ -19,10 +18,6 @@ export async function getStaticProps() {
 }
 
 const HomeContent = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className={styles.pageContainer}>
@@ -36,17 +31,19 @@ const HomeContent = () => {
             <div className={styles.middleSection}>
               <Recent />
               
-              {/* July Cipher Session Signup Banner */}
-              <div className={styles.cipherSessionBanner}>
+              {/* July Cipher Session Registration Closed Banner */}
+              <div className={styles.cipherSessionClosedBanner}>
                 <div className={styles.shimmer}></div>
-                <h2>July Cipher Session</h2>
-                
-                <button 
-                  className={styles.cipherSessionButton}
-                  onClick={openModal}
-                >
-                  Register Now
-                </button>
+                <div className={styles.closedIcon}>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M16 16l-4-4-4 4"/>
+                    <path d="M8 8l4 4 4-4"/>
+                  </svg>
+                </div>
+                <h2>Registration Closed</h2>
+                <p>Thank you for your interest in the July Cipher Session. Registration has now ended. We'll keep you updated via our social media page about future sessions and opportunities.</p>
+              
               </div>
               
               <Tupdate />
@@ -57,9 +54,7 @@ const HomeContent = () => {
           </div>
         </div>
       </div>
-      
-      {/* Cipher Session Modal */}
-      <CipherSessionModal isOpen={isModalOpen} onClose={closeModal} />
+
     </div>
   );
 };
