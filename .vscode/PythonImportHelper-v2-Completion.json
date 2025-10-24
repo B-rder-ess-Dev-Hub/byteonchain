@@ -1,0 +1,604 @@
+[
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "copy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "copy",
+        "description": "copy",
+        "detail": "copy",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Callable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "urllib",
+        "description": "urllib",
+        "isExtraImport": true,
+        "detail": "urllib",
+        "documentation": {}
+    },
+    {
+        "label": "os,",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os.",
+        "description": "os.",
+        "detail": "os.",
+        "documentation": {}
+    },
+    {
+        "label": "AES",
+        "importPath": "Crypto.Cipher",
+        "description": "Crypto.Cipher",
+        "isExtraImport": true,
+        "detail": "Crypto.Cipher",
+        "documentation": {}
+    },
+    {
+        "label": "AES",
+        "importPath": "Crypto.Cipher",
+        "description": "Crypto.Cipher",
+        "isExtraImport": true,
+        "detail": "Crypto.Cipher",
+        "documentation": {}
+    },
+    {
+        "label": "AES",
+        "importPath": "Crypto.Cipher",
+        "description": "Crypto.Cipher",
+        "isExtraImport": true,
+        "detail": "Crypto.Cipher",
+        "documentation": {}
+    },
+    {
+        "label": "Counter",
+        "importPath": "Crypto.Util",
+        "description": "Crypto.Util",
+        "isExtraImport": true,
+        "detail": "Crypto.Util",
+        "documentation": {}
+    },
+    {
+        "label": "Counter",
+        "importPath": "Crypto.Util",
+        "description": "Crypto.Util",
+        "isExtraImport": true,
+        "detail": "Crypto.Util",
+        "documentation": {}
+    },
+    {
+        "label": "Counter",
+        "importPath": "Crypto.Util",
+        "description": "Crypto.Util",
+        "isExtraImport": true,
+        "detail": "Crypto.Util",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "urllib2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib2",
+        "description": "urllib2",
+        "detail": "urllib2",
+        "documentation": {}
+    },
+    {
+        "label": "CmpCheatcode",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class CmpCheatcode:\n    cheatcode: \"Cheatcode\"\n    def __init__(self, cheatcode: \"Cheatcode\"):\n        self.cheatcode = cheatcode\n    def __lt__(self, other: \"CmpCheatcode\") -> bool:\n        return cmp_cheatcode(self.cheatcode, other.cheatcode) < 0\n    def __eq__(self, other: \"CmpCheatcode\") -> bool:\n        return cmp_cheatcode(self.cheatcode, other.cheatcode) == 0\n    def __gt__(self, other: \"CmpCheatcode\") -> bool:\n        return cmp_cheatcode(self.cheatcode, other.cheatcode) > 0",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Visibility",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Visibility(PyEnum):\n    EXTERNAL: str = \"external\"\n    PUBLIC: str = \"public\"\n    INTERNAL: str = \"internal\"\n    PRIVATE: str = \"private\"\n    def __str__(self):\n        return self.value\nclass Mutability(PyEnum):\n    PURE: str = \"pure\"\n    VIEW: str = \"view\"",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Mutability",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Mutability(PyEnum):\n    PURE: str = \"pure\"\n    VIEW: str = \"view\"\n    NONE: str = \"\"\n    def __str__(self):\n        return self.value\nclass Function:\n    id: str\n    description: str\n    declaration: str",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Function",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Function:\n    id: str\n    description: str\n    declaration: str\n    visibility: Visibility\n    mutability: Mutability\n    signature: str\n    selector: str\n    selector_bytes: bytes\n    def __init__(",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Cheatcode",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Cheatcode:\n    func: Function\n    group: str\n    status: str\n    safety: str\n    def __init__(self, func: Function, group: str, status: str, safety: str):\n        self.func = func\n        self.group = group\n        self.status = status\n        self.safety = safety",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Error",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Error:\n    name: str\n    description: str\n    declaration: str\n    def __init__(self, name: str, description: str, declaration: str):\n        self.name = name\n        self.description = description\n        self.declaration = declaration\n    @staticmethod\n    def from_dict(d: dict) -> \"Error\":",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Event",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Event:\n    name: str\n    description: str\n    declaration: str\n    def __init__(self, name: str, description: str, declaration: str):\n        self.name = name\n        self.description = description\n        self.declaration = declaration\n    @staticmethod\n    def from_dict(d: dict) -> \"Event\":",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "EnumVariant",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class EnumVariant:\n    name: str\n    description: str\n    def __init__(self, name: str, description: str):\n        self.name = name\n        self.description = description\nclass Enum:\n    name: str\n    description: str\n    variants: list[EnumVariant]",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Enum:\n    name: str\n    description: str\n    variants: list[EnumVariant]\n    def __init__(self, name: str, description: str, variants: list[EnumVariant]):\n        self.name = name\n        self.description = description\n        self.variants = variants\n    @staticmethod\n    def from_dict(d: dict) -> \"Enum\":",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "StructField",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class StructField:\n    name: str\n    ty: str\n    description: str\n    def __init__(self, name: str, ty: str, description: str):\n        self.name = name\n        self.ty = ty\n        self.description = description\nclass Struct:\n    name: str",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Struct",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Struct:\n    name: str\n    description: str\n    fields: list[StructField]\n    def __init__(self, name: str, description: str, fields: list[StructField]):\n        self.name = name\n        self.description = description\n        self.fields = fields\n    @staticmethod\n    def from_dict(d: dict) -> \"Struct\":",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Cheatcodes",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Cheatcodes:\n    errors: list[Error]\n    events: list[Event]\n    enums: list[Enum]\n    structs: list[Struct]\n    cheatcodes: list[Cheatcode]\n    def __init__(\n        self,\n        errors: list[Error],\n        events: list[Event],",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "Item",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class Item(PyEnum):\n    ERROR: str = \"error\"\n    EVENT: str = \"event\"\n    ENUM: str = \"enum\"\n    STRUCT: str = \"struct\"\n    FUNCTION: str = \"function\"\nclass ItemOrder:\n    _list: list[Item]\n    def __init__(self, list: list[Item]) -> None:\n        assert len(list) <= len(Item), \"list must not contain more items than Item\"",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "ItemOrder",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class ItemOrder:\n    _list: list[Item]\n    def __init__(self, list: list[Item]) -> None:\n        assert len(list) <= len(Item), \"list must not contain more items than Item\"\n        assert len(list) == len(set(list)), \"list must not contain duplicates\"\n        self._list = list\n        pass\n    def get_list(self) -> list[Item]:\n        return self._list\n    @staticmethod",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "CheatcodesPrinter",
+        "kind": 6,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "class CheatcodesPrinter:\n    buffer: str\n    prelude: bool\n    spdx_identifier: str\n    solidity_requirement: str\n    abicoder_v2: bool\n    block_doc_style: bool\n    indent_level: int\n    _indent_str: str\n    nl_str: str",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "def main():\n    parser = argparse.ArgumentParser(\n            description=\"Generate Vm.sol based on the cheatcodes json created by Foundry\")\n    parser.add_argument(\n            \"--from\",\n            metavar=\"PATH\",\n            dest=\"path\",\n            required=False,\n            help=\"path to a json file containing the Vm interface, as generated by Foundry\")\n    args = parser.parse_args()",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "cmp_cheatcode",
+        "kind": 2,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "def cmp_cheatcode(a: \"Cheatcode\", b: \"Cheatcode\") -> int:\n    if a.group != b.group:\n        return -1 if a.group < b.group else 1\n    if a.status != b.status:\n        return -1 if a.status < b.status else 1\n    if a.safety != b.safety:\n        return -1 if a.safety < b.safety else 1\n    if a.func.id != b.func.id:\n        return -1 if a.func.id < b.func.id else 1\n    return 0",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "prefix_with_group_headers",
+        "kind": 2,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "def prefix_with_group_headers(cheats: list[\"Cheatcode\"]):\n    s = set()\n    for i, cheat in enumerate(cheats):\n        if cheat.group in s:\n            continue\n        s.add(cheat.group)\n        c = copy.deepcopy(cheat)\n        c.func.description = \"\"\n        c.func.declaration = f\"// ======== {group(c.group)} ========\"\n        cheats.insert(i, c)",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "group",
+        "kind": 2,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "def group(s: str) -> str:\n    if s == \"evm\":\n        return \"EVM\"\n    if s == \"json\":\n        return \"JSON\"\n    return s[0].upper() + s[1:]\nclass Visibility(PyEnum):\n    EXTERNAL: str = \"external\"\n    PUBLIC: str = \"public\"\n    INTERNAL: str = \"internal\"",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "VoidFn",
+        "kind": 5,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "VoidFn = Callable[[], None]\nCHEATCODES_JSON_URL = \"https://raw.githubusercontent.com/foundry-rs/foundry/master/crates/cheatcodes/assets/cheatcodes.json\"\nOUT_PATH = \"src/Vm.sol\"\nVM_SAFE_DOC = \"\"\"\\\n/// The `VmSafe` interface does not allow manipulation of the EVM state or other actions that may\n/// result in Script simulations differing from on-chain execution. It is recommended to only use\n/// these cheats in scripts.\n\"\"\"\nVM_DOC = \"\"\"\\\n/// The `Vm` interface does allow manipulation of the EVM state. These are all intended to be used",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "CHEATCODES_JSON_URL",
+        "kind": 5,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "CHEATCODES_JSON_URL = \"https://raw.githubusercontent.com/foundry-rs/foundry/master/crates/cheatcodes/assets/cheatcodes.json\"\nOUT_PATH = \"src/Vm.sol\"\nVM_SAFE_DOC = \"\"\"\\\n/// The `VmSafe` interface does not allow manipulation of the EVM state or other actions that may\n/// result in Script simulations differing from on-chain execution. It is recommended to only use\n/// these cheats in scripts.\n\"\"\"\nVM_DOC = \"\"\"\\\n/// The `Vm` interface does allow manipulation of the EVM state. These are all intended to be used\n/// in tests, but it is not recommended to use these cheats in scripts.",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "OUT_PATH",
+        "kind": 5,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "OUT_PATH = \"src/Vm.sol\"\nVM_SAFE_DOC = \"\"\"\\\n/// The `VmSafe` interface does not allow manipulation of the EVM state or other actions that may\n/// result in Script simulations differing from on-chain execution. It is recommended to only use\n/// these cheats in scripts.\n\"\"\"\nVM_DOC = \"\"\"\\\n/// The `Vm` interface does allow manipulation of the EVM state. These are all intended to be used\n/// in tests, but it is not recommended to use these cheats in scripts.\n\"\"\"",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "VM_SAFE_DOC",
+        "kind": 5,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "VM_SAFE_DOC = \"\"\"\\\n/// The `VmSafe` interface does not allow manipulation of the EVM state or other actions that may\n/// result in Script simulations differing from on-chain execution. It is recommended to only use\n/// these cheats in scripts.\n\"\"\"\nVM_DOC = \"\"\"\\\n/// The `Vm` interface does allow manipulation of the EVM state. These are all intended to be used\n/// in tests, but it is not recommended to use these cheats in scripts.\n\"\"\"\ndef main():",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "VM_DOC",
+        "kind": 5,
+        "importPath": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "description": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "peekOfCode": "VM_DOC = \"\"\"\\\n/// The `Vm` interface does allow manipulation of the EVM state. These are all intended to be used\n/// in tests, but it is not recommended to use these cheats in scripts.\n\"\"\"\ndef main():\n    parser = argparse.ArgumentParser(\n            description=\"Generate Vm.sol based on the cheatcodes json created by Foundry\")\n    parser.add_argument(\n            \"--from\",\n            metavar=\"PATH\",",
+        "detail": "lib.openzeppelin-contracts.lib.forge-std.scripts.vm",
+        "documentation": {}
+    },
+    {
+        "label": "NoIndent",
+        "kind": 6,
+        "importPath": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "peekOfCode": "class NoIndent(object):\n    def __init__(self, value):\n        self.value = value\ndef default(o, encoder=json.JSONEncoder()):\n    if isinstance(o, NoIndent):\n        return '__' + json.dumps(o.value) + '__'\n    return encoder.default(o)\nimport os, time\nTests = []\n# compare against a known working implementation",
+        "detail": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "default",
+        "kind": 2,
+        "importPath": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "peekOfCode": "def default(o, encoder=json.JSONEncoder()):\n    if isinstance(o, NoIndent):\n        return '__' + json.dumps(o.value) + '__'\n    return encoder.default(o)\nimport os, time\nTests = []\n# compare against a known working implementation\nfrom Crypto.Cipher import AES as KAES\nfrom Crypto.Util import Counter as KCounter\nfor mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:",
+        "detail": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "Tests",
+        "kind": 5,
+        "importPath": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "peekOfCode": "Tests = []\n# compare against a known working implementation\nfrom Crypto.Cipher import AES as KAES\nfrom Crypto.Util import Counter as KCounter\nfor mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:\n    (tt_ksetup, tt_kencrypt, tt_kdecrypt) = (0.0, 0.0, 0.0)\n    (tt_setup, tt_encrypt, tt_decrypt) = (0.0, 0.0, 0.0)\n    count = 0\n    for key_size in (128, 192, 256):\n        for test in xrange(1, 8):",
+        "detail": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "reJavaScript",
+        "kind": 5,
+        "importPath": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.run-readme",
+        "description": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.run-readme",
+        "peekOfCode": "reJavaScript = re.compile('```javascript((.|\\n)*?)```')\nreadmeData = file('README.md').read()\nprint 'const aesjs = require(\"./index.js\");'\nfor (example, nl) in reJavaScript.findall(readmeData):\n    print 'console.log(\"=====================\");'\n    print '(function() {'\n    print '    try {'\n    print 'console.log(%r)' % example\n    for line in example.split('\\n'):\n        print (' ' * 8) + line",
+        "detail": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.run-readme",
+        "documentation": {}
+    },
+    {
+        "label": "readmeData",
+        "kind": 5,
+        "importPath": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.run-readme",
+        "description": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.run-readme",
+        "peekOfCode": "readmeData = file('README.md').read()\nprint 'const aesjs = require(\"./index.js\");'\nfor (example, nl) in reJavaScript.findall(readmeData):\n    print 'console.log(\"=====================\");'\n    print '(function() {'\n    print '    try {'\n    print 'console.log(%r)' % example\n    for line in example.split('\\n'):\n        print (' ' * 8) + line\n    print '    } catch (error) { console.log(\"ERROR: \",  error); }'",
+        "detail": "node_modules.@ethersproject.json-wallets.node_modules.aes-js.run-readme",
+        "documentation": {}
+    },
+    {
+        "label": "NoIndent",
+        "kind": 6,
+        "importPath": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "peekOfCode": "class NoIndent(object):\n    def __init__(self, value):\n        self.value = value\ndef default(o, encoder=json.JSONEncoder()):\n    if isinstance(o, NoIndent):\n        return '__' + json.dumps(o.value) + '__'\n    return encoder.default(o)\nimport os, time\nTests = []\n# compare against a known working implementation",
+        "detail": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "default",
+        "kind": 2,
+        "importPath": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "peekOfCode": "def default(o, encoder=json.JSONEncoder()):\n    if isinstance(o, NoIndent):\n        return '__' + json.dumps(o.value) + '__'\n    return encoder.default(o)\nimport os, time\nTests = []\n# compare against a known working implementation\nfrom Crypto.Cipher import AES as KAES\nfrom Crypto.Util import Counter as KCounter\nfor mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:",
+        "detail": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "Tests",
+        "kind": 5,
+        "importPath": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "peekOfCode": "Tests = []\n# compare against a known working implementation\nfrom Crypto.Cipher import AES as KAES\nfrom Crypto.Util import Counter as KCounter\nfor mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:\n    (tt_ksetup, tt_kencrypt, tt_kdecrypt) = (0.0, 0.0, 0.0)\n    (tt_setup, tt_encrypt, tt_decrypt) = (0.0, 0.0, 0.0)\n    count = 0\n    for key_size in (128, 192, 256):\n        for test in xrange(1, 8):",
+        "detail": "node_modules.@truffle.contract.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "reJavaScript",
+        "kind": 5,
+        "importPath": "node_modules.@truffle.contract.node_modules.aes-js.run-readme",
+        "description": "node_modules.@truffle.contract.node_modules.aes-js.run-readme",
+        "peekOfCode": "reJavaScript = re.compile('```javascript((.|\\n)*?)```')\nreadmeData = file('README.md').read()\nprint 'const aesjs = require(\"./index.js\");'\nfor (example, nl) in reJavaScript.findall(readmeData):\n    print 'console.log(\"=====================\");'\n    print '(function() {'\n    print '    try {'\n    print 'console.log(%r)' % example\n    for line in example.split('\\n'):\n        print (' ' * 8) + line",
+        "detail": "node_modules.@truffle.contract.node_modules.aes-js.run-readme",
+        "documentation": {}
+    },
+    {
+        "label": "readmeData",
+        "kind": 5,
+        "importPath": "node_modules.@truffle.contract.node_modules.aes-js.run-readme",
+        "description": "node_modules.@truffle.contract.node_modules.aes-js.run-readme",
+        "peekOfCode": "readmeData = file('README.md').read()\nprint 'const aesjs = require(\"./index.js\");'\nfor (example, nl) in reJavaScript.findall(readmeData):\n    print 'console.log(\"=====================\");'\n    print '(function() {'\n    print '    try {'\n    print 'console.log(%r)' % example\n    for line in example.split('\\n'):\n        print (' ' * 8) + line\n    print '    } catch (error) { console.log(\"ERROR: \",  error); }'",
+        "detail": "node_modules.@truffle.contract.node_modules.aes-js.run-readme",
+        "documentation": {}
+    },
+    {
+        "label": "NoIndent",
+        "kind": 6,
+        "importPath": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "peekOfCode": "class NoIndent(object):\n    def __init__(self, value):\n        self.value = value\ndef default(o, encoder=json.JSONEncoder()):\n    if isinstance(o, NoIndent):\n        return '__' + json.dumps(o.value) + '__'\n    return encoder.default(o)\nimport os, time\nTests = []\n# compare against a known working implementation",
+        "detail": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "default",
+        "kind": 2,
+        "importPath": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "peekOfCode": "def default(o, encoder=json.JSONEncoder()):\n    if isinstance(o, NoIndent):\n        return '__' + json.dumps(o.value) + '__'\n    return encoder.default(o)\nimport os, time\nTests = []\n# compare against a known working implementation\nfrom Crypto.Cipher import AES as KAES\nfrom Crypto.Util import Counter as KCounter\nfor mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:",
+        "detail": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "Tests",
+        "kind": 5,
+        "importPath": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "description": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "peekOfCode": "Tests = []\n# compare against a known working implementation\nfrom Crypto.Cipher import AES as KAES\nfrom Crypto.Util import Counter as KCounter\nfor mode in [ 'CBC', 'CTR',  'CFB', 'ECB', 'OFB' ]:\n    (tt_ksetup, tt_kencrypt, tt_kdecrypt) = (0.0, 0.0, 0.0)\n    (tt_setup, tt_encrypt, tt_decrypt) = (0.0, 0.0, 0.0)\n    count = 0\n    for key_size in (128, 192, 256):\n        for test in xrange(1, 8):",
+        "detail": "node_modules.@truffle.interface-adapter.node_modules.aes-js.generate-tests",
+        "documentation": {}
+    },
+    {
+        "label": "reJavaScript",
+        "kind": 5,
+        "importPath": "node_modules.@truffle.interface-adapter.node_modules.aes-js.run-readme",
+        "description": "node_modules.@truffle.interface-adapter.node_modules.aes-js.run-readme",
+        "peekOfCode": "reJavaScript = re.compile('```javascript((.|\\n)*?)```')\nreadmeData = file('README.md').read()\nprint 'const aesjs = require(\"./index.js\");'\nfor (example, nl) in reJavaScript.findall(readmeData):\n    print 'console.log(\"=====================\");'\n    print '(function() {'\n    print '    try {'\n    print 'console.log(%r)' % example\n    for line in example.split('\\n'):\n        print (' ' * 8) + line",
+        "detail": "node_modules.@truffle.interface-adapter.node_modules.aes-js.run-readme",
+        "documentation": {}
+    },
+    {
+        "label": "readmeData",
+        "kind": 5,
+        "importPath": "node_modules.@truffle.interface-adapter.node_modules.aes-js.run-readme",
+        "description": "node_modules.@truffle.interface-adapter.node_modules.aes-js.run-readme",
+        "peekOfCode": "readmeData = file('README.md').read()\nprint 'const aesjs = require(\"./index.js\");'\nfor (example, nl) in reJavaScript.findall(readmeData):\n    print 'console.log(\"=====================\");'\n    print '(function() {'\n    print '    try {'\n    print 'console.log(%r)' % example\n    for line in example.split('\\n'):\n        print (' ' * 8) + line\n    print '    } catch (error) { console.log(\"ERROR: \",  error); }'",
+        "detail": "node_modules.@truffle.interface-adapter.node_modules.aes-js.run-readme",
+        "documentation": {}
+    },
+    {
+        "label": "MappedValue",
+        "kind": 6,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "class MappedValue(object):\n    def __init__(self, parts):\n        self.flags = 0\n        self.rule = parts[0]\n        # If there are two parts, the second part is the mapping in question.\n        if len(parts) > 1 and parts[1]:\n            self.chars = ''.join(map(lambda u: unichr(int(u, 16)),\n                parts[1].split(' ')))\n        else:\n            self.chars = ''",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "download_unicode",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def download_unicode(version):\n    idna_tables = \"http://www.unicode.org/Public/idna/\" + version\n    infd = urllib2.urlopen(idna_tables + \"/IdnaTest.txt\")\n    #with open(\"test/test-idna2.js\", \"w\") as outfd:\n    #    build_test_code(infd, outfd)\n    with open(\"test/IdnaTest.txt\", \"w\") as outfd:\n        for line in infd:\n            outfd.write(line)\n    infd.close()\n    infd = urllib2.urlopen(idna_tables + \"/IdnaMappingTable.txt\")",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "parse_unicode_data_file",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def parse_unicode_data_file(fd):\n    '''Yield a generator of (start, end, fields) for the given Unicode data\n    file. These files are of the same basic format: a semicolon-delimited set\n    of columns, where the first column is either a single element or a range of\n    characters. In this case, the range implied by start and end are\n    inclusive.'''\n    for line in fd:\n        pos = line.find('#')\n        if pos >= 0: line = line[:pos]\n        line = line.strip()",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "utf16len",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def utf16len(string):\n    return sum(2 if ord(c) > 0xffff else 1 for c in string)\nclass MappedValue(object):\n    def __init__(self, parts):\n        self.flags = 0\n        self.rule = parts[0]\n        # If there are two parts, the second part is the mapping in question.\n        if len(parts) > 1 and parts[1]:\n            self.chars = ''.join(map(lambda u: unichr(int(u, 16)),\n                parts[1].split(' ')))",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "build_unicode_map",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def build_unicode_map(idnaMapTable, out, derivedGeneralCategory):\n    unicharMap = [0] * NUM_UCHAR\n    vals = []\n    for start, end, parts in parse_unicode_data_file(idnaMapTable):\n        for ch in range(start, end + 1):\n            value = MappedValue(parts)\n            vals.append(value)\n            unicharMap[ch] = value\n    # Note which characters have the combining mark property.\n    for start, end, parts in parse_unicode_data_file(derivedGeneralCategory):",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "find_block_sizes",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def find_block_sizes(unicharMap):\n    for lg_block_size in range(1, 15):\n        block_size = 1 << lg_block_size\n        memUsage, blocks = compute_block_size(unicharMap, block_size)\n        yield memUsage, lg_block_size, blocks\ndef compute_block_size(unicharMap, block_size):\n    blocks = set()\n    for i in range(0, len(unicharMap), block_size):\n        block = tuple(unicharMap[i:i + block_size])\n        blocks.add(block)",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "compute_block_size",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def compute_block_size(unicharMap, block_size):\n    blocks = set()\n    for i in range(0, len(unicharMap), block_size):\n        block = tuple(unicharMap[i:i + block_size])\n        blocks.add(block)\n    num = len(blocks)\n    if num < 256:\n        mem = len(unicharMap) / block_size\n    elif num < 0x10000:\n        mem = 2 * len(unicharMap) / block_size",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "convert_escape",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def convert_escape(string):\n    return string\n# These functions build the test IDNA vectors.\ndef build_body(mode, test_vector, func, expected):\n    lines = []\n    if expected[0] == '[':\n        if not re.search('[AVP]', expected):\n            return []\n        if mode == 'T' or mode == 'B':\n            lines.append(\"assert.throws(function () { %s(\\\"%s\\\", true); });\" %",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "build_body",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def build_body(mode, test_vector, func, expected):\n    lines = []\n    if expected[0] == '[':\n        if not re.search('[AVP]', expected):\n            return []\n        if mode == 'T' or mode == 'B':\n            lines.append(\"assert.throws(function () { %s(\\\"%s\\\", true); });\" %\n                (func, test_vector))\n        if mode == 'N' or mode == 'B':\n            lines.append(\"assert.throws(function () { %s(\\\"%s\\\", false); });\" %",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "build_test_code",
+        "kind": 2,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "def build_test_code(infd, out):\n    out.write(\"/* This file is generated from the Unicode IDNA table, using\\n\")\n    out.write(\"   the build-unicode-tables.py script. Please edit that\\n\")\n    out.write(\"   script instead of this file. */\\n\\n\")\n    out.write(\"var assert = require(\\\"assert\\\");\\n\")\n    out.write(\"var uts46 = require(\\\"../utr46-gold\\\");\\n\\n\")\n    out.write(\"\"\"\nfunction toAscii(input, transitional) {\n  return uts46.toAscii(input, true, transitional, true);\n}",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    },
+    {
+        "label": "NUM_UCHAR",
+        "kind": 5,
+        "importPath": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "description": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "peekOfCode": "NUM_UCHAR = 0x10ffff + 1\ndef download_unicode(version):\n    idna_tables = \"http://www.unicode.org/Public/idna/\" + version\n    infd = urllib2.urlopen(idna_tables + \"/IdnaTest.txt\")\n    #with open(\"test/test-idna2.js\", \"w\") as outfd:\n    #    build_test_code(infd, outfd)\n    with open(\"test/IdnaTest.txt\", \"w\") as outfd:\n        for line in infd:\n            outfd.write(line)\n    infd.close()",
+        "detail": "node_modules.idna-uts46-hx.build-unicode-tables",
+        "documentation": {}
+    }
+]

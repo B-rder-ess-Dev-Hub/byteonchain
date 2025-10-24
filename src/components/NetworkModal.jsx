@@ -5,6 +5,7 @@ import arbitrumLogo from '../../public/arbitrum.png';
 import optimismLogo from '../../public/optimisim.png';
 import celoLogo from '../../public/celo.png';
 import baseLogo from '../../public/base.svg';
+import scrollLogo from '../../public/Scroll.svg'
 
 const NetworkModal = ({ isOpen, onNetworkSelect }) => {
   const [switchingNetwork, setSwitchingNetwork] = useState(null);
@@ -68,6 +69,20 @@ const NetworkModal = ({ isOpen, onNetworkSelect }) => {
         decimals: 18
       },
       blockExplorerUrl: 'https://explorer.celo.org',
+      isActive: true
+    },
+    { 
+      id: 'scroll',
+      name: 'Scroll',
+      chainId: 534352,
+      logo: scrollLogo,
+      rpcUrl: 'https://scroll.drpc.org',
+      nativeCurrency: {
+        name: 'Scroll',
+        symbol: 'ETH',
+        decimals: 18
+      },
+      blockExplorerUrl: 'https://scrollscan.com/',
       isActive: true
     },
   ];
