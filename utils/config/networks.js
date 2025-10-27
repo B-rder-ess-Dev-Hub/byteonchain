@@ -43,7 +43,7 @@ export const networks = [
         easContractAddress: "0xC47300428b6AD2c7D03BB76D05A176058b47E6B0",
         OnboardingSchemaUID: "0xadc627b3baae8680c1e7d1f080ea5e50738e7efcc93e95a35269e6841116fffe",
         courseSchemaUID: "0xe9a059a2f6cf3a119b0f8c1d5dc022711a447c7fbb94baf6ce670ca2e6faeaeb",
-        baseURL : "https://scroll.easscan.org/",
+        baseURL : "https://scroll.easscan.org",
     }
 
   ];
