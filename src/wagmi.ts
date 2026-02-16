@@ -24,6 +24,7 @@ import {
   base,
   celo,
   sepolia,
+  scroll
 } from 'wagmi/chains';
 
 // Define the project ID for WalletConnect
@@ -37,6 +38,7 @@ const chains = [
   arbitrum,
   base,
   celo,
+  scroll,
   ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
 ] as const;
 
@@ -80,6 +82,7 @@ export const config = createConfig({
     [arbitrum.id]: http(),
     [base.id]: http(),
     [celo.id]: http(),
+    [scroll.id]: http(),
     [sepolia.id]: http(),
   },
   ssr: true,
